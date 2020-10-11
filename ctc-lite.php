@@ -72,8 +72,6 @@ public function ctcLiteActivate(){
 
    public function enequeFrontendJs(){
     wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js');
- 
-
    }
 
    /**
