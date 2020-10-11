@@ -1,0 +1,53 @@
+.ctcl-add-cart{
+    color:rgba(255,255,255,1);
+    background-color:rgba(61,148,218,1);
+    font-size: 16px!important;
+    height:40px;
+    padding:10px!important;
+    width:150px;
+    font-size:23px;
+    text-transform:capitalize;
+    text-decoration: none!important;
+
+}
+
+.ctcl-add-cart:active{
+    color:rgba(255,255,255,0.9);
+}
+.ctcl-add-cart:hover{
+    color:rgba(255,255,255,0.9);
+}
+.product-price{
+    font-size:23px;
+}
+.ctcl-product-container{
+   
+    padding:5px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.product-price-container{
+    font-size: 17px;
+}
+
+.ctcl-qty{
+    width:100px!important;
+    height:35px!important;
+    display:inline-block;
+}
+.ctcl-quantity{
+    height:40px;
+}
+
+.ctcl-quantity input{
+    display:inline-block!important;
+    margin-left:13px!important;
+    margin-right:13px!important;
+}
+.ctcl-plus-qty,
+.ctcl-minus-qty{
+font-size:23px;
+cursor:pointer;
+}
