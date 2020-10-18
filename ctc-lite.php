@@ -88,9 +88,7 @@ public function ctcLiteActivate(){
    */
 
   public function enequeAdminJs(){
-    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-admin.js');
- 
-
+    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js');
    }
 
    /**
@@ -98,7 +96,7 @@ public function ctcLiteActivate(){
    */
 
   public function enequeAdminCss(){
-    wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-admin.css'); 
+    wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin.css'); 
 }
 
    /**
