@@ -45,17 +45,25 @@ window.addEventListener('load', () => {
      * on add to cart button click
      */
 
-    Array.from(document.querySelectorAll('.ctcl-add-cart')).map(x => x.addEventListener('click', e => {
 
-        console.log(localStorage);
-        if (null === localStorage('ctclHiddenCart')) {
+    Array.from(document.querySelectorAll('.ctcl-add-cart')).map((x, i, btnArr) => btnArr[i].addEventListener('click', e => {
+        let filteredCartItems = Array();
+        let newItem = e.target.getAttribute('data-name');
 
-            localStorage.setItem('ctclHiddenCart', JSON.stringify([{ name: e.target.getAttribute('data-name'), price: e.target.getArrtibute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic') }]))
-
+        if (null === localStorage.getItem('ctclHiddenCart')) {
+            localStorage.setItem('ctclHiddenCart', JSON.stringify([{ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target('data-shipping-cost') }]))
         } else {
-
-            console.log(JSON.parse(localStorage.getItem('ctclHiddenCart')));
-
+            let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
+            let prodNameCart = setCartItems.map(x => x.name);
+            for (let i in setCartItems) {
+                if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
+                    setCartItems[i] = { name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target('data-shipping-cost') };
+                } else if (setCartItems[i].name != newItem && -1 === prodNameCart.indexOf(newItem)) {
+                    setCartItems.push({ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target('data-shipping-cost') })
+                    prodNameCart.push(newItem);
+                }
+            }
+            localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems))
         }
 
     }))

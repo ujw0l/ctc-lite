@@ -130,7 +130,7 @@ public function ctcLiteActivate(){
 wp_register_script(
     'ctcl-block-editor',
     plugins_url( 'js/ctcl-block.js',__FILE__ ),
-    array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n','wp-data' ),
+    array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-edit-post','wp-components', 'wp-i18n','wp-data' ),
  );
  
  wp_localize_script( 'ctcl-block-editor', 'ctcLiteParams', array('defaultPic'=>plugins_url( 'misc/image/ctclite-default.png',__FILE__ )));
