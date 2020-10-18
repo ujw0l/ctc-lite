@@ -63,6 +63,7 @@ public function ctcLiteActivate(){
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
+    add_shortcode('ctcl-checkout', array($this,'checkoutPageShortCode'));
 
   }
 
@@ -117,6 +118,21 @@ public function ctcLiteActivate(){
     echo "This is admin panel content";
 
   }
+
+  /**
+   * Checkout page shortcode
+   * @param $atts Shortcode attributes
+   * @param $content Shortcode content
+   */
+
+   public function checkoutPageShortCode($atts,$content){
+
+      if(!is_admin()){
+         echo $content;
+      }
+       
+
+   }
 
   /**
    * Register gutenberg block
