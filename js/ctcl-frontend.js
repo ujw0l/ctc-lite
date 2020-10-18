@@ -57,9 +57,9 @@ window.addEventListener('load', () => {
             let prodNameCart = setCartItems.map(x => x.name);
             for (let i in setCartItems) {
                 if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
-                    setCartItems[i] = { name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target('data-shipping-cost') };
+                    setCartItems[i] = { name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target.getAttribute('data-shipping-cost') };
                 } else if (setCartItems[i].name != newItem && -1 === prodNameCart.indexOf(newItem)) {
-                    setCartItems.push({ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target('data-shipping-cost') })
+                    setCartItems.push({ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target.getAttribute('data-shipping-cost') })
                     prodNameCart.push(newItem);
                 }
             }
