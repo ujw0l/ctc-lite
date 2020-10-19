@@ -75,7 +75,9 @@ public function ctcLiteActivate(){
     wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js');
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>7,
-       'currency'=>'usd'
+       'currency'=>'usd',
+       'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
+       'subTotal'=>__("Sub Total","ctc-lite"),
       )
    );
     wp_localize_script('ctclFrontendJs','ctclCartFunc',[]);

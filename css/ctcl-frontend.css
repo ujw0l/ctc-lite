@@ -52,6 +52,26 @@ font-size:23px;
 cursor:pointer;
 }
 
+
+.ctcl-checkout-item{
+    width:100%!important;
+    text-align:center;
+    height:50px;
+    margin-bottom:5px;
+}
+.ctcl-checkout-item span{
+    vertical-align: middle;
+    width:100px;
+    height:100%;
+}
+.ctcl-checkout-item-img-span img{
+
+    height:50px;
+    width:50px;
+    display:inline-block;
+}
+
 .ctcl-checkout-item-remove:before{
-    
+   vertical-align: middle;
+   cursor:pointer;
 }

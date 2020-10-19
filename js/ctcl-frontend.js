@@ -101,7 +101,7 @@ class ctclMain {
         let prodListCont = document.querySelector('#ctcl-checkout-product-list');
 
         if (null !== localStorage.getItem('ctclHiddenCart')) {
-            prodListCont.querySelector('p').style.dislay = 'none';
+            prodListCont.querySelector('p').style.display = 'none';
 
 
             let cartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
@@ -131,7 +131,14 @@ class ctclMain {
 
                 let itemDisplay = document.createElement('div');
                 itemDisplay.id = `ctcl-checkout-item-${i}`;
-                itemDisplay.classList.add('ctcl-checkput-item');
+                itemDisplay.classList.add('ctcl-checkout-item');
+
+                let imgSpan = document.createElement('span');
+                imgSpan.classList.add('ctcl-checkout-item-img-span');
+                let itemImg = new Image();
+                itemImg.src = cartItems[i].pic;
+                imgSpan.appendChild(itemImg);
+                itemDisplay.appendChild(imgSpan);
 
                 let itemName = document.createElement('span');
                 itemName.classList.add('ctcl-checkout-item-name');
@@ -160,6 +167,44 @@ class ctclMain {
 
                 listContainer.appendChild(itemDisplay);
             }
+
+            let totalShippingCont = document.createElement('div');
+            totalShippingCont.id = "ctcl-totalshipping-cost";
+
+            let totalShippingCostLabel = document.createElement('span');
+            totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
+            totalShippingCostLabel.appendChild(document.createTextNode(ctclParams.totalShipping));
+            totalShippingCont.appendChild(totalShippingCostLabel);
+
+            let totalShippingCost = document.createElement('span');
+            totalShippingCost.classList.add('ctcl-total-shipping-cost');
+            totalShippingCost.appendChild(document.createTextNode(shippingCost.toFixed(2)))
+            totalShippingCont.appendChild(totalShippingCost);
+            prodListCont.appendChild(totalShippingCont);
+
+            let subTotalCont = document.createElement('div');
+            subTotalCont.id = "ctcl-subtotal-container";
+
+            let subTotalLabel = document.createElement('span');
+            subTotalLabel.classList.add('ctcl-sub-total-label');
+            subTotalLabel.appendChild(document.createTextNode(ctclParams.subTotal));
+            subTotalCont.appendChild(subTotalLabel);
+
+            let subTotalVal = document.createElement('span');
+            subTotalVal.classList.add('ctcl-total-shipping-cost');
+            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + shippingCost).toFixed(2)));
+            subTotalCont.appendChild(subTotalVal);
+            prodListCont.appendChild(subTotalCont);
+
+            let subTotalInput = document.createElement('input');
+            subTotalInput.type = 'hidden';
+            subTotalInput.name = 'sub-total';
+            subTotalInput.value = (subTotal + shippingCost).toFixed(2);
+            prodListCont.appendChild(subTotalInput);
+
+
+
+
         } else {
             prodListCont.querySelector('p').style.display = '';
         }
@@ -180,11 +225,16 @@ class ctclMain {
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
-
         localStorage.removeItem(hiddenCart);
-        localStorage.setItem(hiddenCart, JSON.stringify(setItems));
+        if (1 <= setItems.length) {
+            localStorage.setItem(hiddenCart, JSON.stringify(setItems));
+        } else {
+
+            localStorage.removeItem('ctclHiddenCart');
+        }
 
         cont.parentElement.removeChild(cont);
+        ctclCartFunc.map(x => x(setItems));
         this.loadCartItems();
     }
 

@@ -167,7 +167,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                     el('div', { className: 'ctcl-product-list' },
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List', 'ctc-lite')),
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
-                            el('p', { className: 'ctcl-product-list-content' }, __('Empty Cart', 'ctc-lite')),
+                            el('p', { className: 'ctcl-product-list-content', style: { opacity: 'none' } }, __('Empty Cart', 'ctc-lite')),
                         )),
                     el('div', { className: "ctcl-co-name-container" },
                         el('label', { htmlFor: "ctcl-co-name", className: "ctcl-co-add-1-label" }, __("* Full Name :", 'ctc-lite')),
