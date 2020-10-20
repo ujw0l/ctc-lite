@@ -111,6 +111,12 @@ class ctclMain {
             let subTotal = 0;
 
 
+            let totalShippingCont = document.createElement('div');
+            totalShippingCont.id = "ctcl-totalshipping-cost";
+
+            let subTotalCont = document.createElement('div');
+            subTotalCont.id = "ctcl-subtotal-container";
+
             let listContainer = document.createElement('div');
             listContainer.id = "ctcl-checkout-list-container";
             listContainer.classList.add('ctcl-checkout-list-container');
@@ -162,14 +168,12 @@ class ctclMain {
 
                 let itemRemove = document.createElement('span');
                 itemRemove.className = 'dashicons-before dashicons-trash ctcl-checkout-item-remove ';
-                itemRemove.addEventListener('click', () => this.removeItem(i, listContainer, 'ctclHiddenCart'));
+                itemRemove.addEventListener('click', () => this.removeItem(i, [listContainer, totalShippingCont, subTotalCont], 'ctclHiddenCart'));
                 itemDisplay.append(itemRemove);
 
                 listContainer.appendChild(itemDisplay);
             }
 
-            let totalShippingCont = document.createElement('div');
-            totalShippingCont.id = "ctcl-totalshipping-cost";
 
             let totalShippingCostLabel = document.createElement('span');
             totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
@@ -182,8 +186,7 @@ class ctclMain {
             totalShippingCont.appendChild(totalShippingCost);
             prodListCont.appendChild(totalShippingCont);
 
-            let subTotalCont = document.createElement('div');
-            subTotalCont.id = "ctcl-subtotal-container";
+
 
             let subTotalLabel = document.createElement('span');
             subTotalLabel.classList.add('ctcl-sub-total-label');
@@ -217,11 +220,11 @@ class ctclMain {
      * Remove item from cart
      * 
      * @param i item number in cart 
-     * @param cont item list container 
+     * @param conts array of container to be removed
      * @param hiddenCart localstorage hidden cart identifier
      */
 
-    removeItem(i, cont, hiddenCart) {
+    removeItem(i, conts, hiddenCart) {
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
@@ -233,7 +236,7 @@ class ctclMain {
             localStorage.removeItem('ctclHiddenCart');
         }
 
-        cont.parentElement.removeChild(cont);
+        conts.map(x => x.parentElement.removeChild(x));
         ctclCartFunc.map(x => x(setItems));
         this.loadCartItems();
     }
