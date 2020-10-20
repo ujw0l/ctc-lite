@@ -105,7 +105,6 @@ class ctclMain {
 
 
             let cartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
-            let taxSum = 0;
             let shippingCost = 0;
             let totalTax = 0;
             let subTotal = 0;
@@ -204,9 +203,6 @@ class ctclMain {
             subTotalInput.name = 'sub-total';
             subTotalInput.value = (subTotal + shippingCost).toFixed(2);
             prodListCont.appendChild(subTotalInput);
-
-
-
 
         } else {
             prodListCont.querySelector('p').style.display = '';

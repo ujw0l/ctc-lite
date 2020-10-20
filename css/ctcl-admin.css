@@ -1,13 +1,21 @@
+
 .ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
     font-size: 16px!important;
     padding-left:25px!important;
 }
+.ctcl-checkout-button{
+    color:rgba(255,255,255,1);
+    background-color:rgba(61,148,218,1);
+    font-size: 16px!important;
 
+}
+.ctcl-checkout-button:active,
 .ctcl-add-cart:active{
     color:rgba(255,255,255,0.9);
 }
+.ctcl-checkout-button:hover,
 .ctcl-add-cart:hover{
     color:rgba(255,255,255,1);
 }
@@ -29,9 +37,7 @@
     color:rgba(255,255,255,0.8);
 }
 
-.ctcl-media-button:before{
-font-family: dashicons;
-}
+
 
 .ctcl-product-container{
    
@@ -58,3 +64,6 @@ font-family: dashicons;
 font-size:23px;
 cursor:pointer;
 }
+
+.ctcl-checkout-button
+

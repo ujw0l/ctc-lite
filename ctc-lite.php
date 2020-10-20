@@ -63,7 +63,7 @@ public function ctcLiteActivate(){
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_shortcode('ctcl-checkout', array($this,'checkoutPageShortCode'));
+    add_shortcode('ctcl_checkout', array($this,'checkoutPageShortCode'));
 
   }
 

@@ -75,3 +75,20 @@ cursor:pointer;
    vertical-align: middle;
    cursor:pointer;
 }
+
+.ctcl-address-row{
+    width:100%;
+}
+.ctcl-address-row .ctcl-address-col{
+
+    width:48%;
+    display:inline-block;
+    margin-left:1%;
+    margin-right:1%;
+
+}
+
+.ctcl-address-col .ctccl-co-zip{
+
+    width:60%;
+}
