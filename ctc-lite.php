@@ -63,7 +63,7 @@ public function ctcLiteActivate(){
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_shortcode('ctcl_checkout', array($this,'checkoutPageShortCode'));
+    add_shortcode('ctcl_payment_page', array($this,'paymentPageShortCode'));
 
   }
 
@@ -131,12 +131,14 @@ public function ctcLiteActivate(){
    * @param $content Shortcode content
    */
 
-   public function checkoutPageShortCode($atts,$content){
+   public function paymentPageShortCode(){
 
-      if(!is_admin()){
-         echo $content;
-      }
-       
+    if(!is_admin()):
+      if(!empty($_POST)):
+         echo "<pre>";
+         print_r($_POST);
+      endif;
+   endif;
 
    }
 

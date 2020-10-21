@@ -131,7 +131,7 @@ class ctclMain {
                 let itemInput = document.createElement('input');
                 itemInput.type = 'hidden';
                 itemInput.name = `item-${i}`;
-                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, qunatity: cartItems[i].qty, itemTotal: itemTotal });
+                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal });
                 prodListCont.appendChild(itemInput);
 
                 let itemDisplay = document.createElement('div');
@@ -162,7 +162,7 @@ class ctclMain {
 
                 let itemTotalSpan = document.createElement('span');
                 itemTotalSpan.classList.add('ctcl-checkout-item-total');
-                itemTotalSpan.appendChild(document.createTextNode(itemTotal));
+                itemTotalSpan.appendChild(document.createTextNode(itemTotal.toFixed(2)));
                 itemDisplay.append(itemTotalSpan);
 
                 let itemRemove = document.createElement('span');

@@ -37,7 +37,9 @@
     color:rgba(255,255,255,0.8);
 }
 
-
+.ctcl-checkout{
+    width:85%;
+}
 
 .ctcl-product-container{
    
@@ -65,5 +67,7 @@ font-size:23px;
 cursor:pointer;
 }
 
-.ctcl-checkout-button
-
+.ctcl-checkout-container{
+    width:85%;
+   
+}
