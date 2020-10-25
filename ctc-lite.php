@@ -9,17 +9,36 @@
  Text Domain:  ctc-lite
  License: GPLv2
 */
-
-namespace ctcLite;
+require_once "classes/ctcl-html.php";
+require_once "classes/ctcl-processing.php";
+require_once "classes/ctcl-payments.php";
 
 class ctcLite{
 
+   /**
+    * Variable to generate html 
+    */
+   public $ctcHtml;
+
+   /**
+    * Variable for plugin precessing
+    */
+   public $ctclProcessing;
+
+   /**
+    * Payments options
+    */
+    public  $ctclPayments;
 
 public function __construct(){
-
-define('CTCL_DIR_PATH',plugin_dir_url(__FILE__) );
-self::activeDeactivUinstall();
-self::requiredWpAction();
+   define('CTCL_DIR_PATH',plugin_dir_url(__FILE__) );
+   $this->ctclPayments =  new ctclPayments();
+   $this->ctcHtml =  new ctclHtml();
+   $this->ctclProcessing = new ctclProcessing();
+  
+   self::activeDeactivUinstall();
+   self::requiredWpAction();
+  
 }
 
 /** 
@@ -28,7 +47,7 @@ self::requiredWpAction();
 public function activeDeactivUinstall(){   
     register_activation_hook(__FILE__, array($this, 'ctcLiteActivate'));
     register_deactivation_hook(__FILE__,  array($this,'ctcLiteDeactivate'));
-    register_uninstall_hook(__FILE__,array($this,'ctcLiteUninstall'));
+    register_uninstall_hook(__FILE__,array('ctcLite','ctcLiteUninstall'));
 }
 
 /**
@@ -48,7 +67,7 @@ public function ctcLiteActivate(){
  /**
   * Uninstall plugin
   */
-  public function ctcLiteUnistall(){
+  public static function ctcLiteUnistall(){
 
 
   }
@@ -57,13 +76,16 @@ public function ctcLiteActivate(){
    * Register required wp action
    */
   public function requiredWpAction(){
+
+   //$ctcHtml =  new ctclHtml();
+
     add_action('admin_menu', array($this, 'adminMenu'),10);  
     add_action( 'wp_enqueue_scripts', array($this,'enequeFrontendJs' ));
     add_action( 'wp_enqueue_scripts', array($this,'enequeFrontendCss' ));
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_shortcode('ctcl_payment_page', array($this,'paymentPageShortCode'));
+    add_shortcode('ctcl_shipping_options', array($this->ctcHtml,'paymentOptionsShortCode'));
 
   }
 
@@ -104,7 +126,7 @@ public function ctcLiteActivate(){
    */
 
   public function enequeAdminCss(){
-    wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin.css'); 
+    wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin-panel.css'); 
 }
 
    /**
@@ -113,7 +135,7 @@ public function ctcLiteActivate(){
 
   public function adminMenu(){
     if ( is_admin()):
-        add_menu_page( 'CTC Lite','CTC Lite ','administrator','ctclAdminPanel',array($this, 'adminPanelContent'),'dashicons-store','2');
+        add_menu_page( 'CTC Lite','CTC Lite ','administrator','ctclAdminPanel',array($this->ctcHtml, 'adminPanelHtml'),'dashicons-store','2');
     endif;
 }
 
@@ -125,23 +147,7 @@ public function ctcLiteActivate(){
 
   }
 
-  /**
-   * Checkout page shortcode
-   * @param $atts Shortcode attributes
-   * @param $content Shortcode content
-   */
-
-   public function paymentPageShortCode(){
-
-    if(!is_admin()):
-      if(!empty($_POST)):
-         echo "<pre>";
-         print_r($_POST);
-      endif;
-   endif;
-
-   }
-
+  
   /**
    * Register gutenberg block
    * 
@@ -168,7 +174,7 @@ wp_register_script(
   // Block editor styles.
   wp_register_style(
      'ctcl-block-editor-styles',
-     plugins_url( 'css/ctcl-admin.css',__FILE__ ),
+     plugins_url( 'css/ctcl-admin-block.css',__FILE__ ),
      array( 'wp-edit-blocks','dashicons' ),
   );
  

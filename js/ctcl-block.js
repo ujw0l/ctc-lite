@@ -157,7 +157,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'cart', title: __('Checkout page setting', 'ctc-lite') },
                         el(PanelBody, null,
-                            el(TextControl, { onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('Page where Payment is processed :', 'ctc-lite') }),
+                            el(TextControl, { onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
                     )
@@ -166,8 +166,6 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
     },
     save: ({ attributes }) => {
-
-
         return el('div', null,
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-from', method: 'post', action: attributes.paymentPage },
@@ -231,13 +229,11 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                     el('div', { className: 'ctcl-required-message' }, el('i', null, __('* Are Required Fields.', 'ctc-lite'))),
                     el('div', { className: 'ctcl-shipping-options' },
                         el('h5', { className: 'ctcl-shipping-options-header' }, __('Shipping Options', 'ctc-lite')),
-                        el('div', { id: 'ctcl-checkout-shipping-options', className: 'ctcl-shipping-options-container' },
-                            el('p', { className: 'ctcl-shipping-options-content' }, __('Loading ...', 'ctc-lite')),
+                        el('div', { id: 'ctcl-checkout-shipping-options', className: 'ctcl-shipping-options-container' }, '[ctcl_shipping_options]'
                         )),
                     el('div', { className: 'ctcl-payment-options' },
                         el('h5', { className: 'ctcl-payment-options-header' }, __('Payment Options', 'ctc-lite')),
-                        el('div', { id: 'ctcl-checkout-payment-option', className: 'ctcl-payment-options-container' },
-                            el('p', { className: 'ctcl-payment-options-content' }, __('Loading ...', 'ctc-lite')),
+                        el('div', { id: 'ctcl-checkout-payment-option', className: 'ctcl-payment-options-container' }, '[ctcl_payment_options]'
                         )),
                     el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
                 ),
@@ -253,8 +249,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
 registerBlockType('ctc-lite/ctc-lite-payment-processing', {
 
-    title: __('CTC Lite Payment  Processing', 'ctc-lite'),
-    icons: 'money',
+    title: __('CTC Lite Payment Processing', 'ctc-lite'),
+    icon: 'money',
     description: __("CTC Lite block to create payment processing page", "ctc-lite"),
     category: 'common',
     keywords: [__('eCommerce', 'ctc-lite'), __('Payment Processing', 'ctc-lite')],
@@ -264,7 +260,7 @@ registerBlockType('ctc-lite/ctc-lite-payment-processing', {
     edit: () => {
         return el('div', { className: 'ctcl-payment-processing-block' },
             el('h5', { className: 'ctcl-payment-processing-header' }, __('Payment Processing', 'ctc-lite')),
-            el('p', { className: 'ctc-payment-message' }, __('Contains Payment outcome message', 'ctc-lite')),
+            el('p', { className: 'ctc-payment-message' }, __('Contains Payment outcome message.', 'ctc-lite')),
         );
 
     },
