@@ -1,0 +1,76 @@
+
+.ctcl-add-cart{
+    color:rgba(255,255,255,1);
+    background-color:rgba(61,148,218,1);
+    font-size: 16px!important;
+    padding-left:25px!important;
+}
+.ctcl-checkout-button{
+    color:rgba(255,255,255,1);
+    background-color:rgba(61,148,218,1);
+    font-size: 16px!important;
+
+}
+.ctcl-checkout-button:active,
+.ctcl-add-cart:active{
+    color:rgba(255,255,255,0.9);
+}
+.ctcl-checkout-button:hover,
+.ctcl-add-cart:hover{
+    color:rgba(255,255,255,1);
+}
+.inspect-product-price,
+.inspect-shipping-cost,
+.inspect-product-name{
+    width:80%;
+    margin-left:20px;
+}
+.ctcl-media-button{
+    
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+    background-color:rgba(61,148,218,1);
+    color:rgba(255,255,255,1);
+    margin-bottom:10px;
+}
+.ctcl-media-button:hover{
+    color:rgba(255,255,255,0.8);
+}
+
+.ctcl-checkout{
+    width:85%;
+}
+
+.ctcl-product-container{
+   
+    padding:5px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.product-price-container{
+    font-size: 17px;
+}
+
+.ctcl-qty{
+    width:100px;
+    height:35px;
+}
+.ctcl-quantity{
+    line-height: 1.5;
+    height:40px;
+}
+.ctcl-plus-qty,
+.ctcl-minus-qty{
+font-size:23px;
+cursor:pointer;
+}
+
+.ctcl-checkout-container{
+    width:85%;
+   
+}
+
+

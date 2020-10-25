@@ -1,0 +1,46 @@
+
+.ctcl-payment-tab-content{
+    margin:15px;
+}
+
+.ctcl-payment-tab-content .ctcl-payment-tab-fieldset{
+   border:1px dashed rgba(0,0,0,1);
+   padding:20px;
+}
+.ctcl-payment-tab-content form{
+width:31%;
+display:inline-block;
+margin:1.1%;
+
+}
+.ctcl-payment-tab-content fieldset{
+   border:1px dashed rgba(0,0,0,1);
+   padding:20px;
+
+}
+
+.ctcl-payment-tab-content fieldset legend{
+   text-align:center;
+}
+.ctcl-payment-tab-content div {
+   display:block;
+}
+.ctcl-payment-tab-content div label{
+   float:left;
+   width:45%;
+   font-weight: bold;
+}
+
+.ctcl-payment-tab-content div span{
+   float:right;
+   width:54%;
+}
+
+.ctcl-payment-tab-fieldset-legend:before{
+animation: rotateSettingButton 20s linear infinite;
+}
+
+@keyframes rotateSettingButton{
+   from{transform: rotate(0deg);}
+   to{transform: rotate(3600deg);}
+}
