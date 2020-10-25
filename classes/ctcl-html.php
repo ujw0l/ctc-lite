@@ -16,10 +16,10 @@ public function adminPanelHtml(){
     <h4 class="nav-tab-wrapper">
         <a href="?page=ctclAdminPanel&tab=info" class="nav-tab dashicons-before dashicons-info <?=$activeTab == 'info' ? 'nav-tab-active' : ''; ?> ">Information</a>
         <a href="?page=ctclAdminPanel&tab=payment" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'payment' ? 'nav-tab-active' : ''; ?> ">Payment</a>
-        <a href="?page=ctclAdminPanel&tab=shipping" class="nav-tab dashicons-before dashicons-cart <?=$activeTab == 'shipping' ? 'nav-tab-active' : ''; ?> ">Shipping</a>
+        <a href="?page=ctclAdminPanel&tab=shipping" class="nav-tab dashicons-before dashicons-car <?=$activeTab == 'shipping' ? 'nav-tab-active' : ''; ?> ">Shipping</a>
         <a href="?page=ctclAdminPanel&tab=email" class="nav-tab dashicons-before dashicons-email-alt2 <?=$activeTab == 'email' ? 'nav-tab-active' : ''; ?> ">Email</a>
-        <a href="?page=ctclAdminPanel&tab=complete_order" class="nav-tab dashicons-before dashicons-clipboard <?=$activeTab == 'pending_order' ? 'nav-tab-active' : ''; ?> ">Pending Orders</a>
-        <a href="?page=ctclAdminPanel&tab=pending_order" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == 'complete_order' ? 'nav-tab-active' : ''; ?> ">Complete Orders</a>
+        <a href="?page=ctclAdminPanel&tab=pending_order" class="nav-tab dashicons-before dashicons-clipboard <?=$activeTab == 'pending_order' ? 'nav-tab-active' : ''; ?> ">Pending Orders</a>
+        <a href="?page=ctclAdminPanel&tab=complete_order" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == 'complete_order' ? 'nav-tab-active' : ''; ?> ">Complete Orders</a>
 
     <?php
     if(!empty($additionalTabs )):
@@ -81,19 +81,20 @@ private function paymentTab(){
 $payments = apply_filters('ctcl_admin_payment_html',array());
 ?>
 <div class="ctcl-payment-tab-content">
-
- 
+<fieldset class="ctcl-payment-tab-fieldset">
+ <legend class="dashicons-before dashicons-admin-generic ctcl-payment-tab-fieldset-legend"><strong><?=__('Payment Settings','ctc-lite')?></strong></legend>
 <?php
 for($i=0;$i<count($payments);$i++):
     echo '<form method="post" action="options.php" autocomplete="on">';   
     echo "<fieldset><legend>{$payments[$i]['formHeader']}</legend>";
-    do_settings_sections($payments[$i]['formSetting']);
-    settings_fields($payments[$i]['formSetting']);
+    do_settings_sections('ctcl_payment_setting');
+    settings_fields('ctcl_payment_setting');
     echo ($payments[$i]['html']);
     submit_button( __( 'Submitt', 'ctc-lite' ), 'primary' );
     echo '</fieldset></form>';
 endfor;
 ?>
+</fieldset>
 </div>
 <?php
 }
@@ -131,12 +132,12 @@ private function completeOrderTab(){
      * Adds payment options shortcode
      */
    public function paymentOptionsShortCode(){
-    $shippingOptions = apply_filters( 'ctcl_shipping_options', array());
+    $paymentOptions = apply_filters( 'ctcl_shipping_options', array());
 
 
 $html =  '';
-    for($i=0;$i<=count($shippingOptions)-1;$i++):
-        $html .= "Value is {$shippingOptions[$i]}";
+    for($i=0;$i<=count($paymentOptions)-1;$i++):
+        $html .= "Value is {$paymentOptions[$i]}";
     endfor;
 
     return $html;

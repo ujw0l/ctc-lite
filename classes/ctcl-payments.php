@@ -25,7 +25,7 @@ public function __construct(){
 */
     public function displayOptionsUser(){
         if(1 == get_option('ctcl_cash_on_delivery')): 
-            add_filter('ctcl_shipping_options',function($val){
+            add_filter('ctcl_payment_options',function($val){
                 
 
                 $paymentOption = array('payment-id'=>$this->paymentId,
@@ -34,7 +34,8 @@ public function __construct(){
                                     );
 
                 
-                return array_push($val,$option);
+                array_push($val, $paymentOption);
+                return  $val;
             },10,1);
         endif;
     }
@@ -56,9 +57,9 @@ public function __construct(){
 
             $html = '<div class="ctcl-content-display ctc_payment_cash">';
             $html .=  '<label for"ctcl-cash-on-deblivery"  class="ctcl-cash-on-deblivery-label">'.__('Cash on delivery','ctc-lite').'</label>';
-            $html .= "<input id='ctcl-cash-on-delivery' {$checked} type='checkbox' name='ctcl_cash_on_delivery' value='1'>";
+            $html .= "<span><input id='ctcl-cash-on-delivery' {$checked} type='checkbox' name='ctcl_cash_on_delivery' value='1'></span>";
             $html .= '</div>';
-            array_push($val,array('formHeader'=>__("Cash On Delivery Payment",'ctc-lite'),'formSetting'=>'ctcl_payment_setting','html'=>$html));
+            array_push($val,array('formHeader'=>__("Cash On Delivery Payment",'ctc-lite'),'html'=>$html));
       return $val;
         },10,1);
     }

@@ -38,6 +38,8 @@ public function __construct(){
   
    self::activeDeactivUinstall();
    self::requiredWpAction();
+   self::requiredAjax();
+   self::requiredShortCode();
   
 }
 
@@ -67,7 +69,7 @@ public function ctcLiteActivate(){
  /**
   * Uninstall plugin
   */
-  public static function ctcLiteUnistall(){
+  public function ctcLiteUnistall(){
 
 
   }
@@ -85,8 +87,7 @@ public function ctcLiteActivate(){
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_shortcode('ctcl_shipping_options', array($this->ctcHtml,'paymentOptionsShortCode'));
-
+    
   }
 
   /**
@@ -127,6 +128,20 @@ public function ctcLiteActivate(){
 
   public function enequeAdminCss(){
     wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin-panel.css'); 
+}
+/**
+ * Required shortcode 
+ */
+public function requiredShortCode(){
+   add_shortcode('ctcl_payment_options', array($this->ctcHtml,'paymentOptionsShortCode'));
+
+}
+
+/**
+ * Required AJAX hooks 
+ */
+public function requiredAjax(){
+
 }
 
    /**
