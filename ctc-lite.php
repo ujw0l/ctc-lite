@@ -11,7 +11,7 @@
 */
 require_once "classes/ctcl-html.php";
 require_once "classes/ctcl-processing.php";
-require_once "classes/ctcl-payments.php";
+require_once "classes/ctcl-billings.php";
 
 class ctcLite{
 
@@ -32,7 +32,7 @@ class ctcLite{
 
 public function __construct(){
    define('CTCL_DIR_PATH',plugin_dir_url(__FILE__) );
-   $this->ctclPayments =  new ctclPayments();
+   $this->ctclPayments =  new ctclBillings();
    $this->ctcHtml =  new ctclHtml();
    $this->ctclProcessing = new ctclProcessing();
   
@@ -119,7 +119,8 @@ public function ctcLiteActivate(){
    */
 
   public function enequeAdminJs(){
-    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js');
+   wp_enqueue_script('ctclJsMasonry', CTCL_DIR_PATH.'js/js-masonry.js',array());
+    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry'));
    }
 
    /**
@@ -134,7 +135,7 @@ public function ctcLiteActivate(){
  */
 public function requiredShortCode(){
    add_shortcode('ctcl_payment_options', array($this->ctcHtml,'paymentOptionsShortCode'));
-
+   add_shortcode('ctcl_payment_page',array($this->ctcHtml,'paymentProcessingShortCode'));
 }
 
 /**

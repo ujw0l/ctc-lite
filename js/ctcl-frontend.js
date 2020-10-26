@@ -130,7 +130,7 @@ class ctclMain {
 
                 let itemInput = document.createElement('input');
                 itemInput.type = 'hidden';
-                itemInput.name = `item-${i}`;
+                itemInput.name = `products[]`;
                 itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2) });
                 prodListCont.appendChild(itemInput);
 

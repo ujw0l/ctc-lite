@@ -1,22 +1,42 @@
 
 .ctcl-payment-tab-content{
-    margin:15px;
+ height:100%;
+}
+
+.ctcl-payment-tab-fieldset-legend{
+   margin-top:30px;
+   margin-bottom:30px;
 }
 
 .ctcl-payment-tab-content .ctcl-payment-tab-fieldset{
    border:1px dashed rgba(0,0,0,1);
-   padding:20px;
+ 
 }
 .ctcl-payment-tab-content form{
-width:31%;
+
 display:inline-block;
-margin:1.1%;
+
 
 }
-.ctcl-payment-tab-content fieldset{
-   border:1px dashed rgba(0,0,0,1);
-   padding:20px;
 
+.ctcl-payment-tab-content fieldset fieldset{
+   border:1px dashed rgba(0,0,0,1);
+   margin-top:30px!important;
+}
+
+.ctcl-payment-tab-content{
+   margin-right:15px;
+   padding:0px!important;
+}
+
+.ctcl-payment-tab-content .ctcl-payment-tab-fieldset{
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  opacity:0;
+}
+.ctcl-payment-tab-content .ctcl-payment-tab-fieldset fieldset div.ctcl-content-display{
+   padding:15px;
 }
 
 .ctcl-payment-tab-content fieldset legend{
@@ -29,13 +49,31 @@ margin:1.1%;
    float:left;
    width:45%;
    font-weight: bold;
+   line-height: 2;
 }
 
 .ctcl-payment-tab-content div span{
    float:right;
    width:54%;
 }
+.ctcl-form-submit-button {
+   
+   margin:15px;
+}
+.ctcl-form-submit-button input{
+   display:inline-block;
+   margin-bottom:10px!important;
+}
+#ctcl-tax-rate{
+   width:55px;
+}
 
+.ctcl-business-setting-row{
+   line-height: 2;
+   margin-bottom:10px;
+   vertical-align: middle;
+   height:30px;
+}
 .ctcl-payment-tab-fieldset-legend:before{
 animation: rotateSettingButton 20s linear infinite;
 }

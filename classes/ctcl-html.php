@@ -8,14 +8,16 @@ class ctclHtml{
 public function adminPanelHtml(){
 
     $additionalTabs = apply_filters('ctcl-additional_tab',array());
+
     $activeTab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'info';
     $dynmTab = array();
+    $arrTab=array();
 ?>
 <div class="ctclAdminPanel">	               
 <h2><span class="dashicons-before dashicons-store"></span>CTC Lite Admin Panel</h2>
     <h4 class="nav-tab-wrapper">
         <a href="?page=ctclAdminPanel&tab=info" class="nav-tab dashicons-before dashicons-info <?=$activeTab == 'info' ? 'nav-tab-active' : ''; ?> ">Information</a>
-        <a href="?page=ctclAdminPanel&tab=payment" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'payment' ? 'nav-tab-active' : ''; ?> ">Payment</a>
+        <a href="?page=ctclAdminPanel&tab=billing" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'billing' ? 'nav-tab-active' : ''; ?> ">Billing</a>
         <a href="?page=ctclAdminPanel&tab=shipping" class="nav-tab dashicons-before dashicons-car <?=$activeTab == 'shipping' ? 'nav-tab-active' : ''; ?> ">Shipping</a>
         <a href="?page=ctclAdminPanel&tab=email" class="nav-tab dashicons-before dashicons-email-alt2 <?=$activeTab == 'email' ? 'nav-tab-active' : ''; ?> ">Email</a>
         <a href="?page=ctclAdminPanel&tab=pending_order" class="nav-tab dashicons-before dashicons-clipboard <?=$activeTab == 'pending_order' ? 'nav-tab-active' : ''; ?> ">Pending Orders</a>
@@ -24,6 +26,7 @@ public function adminPanelHtml(){
     <?php
     if(!empty($additionalTabs )):
         foreach($additionalTabs as $key=>$value):
+            $arrTab[] = $value['id'];
             $dynmTab[$value['id']] = $key;
 ?>
         <a href="?page=ctclAdminPanel&tab=<?=$value['id']?>" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == $value['id'] ? 'nav-tab-active' : ''; ?> "><?=$value['name']?></a>
@@ -36,16 +39,15 @@ public function adminPanelHtml(){
  </h4>
  </div>
  <?php
-
-if(  in_array($activeTab,$dynmTab)):
-    $additionalTabs[$dynmTab[$activeTab]]['callbac_func']();
+if(  in_array($activeTab,$arrTab)):
+    $additionalTabs[$dynmTab[$activeTab]]['callback_func']();
 else:
     switch($activeTab):
 
         case 'info':
         $this->infoTab();
         break;
-        case 'payment':
+        case 'billing':
             $this->paymentTab();
         break;
         case 'shipping':
@@ -78,11 +80,11 @@ private function infoTab(){
  * Create payment tab
  */
 private function paymentTab(){
-$payments = apply_filters('ctcl_admin_payment_html',array());
+$payments = apply_filters('ctcl_admin_billings_html',array());
 ?>
 <div class="ctcl-payment-tab-content">
 <fieldset class="ctcl-payment-tab-fieldset">
- <legend class="dashicons-before dashicons-admin-generic ctcl-payment-tab-fieldset-legend"><strong><?=__('Payment Settings','ctc-lite')?></strong></legend>
+ <legend class="dashicons-before dashicons-admin-generic ctcl-payment-tab-fieldset-legend"><strong><?=__('Billing Settings','ctc-lite')?></strong></legend>
 <?php
 for($i=0;$i<count($payments);$i++):
     echo '<form method="post" action="options.php" autocomplete="on">';   
@@ -90,8 +92,9 @@ for($i=0;$i<count($payments);$i++):
     do_settings_sections('ctcl_payment_setting');
     settings_fields('ctcl_payment_setting');
     echo ($payments[$i]['html']);
-    submit_button( __( 'Submitt', 'ctc-lite' ), 'primary' );
-    echo '</fieldset></form>';
+    echo '<div class="ctcl-form-submit-button">';
+    submit_button( __( 'Submit', 'ctc-lite' ), 'primary','submit',false );
+    echo '</div></fieldset></form>';
 endfor;
 ?>
 </fieldset>
@@ -128,6 +131,16 @@ private function completeOrderTab(){
 
 }
 
+
+/**
+ * Payment porcessing shortcode
+ */
+public function paymentProcessingShortCode(){
+
+    echo '<pre>';
+    var_dump(json_decode(stripslashes(json_encode($_POST))));
+
+}
     /**
      * Adds payment options shortcode
      */
