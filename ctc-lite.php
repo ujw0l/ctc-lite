@@ -97,8 +97,8 @@ public function ctcLiteActivate(){
    public function enequeFrontendJs(){
     wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js');
     wp_localize_script('ctclFrontendJs','ctclParams',array(
-       'taxRate'=>7,
-       'currency'=>'usd',
+       'taxRate'=>get_option('ctcl_tax_rate'),
+       'currency'=>get_option('ctcl_currency'),
        'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
        'subTotal'=>__("Sub Total","ctc-lite"),
       )

@@ -89,8 +89,8 @@ $payments = apply_filters('ctcl_admin_billings_html',array());
 for($i=0;$i<count($payments);$i++):
     echo '<form method="post" action="options.php" autocomplete="on">';   
     echo "<fieldset><legend>{$payments[$i]['formHeader']}</legend>";
-    do_settings_sections('ctcl_payment_setting');
-    settings_fields('ctcl_payment_setting');
+    do_settings_sections($payments[$i]['settingFields']);
+    settings_fields($payments[$i]['settingFields']);
     echo ($payments[$i]['html']);
     echo '<div class="ctcl-form-submit-button">';
     submit_button( __( 'Submit', 'ctc-lite' ), 'primary','submit',false );
