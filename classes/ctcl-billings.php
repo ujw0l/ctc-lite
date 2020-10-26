@@ -24,14 +24,10 @@ public function __construct(){
     public function displayOptionsUser(){
         if(1 == get_option('ctcl_cash_on_delivery')): 
             add_filter('ctcl_payment_options',function($val){
-                
-
                 $paymentOption = array('payment-id'=>$this->paymentId,
                                         'payment-name'=>$this->paymentName,
                                         'option-html'=>$this->frontendHtml
                                     );
-
-                
                 array_push($val, $paymentOption);
                 return  $val;
             },10,1);
@@ -62,7 +58,13 @@ public function __construct(){
             $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-tax-rate"  class="ctcl-tax-rate">'.__('Tax Rate (%) : ','ctc-lite').'</label>';
             $html .= "<span><input id='ctcl-tax-rate' type='number' min='0.00' name='ctcl_tax_rate' value='{$taxRate}'></span></div>";
             $html .= '</div>';
-            array_push($val,array('settingFields'=>'ctcl_basic_setting','formHeader'=>__("Basic Settings",'ctc-lite'),'html'=>$html));
+
+            array_push($val,array(
+                                    'settingFields'=>'ctcl_basic_setting',
+                                    'formHeader'=>__("Basic Settings",'ctc-lite'),
+                                    'html'=>$html
+                                )
+                            );
       return $val;
         },10,1);
 
@@ -73,7 +75,13 @@ public function __construct(){
             $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-cash-on-delivery"  class="ctcl-cash-on-delivery-label">'.__('Cash on delivery','ctc-lite').'</label>';
             $html .= "<span><input id='ctcl-cash-on-delivery' {$checked} type='checkbox' name='ctcl_cash_on_delivery' value='1'></span></div>";
             $html .= '</div>';
-            array_push($val,array('settingFields'=>'ctcl_cash_setting','formHeader'=>__("Cash On Delivery Payment",'ctc-lite'),'html'=>$html));
+
+            array_push($val,array(
+                                    'settingFields'=>'ctcl_cash_setting',
+                                    'formHeader'=>__("Cash On Delivery Payment",'ctc-lite'),
+                                    'html'=>$html
+                                )
+                            );
       return $val;
         },20,1);
 
