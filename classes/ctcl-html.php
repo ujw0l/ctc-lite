@@ -88,7 +88,7 @@ $payments = apply_filters('ctcl_admin_billings_html',array());
 <?php
 for($i=0;$i<count($payments);$i++):
     echo '<form method="post" action="options.php" autocomplete="on">';   
-    echo "<fieldset><legend>{$payments[$i]['formHeader']}</legend>";
+    echo "<fieldset><legend><b>{$payments[$i]['formHeader']}</b></legend>";
     do_settings_sections($payments[$i]['settingFields']);
     settings_fields($payments[$i]['settingFields']);
     echo ($payments[$i]['html']);

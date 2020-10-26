@@ -13,11 +13,9 @@ public $paymentName = 'Cash';
 
 
 public function __construct(){
-  
     self::registerOptions();
     self::displayOptionsUser();
     self::adminPanelHtml();
-   
 }
 
 /**
@@ -72,7 +70,7 @@ public function __construct(){
             $checked =  '1'=== get_option('ctcl_cash_on_delivery')? 'checked':'';
 
             $html = '<div class="ctcl-content-display ctcl-payment-cash">';
-            $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-cash-on-deblivery"  class="ctcl-cash-on-delivery-label">'.__('Cash on delivery','ctc-lite').'</label>';
+            $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-cash-on-delivery"  class="ctcl-cash-on-delivery-label">'.__('Cash on delivery','ctc-lite').'</label>';
             $html .= "<span><input id='ctcl-cash-on-delivery' {$checked} type='checkbox' name='ctcl_cash_on_delivery' value='1'></span></div>";
             $html .= '</div>';
             array_push($val,array('settingFields'=>'ctcl_cash_setting','formHeader'=>__("Cash On Delivery Payment",'ctc-lite'),'html'=>$html));
