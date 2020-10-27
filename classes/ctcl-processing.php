@@ -4,20 +4,19 @@ class ctclProcessing{
     
 
     /**
-     * send test email with ajax
+     * Send test email with ajax
      */
     public function sendSmtpTestEmail(){
         $subject = __('Test email','ctc-lite');
-        $emaiBody = '<p>'.__('This is test email, you may ignore it.').'</p>';
-        $this->sendConfirmationEmail( $emailBody,$subject,sanitize_email($_POST['email']));
+        $emailBody = '<p>'.__('This is test email, you may ignore it.').'</p>';
+       echo  $this->sendConfirmationEmail( $_POST['email'],$subject,$emailBody);
         wp_die();
-
     }
 
     /**
      * Php mailer email setup
      */
-    public function smtpEmailSetting(){
+    public function smtpEmailSetting($mail){
 
         $mail->isSMTP();
     	$mail->smtpConnect([
@@ -34,20 +33,25 @@ class ctclProcessing{
     	$mail->Username   = get_option('ctcl_smtp_username') ;
     	$mail->Password   = get_option('ctcl_smtp_password') ;
         $mail->SMTPSecure = get_option('ctcl_smtp_encryption') ;
-    	$mail->From       = sanitize_email(get_option('ctcl_smtp_from_email')) ;
+    	$mail->From       = get_option('ctcl_smtp_from_email') ;
         $mail->FromName   =  get_option('ctcl_smtp_from_name') ;
-        $mail->addBCC(sanitize_email(get_option('ctcl_smtp_from_email')), __('Admin','ctc-lite'));
     	$mail->IsHTML(true);
-    	$mail->SMTPDebug = 1;
+    	$mail->SMTPDebug = 0;
 
     }
 
     /**
      * Send confirmation email
      */
-    public function sendConfirmationEmail($emailBody,$emailAddress,$subject){
-		global $phpmailer;
-		wp_mail($emailAddress, $subject , $emailBody);
+    public function sendConfirmationEmail($emailAddress,$subject,$emailBody){
+        global $phpmailer;
+        $headers[] = 'Bcc:'. get_option('ctcl_smtp_bcc_email');
+        $emailSent = wp_mail($emailAddress, $subject , $emailBody,$headers);
+		if($emailSent):
+            return __('Email sent sucessfully','ctc-lite');
+        else:
+            return __("Email couldn't be sent,please check email settings.",'ctc-lite' );
+        endif;
     }
     
 }

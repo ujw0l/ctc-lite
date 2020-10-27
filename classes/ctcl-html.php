@@ -88,7 +88,7 @@ $payments = apply_filters('ctcl_admin_billings_html',array());
 <?php
 for($i=0;$i<count($payments);$i++):
     echo '<form method="post" action="options.php" autocomplete="on">';   
-    echo "<fieldset><legend><b>{$payments[$i]['formHeader']}</b></legend>";
+    echo "<fieldset><legend class='dashicons-before dashicons-money'><b>{$payments[$i]['formHeader']}</b></legend>";
     do_settings_sections($payments[$i]['settingFields']);
     settings_fields($payments[$i]['settingFields']);
     echo ($payments[$i]['html']);
@@ -120,7 +120,7 @@ private function emailTab(){
 <legend class="dashicons-before dashicons-admin-generic ctcl-email-tab-fieldset-legend"><?=__('SMTP Email Setting','ctc-lite')?></legend>
 <div class="ctcl-smtp-email-setting">
 <fieldset class="ctcl-email-setting">
-<legend><?=__('Settings','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-email-alt2"><?=__('Settings','ctc-lite')?></legend>
 <form method="post" action="options.php" autocomplete="on">
 <?php 
 do_settings_sections('ctcl_email_settings');
@@ -162,7 +162,7 @@ settings_fields('ctcl_email_settings');
 </div>
 <div class="ctcl-email-setting-row">
 <label for="ctcl-smtp-bcc-email" class="ctcl-smtp-bcc-email-label" ><?=__('BCC Email Address :','ctc-lite')?></label>
-<span><input id="ctcl-smtp-bcc-email" type="email" required name='ctcl_smtp_bcc_email' value="<?=get_option('ctcl_smtp_bcc_email')?>"/><span>
+<span><input id="ctcl-smtp-bcc-email" type="email" name='ctcl_smtp_bcc_email' value="<?=get_option('ctcl_smtp_bcc_email')?>"/><span>
 </div>
 <div class="ctcl-email-setting-row">
 <label for="ctcl-smtp-from-name" class="ctcl-smtp-from-name-label" ><?=__('From :','ctc-lite')?></label>

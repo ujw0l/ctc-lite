@@ -88,6 +88,7 @@ public function ctcLiteActivate(){
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
     add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
+    add_filter( 'wp_mail_from', function(){return get_option('ctcl_smtp_from_email');} );
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
     
   }

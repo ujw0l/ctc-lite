@@ -24,7 +24,8 @@ display:inline-block;
    margin-top:30px!important;
 }
 .ctcl-email-setting{
-   width:40%;
+   width:500px!important;
+   max-width:78%;
    padding:20px;
    margin:25px;
 }
@@ -35,25 +36,39 @@ display:inline-block;
 }
 
 .ctcl-email-setting-row label{
-   width:50%!important;
+   width:200px;
+   max-width:100%;
  
 }
 .ctcl-email-setting-row span{
-  width:50%;
+  width:300px;
+  max-width:90%;
   float:right;
+}
+.ctcl-email-setting-row input,
+.ctcl-email-setting-row  select{
+   height:35px;
+   max-height:100%;
+   min-height:35px;
 }
 .ctcl-test-email-row{
    margin-top:10px;
 }
 #ctcl-smtp-port,
 #ctcl-smtp-encryption{
-   width:40%;
+   width:100px;
+   max-width:100%;
 }
+#ctcl-smtp-bcc-email,
 #ctcl-smtp-from-email{
-   width:100%;
+   width:200px;
+   max-width:100%;
 }
 #ctcl-test-email{
-   width:50%;
+   width:200px;
+   max-width:50%;
+   height:35px;
+   min-height:35px;
 }
 .ctcl-email-setting legend{
    text-align:center;
