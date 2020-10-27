@@ -40,6 +40,7 @@ public function __construct(){
    self::requiredWpAction();
    self::requiredAjax();
    self::requiredShortCode();
+   self::registerWpSetting();
   
 }
 
@@ -86,8 +87,25 @@ public function ctcLiteActivate(){
     add_action( 'wp_enqueue_scripts', array($this,'enequeFrontendCss' ));
     add_action( 'admin_enqueue_scripts', array($this,'enequeAdminJs' ));
     add_action('admin_enqueue_scripts', array($this, 'enequeAdminCss'));
+    add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
     
+  }
+
+  /**
+   * Register wp form settings 
+   */
+  private function registerWpSetting(){
+
+   register_setting('ctcl_email_settings','ctcl_smtp_host');
+   register_setting('ctcl_email_settings','ctcl_smtp_authentication');
+   register_setting('ctcl_email_settings','ctcl_smtp_port');
+   register_setting('ctcl_email_settings','ctcl_smtp_username');
+   register_setting('ctcl_email_settings','ctcl_smtp_password');
+   register_setting('ctcl_email_settings','ctcl_smtp_encryption');
+   register_setting('ctcl_email_settings','ctcl_smtp_from_email');
+   register_setting('ctcl_email_settings','ctcl_smtp_from_name');
+   register_setting('ctcl_email_settings','ctcl_smtp_bcc_email');
   }
 
   /**
@@ -121,6 +139,10 @@ public function ctcLiteActivate(){
   public function enequeAdminJs(){
    wp_enqueue_script('ctclJsMasonry', CTCL_DIR_PATH.'js/js-masonry.js',array());
     wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry'));
+    wp_localize_script('ctclAdminJs','ctclAdminObject',array(
+                                                               'ajaxUrl'=>admin_url( 'admin-ajax.php'),
+                                                               'emptyTestEmail'=>'Please provide email for testing.'
+                                                            ));
    }
 
    /**
@@ -142,7 +164,7 @@ public function requiredShortCode(){
  * Required AJAX hooks 
  */
 public function requiredAjax(){
-
+   add_action( 'wp_ajax_sendTestEmail', array($this->ctclProcessing,'sendSmtpTestEmail') );
 }
 
    /**

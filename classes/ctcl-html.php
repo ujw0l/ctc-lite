@@ -110,10 +110,83 @@ private function shippingTab(){
 }
 
 /**
- * Create email tab
+ * Create email tab and setting form
  */
 private function emailTab(){
+    $trueSelected = 'true' === get_option('ctcl_smtp_authentication') ? 'selected':'';
+    $falseSelected = 'false' === get_option('ctcl_smtp_authentication') ? 'selected':'';
+?>
+<fieldset class="ctc-smtp-email-setting">
+<legend class="dashicons-before dashicons-admin-generic ctcl-email-tab-fieldset-legend"><?=__('SMTP Email Setting','ctc-lite')?></legend>
+<div class="ctcl-smtp-email-setting">
+<fieldset class="ctcl-email-setting">
+<legend><?=__('Settings','ctc-lite')?></legend>
+<form method="post" action="options.php" autocomplete="on">
+<?php 
+do_settings_sections('ctcl_email_settings');
+settings_fields('ctcl_email_settings');
+?>
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-host" class="ctcl-smtp-host-label" ><?=__('SMTP Host :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-host" required type="text" name='ctcl_smtp_host' value="<?=get_option('ctcl_smtp_host')?>"/></span>
+</div>
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-authentication" class="ctcl-smtp-authentication-label" ><?=__('Use SMTP Authentication :','ctc-lite')?></label>
+<span>
+    <select name="ctcl_smtp_authentication">
+	<option <?=$trueSelected?>  value="true">True</option>
+  	<option <?=$falseSelected?>  value="false">False</option>       
+</select>
+</span>		         			
+</div>
 
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-port" class="ctcl-smtp-port-label" ><?=__('SMTP Port :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-port" type="text" required name='ctcl_smtp_port' value="<?=get_option('ctcl_smtp_port')?>"/></span>
+</div>
+
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-username" class="ctcl-smtp-username-label" ><?=__('Email Username :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-username" type="text" required name='ctcl_smtp_username' value="<?=get_option('ctcl_smtp_username')?>"/></span>
+</div>
+
+
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-password" class="ctcl-smtp-password-label" ><?=__('Email Password :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-password" type="password" required name='ctcl_smtp_password' value="<?=get_option('ctcl_smtp_password')?>"/><span>
+</div>
+
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-encryption" class="ctcl-smtp-encryption-label" ><?=__('SMTP Encryption :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-encryption" type="text" required name='ctcl_smtp_encryption' value="<?=get_option('ctcl_smtp_encryption')?>"/></span>
+</div>
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-bcc-email" class="ctcl-smtp-bcc-email-label" ><?=__('BCC Email Address :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-bcc-email" type="email" required name='ctcl_smtp_bcc_email' value="<?=get_option('ctcl_smtp_bcc_email')?>"/><span>
+</div>
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-from-name" class="ctcl-smtp-from-name-label" ><?=__('From :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-from-name" type="text" required name='ctcl_smtp_from_name' value="<?=get_option('ctcl_smtp_from_name')?>"/></span>
+</div>
+<div class="ctcl-email-setting-row">
+<label for="ctcl-smtp-from-email" class="ctcl-smtp-from-email-label" ><?=__('From Email :','ctc-lite')?></label>
+<span><input id="ctcl-smtp-from-email" type="email" required name='ctcl_smtp_from_email' value="<?=get_option('ctcl_smtp_from_email')?>"/><span>
+</div>
+<div class="ctcl-email-submit-row">
+<?=submit_button( __( 'Save', 'ctc-lite' ), 'primary','submit',false );?>
+</div>
+</form>
+<div class="ctcl-test-email-row">
+    <label for="ctcl-test-email" ><?=__('Enter test email :' ,'ctc-lite')?></label>
+<input id="ctcl-test-email" type="email" name='ctcl_test_email' value=""/>
+<a id="ctcl-send-test-email" href="Javascript:void(0)" class="ctcl-smtp-from-email-label" ><?=__('Send Email','ctc-lite')?></a>
+</div>
+</fieldset>
+
+
+</div>
+</fieldset>
+<?php
 }
 
 

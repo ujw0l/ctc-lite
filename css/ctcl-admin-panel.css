@@ -18,10 +18,49 @@ display:inline-block;
 
 
 }
-
+.ctcl-email-setting,
 .ctcl-payment-tab-content fieldset fieldset{
    border:1px dashed rgba(0,0,0,1);
    margin-top:30px!important;
+}
+.ctcl-email-setting{
+   width:40%;
+   padding:20px;
+   margin:25px;
+}
+.ctcl-email-setting-row{
+   margin:10px;
+   vertical-align:middle;
+   line-height:2;
+}
+
+.ctcl-email-setting-row label{
+   width:50%!important;
+ 
+}
+.ctcl-email-setting-row span{
+  width:50%;
+  float:right;
+}
+.ctcl-test-email-row{
+   margin-top:10px;
+}
+#ctcl-smtp-port,
+#ctcl-smtp-encryption{
+   width:40%;
+}
+#ctcl-smtp-from-email{
+   width:100%;
+}
+#ctcl-test-email{
+   width:50%;
+}
+.ctcl-email-setting legend{
+   text-align:center;
+   font-weight:bold;
+}
+.ctc-smtp-email-setting{
+   margin-top:20px;
 }
 
 .ctcl-payment-tab-content{
@@ -79,6 +118,7 @@ display:inline-block;
    vertical-align: middle;
    height:30px;
 }
+.ctcl-email-tab-fieldset-legend:before,
 .ctcl-payment-tab-fieldset-legend:before{
 animation: rotateSettingButton 20s linear infinite;
 }
