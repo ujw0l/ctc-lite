@@ -12,6 +12,7 @@
 require_once "classes/ctcl-html.php";
 require_once "classes/ctcl-processing.php";
 require_once "classes/ctcl-billings.php";
+require_once "classes/ctcl-shippings.php";
 
 class ctcLite{
 
@@ -28,11 +29,18 @@ class ctcLite{
    /**
     * Payments options
     */
-    public  $ctclPayments;
+    public  $ctclBillings;
+
+    /**
+     * Shipping Options
+     */
+    public $ctclShippings;
+
 
 public function __construct(){
    define('CTCL_DIR_PATH',plugin_dir_url(__FILE__) );
-   $this->ctclPayments =  new ctclBillings();
+   $this->ctclBillings =  new ctclBillings();
+   $this->ctclShippings =  new ctclShippings();
    $this->ctcHtml =  new ctclHtml();
    $this->ctclProcessing = new ctclProcessing();
   

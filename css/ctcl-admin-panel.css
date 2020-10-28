@@ -1,17 +1,16 @@
-
+ctcl-shipping-tab-cintent,
 .ctcl-payment-tab-content{
  height:100%;
 }
 
+ctcl-shipping-tab-fieldset-legend,
 .ctcl-payment-tab-fieldset-legend{
    margin-top:30px;
    margin-bottom:30px;
 }
 
-.ctcl-payment-tab-content .ctcl-payment-tab-fieldset{
-   
- 
-}
+
+.ctcl-shipping-tab-content form,
 .ctcl-payment-tab-content form{
 
 display:inline-block;
@@ -19,9 +18,13 @@ display:inline-block;
 
 }
 .ctcl-email-setting,
+.ctcl-shipping-tab-content fieldset fieldset,
 .ctcl-payment-tab-content fieldset fieldset{
    border:1px dashed rgba(0,0,0,1);
    margin-top:30px!important;
+}
+.ctcl-smtp-email-setting{
+   margin-top:-15px;
 }
 .ctcl-email-setting{
    width:500px!important;
@@ -78,11 +81,13 @@ display:inline-block;
    margin-top:20px;
 }
 
+.ctcl-shipping-tab-content,
 .ctcl-payment-tab-content{
    margin-right:15px;
    padding:0px!important;
 }
 
+.ctcl-shipping-tab-content .ctcl-shipping-tab-fieldset,
 .ctcl-payment-tab-content .ctcl-payment-tab-fieldset{
   margin-top:20px;
    margin-left:auto;
@@ -90,34 +95,47 @@ display:inline-block;
   display:block;
   opacity:0;
 }
+.ctcl-payment-tab-content .ctcl-shipping-tab-fieldset fieldset div.ctcl-content-display,
 .ctcl-payment-tab-content .ctcl-payment-tab-fieldset fieldset div.ctcl-content-display{
    padding:15px;
 }
 
+.ctcl-shipping-tab-fieldset fieldset legend,
 .ctcl-payment-tab-content fieldset legend{
    text-align:center;
 }
+.ctcl-shipping-tab-fieldset-legend,
 .ctcl-payment-tab-fieldset-legend{
    text-align:left!important;
    margin-top:20px!important;
 }
+.ctcl-shipping-tab-fieldset div,
 .ctcl-payment-tab-content div {
    display:block;
 }
+.ctcl-shipping-tab-fieldset div label,
 .ctcl-payment-tab-content div label{
    float:left;
-   width:45%;
+   width:46%;
    font-weight: bold;
    line-height: 2;
 }
 
+.ctcl-shipping-tab-fieldset div span,
 .ctcl-payment-tab-content div span{
    float:right;
-   width:54%;
+   width:53%;
 }
 .ctcl-form-submit-button {
    
    margin:15px;
+}
+.ctcl-shipping-tab-content .ctcl-form-submit-button{
+
+   margin-top:70px;
+}
+.ctcl-shipping-tab-content label{
+   margin-left:3px;
 }
 .ctcl-form-submit-button input{
    display:inline-block;
@@ -133,6 +151,28 @@ display:inline-block;
    vertical-align: middle;
    height:30px;
 }
+.ctcl-business-setting-row i{
+   font-size:7px;
+}
+.ctcl-business-setting-row textarea{
+   width:200px;
+   height:100px;
+   max-width:100%;
+}
+.ctcl-business-setting-row h4{
+   text-align:center;
+   width:100%;
+}
+#ctcl-store-pickup-zip-code{
+   width:100px;
+   max-width:100%;
+}
+#ctcl-store-pickup-street1,
+#ctcl-store-pickup-street2{
+   width:200px;
+   max-width: 100%;
+}
+.ctcl-shipping-tab-fieldset-legend:before,
 .ctcl-email-tab-fieldset-legend:before,
 .ctcl-payment-tab-fieldset-legend:before{
 animation: rotateSettingButton 20s linear infinite;

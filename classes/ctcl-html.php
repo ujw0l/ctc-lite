@@ -93,7 +93,7 @@ for($i=0;$i<count($payments);$i++):
     settings_fields($payments[$i]['settingFields']);
     echo ($payments[$i]['html']);
     echo '<div class="ctcl-form-submit-button">';
-    submit_button( __( 'Submit', 'ctc-lite' ), 'primary','submit',false );
+    submit_button( __( 'Save', 'ctc-lite' ), 'primary','submit',false );
     echo '</div></fieldset></form>';
 endfor;
 ?>
@@ -106,6 +106,28 @@ endfor;
  * Create shipping tab
  */
 private function shippingTab(){
+    $shippings = apply_filters('ctcl_admin_shipping_html',array());
+
+    ?>
+<div class="ctcl-shipping-tab-content">
+<fieldset class="ctcl-shipping-tab-fieldset">
+ <legend class="dashicons-before dashicons-admin-generic ctcl-shipping-tab-fieldset-legend"><strong><?=__('Shipping Settings','ctc-lite')?></strong></legend>
+<?php
+for($i=0;$i<count($shippings );$i++):
+    echo '<form method="post" action="options.php" autocomplete="on">';   
+    echo "<fieldset><legend class='dashicons-before dashicons-car'><b>{$shippings[$i]['formHeader']}</b></legend>";
+    do_settings_sections($shippings [$i]['settingFields']);
+    settings_fields($shippings [$i]['settingFields']);
+    echo ($shippings [$i]['html']);
+    echo '<div class="ctcl-form-submit-button">';
+    submit_button( __( 'Save', 'ctc-lite' ), 'primary','submit',false );
+    echo '</div></fieldset></form>';
+endfor;
+?>
+</fieldset>
+</div>
+<?php
+
 
 }
 
