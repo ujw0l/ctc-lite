@@ -12,6 +12,7 @@ class ctclMain {
 
         if (null !== document.querySelector('#ctcl-checkout-from')) {
             this.loadCartItems();
+            this.hideShowPaymentContainer();
         }
 
 
@@ -235,6 +236,29 @@ class ctclMain {
         conts.map(x => x.parentElement.removeChild(x));
         ctclCartFunc.map(x => x(setItems));
         this.loadCartItems();
+    }
+
+    /**
+     * Hide display payment container 
+     */
+    hideShowPaymentContainer() {
+
+        Array.from(document.querySelectorAll('.ctcl-payment-option')).map(x => {
+
+            x.addEventListener('change', e => {
+
+                let showContainer = `${e.target.value}_container`;
+                document.querySelector('#ctcl-payment-type').value = e.target.getAttribute('data-name');
+                Array.from(document.querySelectorAll('.ctcl_payment_container')).map(x => {
+                    if (x.id == showContainer) {
+                        x.style.display = 'block';
+                    } else {
+                        x.style.display = '';
+                    }
+                });
+            });
+
+        });
     }
 
 }
