@@ -92,3 +92,8 @@ cursor:pointer;
 
     width:60%;
 }
+
+.ctcl_payment_option_row label{
+    display:inline-block;
+
+}

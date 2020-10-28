@@ -9,7 +9,7 @@ public $paymentId = 'ctcl_cash';
 /**
  * payment name
  */
-public $paymentName = 'Cash';
+public $paymentName = 'Cash On Delivery';
 
 
 public function __construct(){
@@ -24,9 +24,9 @@ public function __construct(){
     public function displayOptionsUser(){
         if(1 == get_option('ctcl_cash_on_delivery')): 
             add_filter('ctcl_payment_options',function($val){
-                $paymentOption = array('payment-id'=>$this->paymentId,
-                                        'payment-name'=>$this->paymentName,
-                                        'option-html'=>$this->frontendHtml
+                $paymentOption = array('id'=>$this->paymentId,
+                                        'name'=>$this->paymentName,
+                                        'html'=>$this->frontendHtml()
                                     );
                 array_push($val, $paymentOption);
                 return  $val;
@@ -111,7 +111,7 @@ public function __construct(){
       * html for frontend
       */
       public function frontendHtml(){
-
+        return "";
       }
 
 }

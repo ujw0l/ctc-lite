@@ -34,7 +34,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
 
-            el(InspectorControls, null,
+            el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
                 el(PanelBody, null,
                     el(TextControl, { name: 'name', className: 'inspect-product-name', type: "text", value: attributes.productName, label: `${__("Name", 'ctc-lite')} : `, onChange: value => setAttributes({ productName: value }), help: __('Enter product name.', 'ctc-lite') }),
                     el(TextControl, { name: 'price', className: 'inspect-product-price', type: 'number', value: attributes.productPrice, label: `${__("Price", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ productPrice: parseFloat(value).toFixed(2) }), help: __('Enter product price.', 'ctc-lite') }),
@@ -155,7 +155,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                     el(Button, { style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
 
-                    el(PluginSidebar, { name: 'ctcl-checkout', icon: 'cart', title: __('Checkout page setting', 'ctc-lite') },
+                    el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
                         el(PanelBody, null,
                             el(TextControl, { onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),

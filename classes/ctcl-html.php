@@ -240,14 +240,23 @@ public function paymentProcessingShortCode(){
      * Adds payment options shortcode
      */
    public function paymentOptionsShortCode(){
-    $paymentOptions = apply_filters( 'ctcl_shipping_options', array());
-
-
+    $paymentOptions = apply_filters( 'ctcl_payment_options', array());
+$htmlArr = array();
 $html =  '';
-    for($i=0;$i<=count($paymentOptions)-1;$i++):
-        $html .= "Value is {$paymentOptions[$i]}";
-    endfor;
+ 
+        foreach($paymentOptions as $k=>$val):
+        $html .= '<div class="ctcl_payment_option_row">';
+        $html .= "<input type='radio' id='{$val['id']}' name='payment_option' value='{$val['id']}'/>";
+        $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label>";
+        array_push($htmlArr,array('id'=>$val['id'],'html'=>$val['html']));
+        endforeach;
 
+
+    foreach($htmlArr as $ky =>$value):
+       if(!empty($value['html'])):
+        $html .="<div id='{$value['id']}_container'>{$value['html']}</div>";
+       endif;
+    endforeach;
     return $html;
    }
 
