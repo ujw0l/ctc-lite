@@ -45,8 +45,6 @@ class ctclShippings{
      public function adminPanelHtmlFilters(){
         add_filter('ctcl_admin_shipping_html' , array($this,'vendorDelivery'),20,1);
         add_filter('ctcl_admin_shipping_html' , array($this,'storePickup'),10,1);
-        add_filter('ctcl_admin_shipping_html' , array($this,'thirdPartyShipping'),30,1);
-
      }
 
      /**
@@ -112,35 +110,6 @@ class ctclShippings{
 
       }
 
-      /**
-       * Third party shipping option
-       */
-
-       public function thirdPartyShipping($val){
-
-        $thirdPartyShipping =  '1'== get_option('ctcl_third_party_shipping_activate')?'checked':'';
-    
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_activate');
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_options');
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_options_note');
-        
-        $html = '<div class="ctcl-content-display ctcl-basic-business-settings">';
-        $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-third-party-shipping-activate"  class="ctcl-third-party-shipping-activate-label">'.__('Third Party Options : ','ctc-lite').'</label>';
-        $html .= "<span><input id='ctcl-third-party-shipping-activate' type='checkbox' name='ctcl_third_party_shipping_activate' {$thirdPartyShipping} value='1'></span></div>";
-        $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-third-party-shipping-options"  class="ctcl-third-party-shipping-options">'.__('Options  : ','ctc-lite').'<i>'.__('Comma Separated','ctc-lite').'</i></label>';
-        $html .= "<span><input id='ctcl-third-party-shipping-options' type='text' name='ctcl_third_party_shipping_options' value='".get_option('ctcl_third_party_shipping_options')."'></span></div>";
-        $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-third-party-shipping-options-note"  class="ctcl-third-party-shipping-options-note-label">'.__('Shipping Note : ','ctc-lite').'</label>';
-        $html .= "<span><textarea id='ctcl-third-party-shipping-options-note' type='text'  name='ctcl_third_party_shipping_options_note' value='".get_option('ctcl_third_party_shipping_options_note')."'>".get_option('ctcl_vendor_delivery_note')."</textarea></span></div>";
-        $html .= '</div>';
-
-        array_push($val,array(
-                                'settingFields'=>'ctcl_shipping_options_setting',
-                                'formHeader'=>__("Third Party Shipping ",'ctc-lite'),
-                                'html'=>$html
-                            )
-                        );
-  return $val;
-
-       }
+     
 
 }

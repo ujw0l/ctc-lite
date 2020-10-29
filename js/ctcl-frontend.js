@@ -243,22 +243,30 @@ class ctclMain {
      */
     hideShowPaymentContainer() {
 
-        Array.from(document.querySelectorAll('.ctcl-payment-option')).map(x => {
+        let paymentOption = Array.from(document.querySelectorAll('.ctcl-payment-option'));
+        if (1 == paymentOption.length) {
 
-            x.addEventListener('change', e => {
+            document.querySelector('#ctcl-payment-type').value = document.querySelector('.ctcl-payment-option').getAttribute('data-name');
+            document.querySelector('.ctcl_payment_container').style.display = 'block';
+        } else {
 
-                let showContainer = `${e.target.value}_container`;
-                document.querySelector('#ctcl-payment-type').value = e.target.getAttribute('data-name');
-                Array.from(document.querySelectorAll('.ctcl_payment_container')).map(x => {
-                    if (x.id == showContainer) {
-                        x.style.display = 'block';
-                    } else {
-                        x.style.display = '';
-                    }
+            paymentOption.map(x => {
+
+                x.addEventListener('change', e => {
+
+                    let showContainer = `${e.target.value}_container`;
+                    document.querySelector('#ctcl-payment-type').value = e.target.getAttribute('data-name');
+                    Array.from(document.querySelectorAll('.ctcl_payment_container')).map(x => {
+                        if (x.id == showContainer) {
+                            x.style.display = 'block';
+                        } else {
+                            x.style.display = '';
+                        }
+                    });
                 });
-            });
 
-        });
+            });
+        }
     }
 
 }

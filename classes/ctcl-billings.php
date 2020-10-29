@@ -15,7 +15,7 @@ public $paymentName = 'Cash On Delivery';
 public function __construct(){
     self::registerOptions();
     self::displayOptionsUser();
-    self::adminPanelHtml();
+    self:: addRequiredFilter();
 }
 
 /**
@@ -46,9 +46,10 @@ public function __construct(){
     /**
      * create admin panel content
      */
-    public function adminPanelHtml(){
+    public function addRequiredFilter(){
         add_filter('ctcl_admin_billings_html',array($this,'basicSettingAdminHtml'),10,1);
         add_filter('ctcl_admin_billings_html',array($this,'cashOnDeliveryAdminHtml'),20,1);
+        add_filter('ctcl_process_payment_'.$this->paymentId , array($this,'processPayment'));
     }
 
 
@@ -102,9 +103,9 @@ public function __construct(){
      * process payments
      */
 
-     public function processPayments(){
-
-
+     public function processPayment($val){
+        $val['charge_result']= TRUE;
+        return $val;
      }
 
      /**

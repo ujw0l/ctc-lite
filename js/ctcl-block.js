@@ -244,27 +244,27 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 })
 
 /**
- * Register payment prosseing block
+ * Register order prosseing block
  */
 
-registerBlockType('ctc-lite/ctc-lite-payment-processing', {
+registerBlockType('ctc-lite/ctc-lite-order-processing', {
 
-    title: __('CTC Lite Payment Processing', 'ctc-lite'),
+    title: __('CTC Lite Order Processing', 'ctc-lite'),
     icon: 'money',
-    description: __("CTC Lite block to create payment processing page", "ctc-lite"),
+    description: __("CTC Lite block to create Order processing page", "ctc-lite"),
     category: 'common',
-    keywords: [__('eCommerce', 'ctc-lite'), __('Payment Processing', 'ctc-lite')],
+    keywords: [__('eCommerce', 'ctc-lite'), __('Order Processing', 'ctc-lite')],
     example: {},
     attributes: {},
 
     edit: () => {
-        return el('div', { className: 'ctcl-payment-processing-block' },
-            el('h5', { className: 'ctcl-payment-processing-header' }, __('Payment Processing', 'ctc-lite')),
-            el('p', { className: 'ctc-payment-message' }, __('Contains Payment outcome message.', 'ctc-lite')),
+        return el('div', { className: 'ctcl-order-processing-block' },
+            el('h5', { className: 'ctcl-order-processing-header' }, __('Order Processing', 'ctc-lite')),
+            el('p', { className: 'ctc-order-message' }, __('Contains Order outcome message.', 'ctc-lite')),
         );
 
     },
-    save: () => el('div', { className: 'ctcl-payment-message' }, '[ctcl_payment_page]'),
+    save: () => el('div', { className: 'ctcl-order-message' }, '[ctcl_order_page]'),
 
 
 

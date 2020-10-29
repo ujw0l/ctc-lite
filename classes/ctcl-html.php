@@ -230,25 +230,43 @@ private function completeOrderTab(){
 /**
  * Payment porcessing shortcode
  */
-public function paymentProcessingShortCode(){
-
-    echo '<pre>';
-    var_dump(json_decode(stripslashes(json_encode($_POST))));
-
+public function orderProcessingShortCode(){
+    if(isset($_POST)):
+      
+        $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
+        $_POST['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
+      $processPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST); 
+      if(1==$processPayment['charge_result']):
+        $ctclHtml =  new ctclHtml();
+        echo '<pre>';
+        print_r($processPayment);
+        //$emailBody->$createEmailBody($processPayment);
+      else:
+        echo "<p>{$processPayment['failure_message']}</p>";
+      endif;
+    endif;
 }
     /**
      * Adds payment options shortcode
      */
    public function paymentOptionsShortCode(){
     $paymentOptions = apply_filters( 'ctcl_payment_options', array());
-$htmlArr = array();
-$html =  '';
+    $htmlArr = array();
+    $html =  '';
  
+    var_dump(count($paymentOptions));
+
         foreach($paymentOptions as $k=>$val):
-        $html .= '<div class="ctcl_payment_option_row">';
-        $html .= "<input required class='ctcl-payment-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='payment_option' value='{$val['id']}'/>";
-        $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label>";
-        array_push($htmlArr,array('id'=>$val['id'],'html'=>$val['html']));
+            if(1==count($paymentOptions)):
+                $html .= '<div class="ctcl_payment_option_row">';
+                $html .= "<p style='display:none;'><input required class='ctcl-payment-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='payment_option' value='{$val['id']}'/></p>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label><div>";
+            else:    
+                $html .= '<div class="ctcl_payment_option_row">';
+                $html .= "<input required class='ctcl-payment-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='payment_option' value='{$val['id']}'/>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label><div>";
+            endif;
+            array_push($htmlArr,array('id'=>$val['id'],'html'=>$val['html']));
         endforeach;
 
 
@@ -260,5 +278,14 @@ $html =  '';
     $html .= '<input id="ctcl-payment-type" type="hidden" name="payment_type" value=""/>';
     return $html;
    }
+
+   /**
+    * Shipping options shortcode
+    */
+    public function shippingOptionsShortCode(){
+
+        $shippingOptions = apply_filters('ctcl_shipping_option_display',array());
+
+    }
 
 }

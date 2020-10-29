@@ -19,7 +19,7 @@ class ctcLite{
    /**
     * Variable to generate html 
     */
-   public $ctcHtml;
+   public $ctclHtml;
 
    /**
     * Variable for plugin precessing
@@ -41,7 +41,7 @@ public function __construct(){
    define('CTCL_DIR_PATH',plugin_dir_url(__FILE__) );
    $this->ctclBillings =  new ctclBillings();
    $this->ctclShippings =  new ctclShippings();
-   $this->ctcHtml =  new ctclHtml();
+   $this->ctclHtml =  new ctclHtml();
    $this->ctclProcessing = new ctclProcessing();
   
    self::activeDeactivUinstall();
@@ -87,8 +87,6 @@ public function ctcLiteActivate(){
    * Register required wp action
    */
   public function requiredWpAction(){
-
-   //$ctcHtml =  new ctclHtml();
 
     add_action('admin_menu', array($this, 'adminMenu'),10);  
     add_action( 'wp_enqueue_scripts', array($this,'enequeFrontendJs' ));
@@ -165,8 +163,9 @@ public function ctcLiteActivate(){
  * Required shortcode 
  */
 public function requiredShortCode(){
-   add_shortcode('ctcl_payment_options', array($this->ctcHtml,'paymentOptionsShortCode'));
-   add_shortcode('ctcl_payment_page',array($this->ctcHtml,'paymentProcessingShortCode'));
+   add_shortcode('ctcl_payment_options', array($this->ctclHtml,'paymentOptionsShortCode'));
+   add_shortcode('ctcl_shipping_options', array($this->ctclHtml,'shippingOptionsShortCode'));
+   add_shortcode('ctcl_order_page',array($this->ctclHtml,'orderProcessingShortCode'));
 }
 
 /**
@@ -182,7 +181,7 @@ public function requiredAjax(){
 
   public function adminMenu(){
     if ( is_admin()):
-        add_menu_page( 'CTC Lite','CTC Lite ','administrator','ctclAdminPanel',array($this->ctcHtml, 'adminPanelHtml'),'dashicons-store','2');
+        add_menu_page( 'CTC Lite','CTC Lite ','administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
     endif;
 }
 
