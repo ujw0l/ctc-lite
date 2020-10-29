@@ -235,12 +235,15 @@ public function orderProcessingShortCode(){
       
         $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
         $_POST['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
-      $processPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST); 
-      if(1==$processPayment['charge_result']):
+      $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST); 
+      if(1==$dataAfterPayment['charge_result']):
+
+        $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
+
         $ctclHtml =  new ctclHtml();
         echo '<pre>';
-        print_r($processPayment);
-        //$emailBody->$createEmailBody($processPayment);
+        print_r($dataAfterShipping);
+        //$emailBody->createEmailBody($processPayment);
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
       endif;
@@ -260,11 +263,11 @@ public function orderProcessingShortCode(){
             if(1==count($paymentOptions)):
                 $html .= '<div class="ctcl_payment_option_row">';
                 $html .= "<p style='display:none;'><input required class='ctcl-payment-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='payment_option' value='{$val['id']}'/></p>";
-                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label><div>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label></div>";
             else:    
                 $html .= '<div class="ctcl_payment_option_row">';
                 $html .= "<input required class='ctcl-payment-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='payment_option' value='{$val['id']}'/>";
-                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label><div>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label></div>";
             endif;
             array_push($htmlArr,array('id'=>$val['id'],'html'=>$val['html']));
         endforeach;
@@ -285,7 +288,23 @@ public function orderProcessingShortCode(){
     public function shippingOptionsShortCode(){
 
         $shippingOptions = apply_filters('ctcl_shipping_option_display',array());
+        $html = '';
+        foreach($shippingOptions as $key=>$val):
 
+            if(1==count($shippingOptions)):
+                $html .= '<div class="ctcl_shipping_option_row">';
+                $html .= "<p style='display:none;'><input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='shipping_option' value='{$val['id']}'/></p>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label></div>";
+                $shippingInput = "<input id='ctcl-shipping-type' type='hidden' name='shipping_type' value='{$val['name']}'/>";
+            else:    
+                $html .= '<div class="ctcl_shipping_option_row">';
+                $html .= "<input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='shipping_option' value='{$val['id']}'/>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_shipping_option_label >{$val['name']}</label></div>";
+                $shippingInput = '<input id="ctcl-shipping-type" type="hidden" name="shipping_type" value=""/>';
+            endif;
+        endforeach;
+      $html .= $shippingInput ;
+return $html;
     }
 
 }

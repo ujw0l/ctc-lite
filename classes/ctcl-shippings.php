@@ -15,6 +15,8 @@ class ctclShippings{
 
         self::adminPanelHtmlFilters();
         self::registerOptions();
+        self::frontendShiipingOptions();
+        self::processShipping();
     }
 
     /**
@@ -110,6 +112,63 @@ class ctclShippings{
 
       }
 
+      /**
+       * Display shipping option on frontend
+       */
+public function frontendShiipingOptions(){
+    if('1'== get_option('ctcl_store_pickup_activate')):
+    add_filter('ctcl_shipping_option_display',function($val){
+        
+        $shippingArr =  array(
+                                'id'=>'store_pickup',
+                                'name'=>'Store Pickup'
+        );
+
+        array_push($val,$shippingArr);
+
+        return $val;
+    },10,1);
+    endif;
+
+    if( '1'== get_option('ctcl_vendor_delivery_activate')):
+
+        add_filter('ctcl_shipping_option_display',function($val){
+        
+            $shippingArr =  array(
+                                    'id'=>'vendor_shipping',
+                                    'name'=>'Vendor Shipping'
+            );
+    
+            array_push($val,$shippingArr);
+            return $val;
+        },10,1);
+
+    endif;
+}
+
+/**
+ * Process shipping on checkout
+ */
+public function processShipping(){
+    if('1'== get_option('ctcl_store_pickup_activate')):
+        add_filter('ctcl_shipping_option_store_pickup',function($val){
+            
+            $val['shipping_note'] = 'This note is for store pickup'; 
+            return $val;
+        },10,1);
+        endif;
+
+        if( '1'== get_option('ctcl_vendor_delivery_activate')):
+
+            add_filter('ctcl_shipping_option_vendor_shipping',function($val){
+
+                $val['shipping_note'] = 'This note is for vendor delivery';
+                return $val;
+            },10,1);
+    
+        endif;   
+
+}
      
 
 }

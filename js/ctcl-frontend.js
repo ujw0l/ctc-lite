@@ -13,6 +13,7 @@ class ctclMain {
         if (null !== document.querySelector('#ctcl-checkout-from')) {
             this.loadCartItems();
             this.hideShowPaymentContainer();
+            this.onShippingRadioButtonCheck();
         }
 
 
@@ -98,8 +99,11 @@ class ctclMain {
      * 
      */
 
-    loadCartItems() {
+    loadCartItems(storePickUp) {
         let prodListCont = document.querySelector('#ctcl-checkout-product-list');
+        Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container')).map(x => {
+            x.parentElement.removeChild(x)
+        })
 
         if (null !== localStorage.getItem('ctclHiddenCart')) {
             prodListCont.querySelector('p').style.display = 'none';
@@ -174,6 +178,7 @@ class ctclMain {
                 listContainer.appendChild(itemDisplay);
             }
 
+            let finalShippingCost = undefined != storePickUp ? storePickUp : shippingCost;
 
             let totalShippingCostLabel = document.createElement('span');
             totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
@@ -182,7 +187,7 @@ class ctclMain {
 
             let totalShippingCost = document.createElement('span');
             totalShippingCost.classList.add('ctcl-total-shipping-cost');
-            totalShippingCost.appendChild(document.createTextNode(shippingCost.toFixed(2)))
+            totalShippingCost.appendChild(document.createTextNode(finalShippingCost.toFixed(2)))
             totalShippingCont.appendChild(totalShippingCost);
             prodListCont.appendChild(totalShippingCont);
 
@@ -195,14 +200,14 @@ class ctclMain {
 
             let subTotalVal = document.createElement('span');
             subTotalVal.classList.add('ctcl-total-shipping-cost');
-            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + shippingCost).toFixed(2)));
+            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost).toFixed(2)));
             subTotalCont.appendChild(subTotalVal);
             prodListCont.appendChild(subTotalCont);
 
             let subTotalInput = document.createElement('input');
             subTotalInput.type = 'hidden';
             subTotalInput.name = 'sub-total';
-            subTotalInput.value = (subTotal + shippingCost).toFixed(2);
+            subTotalInput.value = (subTotal + finalShippingCost).toFixed(2);
             prodListCont.appendChild(subTotalInput);
 
         } else {
@@ -267,6 +272,26 @@ class ctclMain {
 
             });
         }
+    }
+
+    /**
+     * Add ahipping option to hidden input field
+     */
+    onShippingRadioButtonCheck() {
+        Array.from(document.querySelectorAll('.ctcl-shipping-option')).map(x => {
+            x.addEventListener('change', e => {
+
+                document.querySelector('#ctcl-shipping-type').value = e.target.getAttribute('data-name');
+
+
+
+                if (e.target.id == 'store_pickup') {
+                    this.loadCartItems(0);
+                } else {
+                    this.loadCartItems();
+                }
+            })
+        });
     }
 
 }
