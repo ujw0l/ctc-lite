@@ -1,9 +1,16 @@
 window.addEventListener('load', () => {
 
-    if (0 < document.querySelectorAll('.ctcl-payment-tab-fieldset,.ctcl-shipping-tab-fieldset').length) {
-        let masonry = new jsMasonry('.ctcl-payment-tab-fieldset,.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 400, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+    //lay bricks on payment tab 
+    if (0 < document.querySelectorAll('.ctcl-payment-tab-fieldset').length) {
+        let masonry = new jsMasonry('.ctcl-payment-tab-fieldset', { elSelector: 'fieldset', elWidth: 370, elMargin: 5, callback: (el) => el.style.opacity = 1, });
     }
 
+    //lay bricks on shipping tab
+    if (0 < document.querySelectorAll('.ctcl-shipping-tab-fieldset').length) {
+        let masonry = new jsMasonry('.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+    }
+
+    //script for email setting tab
     if (null !== document.querySelector('.ctc-smtp-email-setting')) {
 
         document.querySelector('#ctcl-send-test-email').addEventListener('click', () => {

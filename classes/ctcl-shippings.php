@@ -59,7 +59,8 @@ class ctclShippings{
         
         $html = '<div class="ctcl-content-display ctcl-basic-business-settings">';
         $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-vendor-delivery-activate"  class="ctcl-vendor-delivery-activate-label">'.__('Vendor Delivery: ','ctc-lite').'</label>';
-        $html .= "<span><input id='ctcl-vendor-delivery-activate' type='checkbox' name='ctcl_vendor_delivery_activate' {$vendorDelivery} value='1'></span></div>";
+        $html .= "<span><input id='ctcl-vendor-delivery-activate' type='checkbox' name='ctcl_vendor_delivery_activate' {$vendorDelivery} value='1'>";
+        $html .= "<i>".__("Check if offering shipping.",'ctc-lite')."</i></span></div>";
         $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-vendor-delivery-note"  class="ctcl-vendor-delivery-note-label">'.__('Shipping Note : ','ctc-lite').'</label>';
         $html .= "<span><textarea id='ctcl-vendor-delivery-note' type='text'  name='ctcl_vendor_delivery_note' value='".get_option('ctcl_vendor_delivery_note')."'>".get_option('ctcl_vendor_delivery_note')."</textarea></span></div>";
         $html .= '</div>';
@@ -82,7 +83,8 @@ class ctclShippings{
         $html = '<div class="ctcl-content-display ctcl-basic-business-settings">';
         
         $html .=  '<div class="ctcl-business-setting-row"><label for"ctcl-store-pickup-activate"  class="ctcl-store-pickup-activate-label">'.__('Store Pickup: ','ctc-lite').'</label>';
-        $html .= "<span><input id='ctcl-store-pickup-activate' type='checkbox' name='ctcl_store_pickup_activate' {$storePickup} value='1'></span></div>";
+        $html .= "<span><input id='ctcl-store-pickup-activate' type='checkbox' name='ctcl_store_pickup_activate' {$storePickup} value='1'>";
+        $html.=  "<i>".__('Check if offering store pickup.','ctc-lite')."</i></span></div>";
 
         $html .=  '<div class="ctcl-business-setting-row ctcl-store-address"><h4 class="dashicons-before dashicons-store">'.__('Store Adddress :','ctc-lite').'</h4></div>';
 

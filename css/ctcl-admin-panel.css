@@ -135,7 +135,12 @@ display:inline-block;
    margin-top:70px;
 }
 .ctcl-shipping-tab-content label{
-   margin-left:3px;
+   margin-left:5px;
+}
+.ctcl-shipping-tab-fieldset .ctcl-basic-business-settings{
+   padding:10px;
+   max-width:100%!important;
+
 }
 .ctcl-form-submit-button input{
    display:inline-block;
@@ -155,7 +160,7 @@ display:inline-block;
    font-size:7px;
 }
 .ctcl-business-setting-row textarea{
-   width:200px;
+   width:400px;
    height:100px;
    max-width:100%;
 }
