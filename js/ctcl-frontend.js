@@ -145,6 +145,7 @@ class ctclMain {
 
                 let imgSpan = document.createElement('span');
                 imgSpan.classList.add('ctcl-checkout-item-img-span');
+                //imgSpan.style = `background:url("${cartItems[i].pic}") center center  /contain no-repeat rgb(0, 0, 0);`;
                 let itemImg = new Image();
                 itemImg.src = cartItems[i].pic;
                 imgSpan.appendChild(itemImg);
@@ -172,6 +173,7 @@ class ctclMain {
 
                 let itemRemove = document.createElement('span');
                 itemRemove.className = 'dashicons-before dashicons-trash ctcl-checkout-item-remove ';
+                itemRemove.title = ctclParams.removeItem
                 itemRemove.addEventListener('click', () => this.removeItem(i, [listContainer, totalShippingCont, subTotalCont], 'ctclHiddenCart'));
                 itemDisplay.append(itemRemove);
 

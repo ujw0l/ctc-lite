@@ -127,6 +127,7 @@ public function ctcLiteActivate(){
        'currency'=>get_option('ctcl_currency'),
        'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
        'subTotal'=>__("Sub Total","ctc-lite"),
+       'removeItem'=>__('Remove Item','ctc-lite'),
       )
    );
     wp_localize_script('ctclFrontendJs','ctclCartFunc',[]);

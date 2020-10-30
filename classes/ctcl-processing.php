@@ -54,11 +54,15 @@ public function orderProcessingShortCode(){
       $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST);
 
       if(1==$dataAfterPayment['charge_result']):
+        $this->enterDataToTable($dataAfterPayment);
         $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
-        $ctclHtml = new ctclHtml();
-        $emailBody = $ctclHtml->createEmailBody( $dataAfterShipping);
-       
-        echo $emailBody;
+        $custEmailBody = apply_filters('ctcl_custom_email_body','',$dataAfterShipping);
+        if(empty( $custEmailBody)):
+             $ctclHtml = new ctclHtml();
+            $emailBody = $ctclHtml->createEmailBody( $dataAfterShipping);
+        else:
+            $emailBody = $custEmailBody;
+        endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
@@ -78,6 +82,15 @@ public function orderProcessingShortCode(){
         else:
             return __("Email couldn't be sent,please check email settings.",'ctc-lite' );
         endif;
+    }
+
+    /**
+     * Enter data to the table
+     */
+    public function enterDataToTable($data){
+
+        echo '<pre>';
+        print_r($data);
     }
     
 }

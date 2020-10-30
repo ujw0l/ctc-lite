@@ -277,12 +277,12 @@ private function completeOrderTab(){
             if(1==count($shippingOptions)):
                 $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<p style='display:none;'><input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='shipping_option' value='{$val['id']}'/></p>";
-                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label></div>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label > {$val['name']}</label></div>";
                 $shippingInput = "<input id='ctcl-shipping-type' type='hidden' name='shipping_type' value='{$val['name']}'/>";
             else:    
                 $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='shipping_option' value='{$val['id']}'/>";
-                $html .= "<label for='{$val['id']}' class=''ctcl_shipping_option_label >{$val['name']}</label></div>";
+                $html .= "<label for='{$val['id']}' class=''ctcl_shipping_option_label > {$val['name']}</label></div>";
                 $shippingInput = '<input id="ctcl-shipping-type" type="hidden" name="shipping_type" value=""/>';
             endif;
         endforeach;
