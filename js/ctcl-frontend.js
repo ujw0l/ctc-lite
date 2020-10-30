@@ -191,6 +191,11 @@ class ctclMain {
             totalShippingCont.appendChild(totalShippingCost);
             prodListCont.appendChild(totalShippingCont);
 
+            let shippingTotalInput = document.createElement('input');
+            shippingTotalInput.type = 'hidden';
+            shippingTotalInput.name = 'shipping-total';
+            shippingTotalInput.value = (finalShippingCost).toFixed(2);
+            prodListCont.appendChild(shippingTotalInput);
 
 
             let subTotalLabel = document.createElement('span');

@@ -40,6 +40,32 @@ class ctclProcessing{
 
     }
 
+
+    /**
+ * Payment porcessing shortcode
+ */
+public function orderProcessingShortCode(){
+    if(isset($_POST)):
+        $date = new DateTime();
+        $_POST['order_id'] = $date->getTimestamp();
+        $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
+        $_POST['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
+
+      $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST);
+
+      if(1==$dataAfterPayment['charge_result']):
+        $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
+        $ctclHtml = new ctclHtml();
+        $emailBody = $ctclHtml->createEmailBody( $dataAfterShipping);
+       
+        echo $emailBody;
+       $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
+      else:
+        echo "<p>{$processPayment['failure_message']}</p>";
+      endif;
+    endif;
+}
+
     /**
      * Send confirmation email
      */

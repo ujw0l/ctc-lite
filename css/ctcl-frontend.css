@@ -100,3 +100,11 @@ cursor:pointer;
 .ctcl_payment_container{
     display:none;
 }
+
+.ctcl-shipping-option-row label{
+    display:inline-block;
+}
+.ctcl-checkout-button{
+    margin-top:20px!important;
+
+}

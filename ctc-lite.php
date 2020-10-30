@@ -104,6 +104,7 @@ public function ctcLiteActivate(){
    */
   private function registerWpSetting(){
 
+   register_setting('ctcl_email_settings','ctcl_email_subject');
    register_setting('ctcl_email_settings','ctcl_smtp_host');
    register_setting('ctcl_email_settings','ctcl_smtp_authentication');
    register_setting('ctcl_email_settings','ctcl_smtp_port');
@@ -165,7 +166,7 @@ public function ctcLiteActivate(){
 public function requiredShortCode(){
    add_shortcode('ctcl_payment_options', array($this->ctclHtml,'paymentOptionsShortCode'));
    add_shortcode('ctcl_shipping_options', array($this->ctclHtml,'shippingOptionsShortCode'));
-   add_shortcode('ctcl_order_page',array($this->ctclHtml,'orderProcessingShortCode'));
+   add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
 }
 
 /**

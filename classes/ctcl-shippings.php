@@ -35,9 +35,7 @@ class ctclShippings{
         register_setting('ctcl_store_pickup_setting','ctcl_store_pickup_country');
         register_setting('ctcl_store_pickup_setting','ctcl_store_pickup_note');
 
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_activate');
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_options');
-        register_setting('ctcl_shipping_options_setting','ctcl_third_party_shipping_options_note');
+        
     }
 
     /**
@@ -154,8 +152,17 @@ public function frontendShiipingOptions(){
 public function processShipping(){
     if('1'== get_option('ctcl_store_pickup_activate')):
         add_filter('ctcl_shipping_option_store_pickup',function($val){
-            
-            $val['shipping_note'] = 'This note is for store pickup'; 
+
+            $html = '<p>'.__('Pickup your order at : ').'</p>';
+            $html .= '<address>';
+            $html .= '<div>'.get_option('ctcl_store_pickup_street1').'</div>';
+            $html .= !empty(get_option('ctcl_store_pickup_street2'))?:'<div>'.get_option('ctcl_store_pickup_street2').'</div>';
+            $html .= '<div>'.get_option('ctcl_store_pickup_city').'</div>';
+            $html .= '<div>'.get_option('ctcl_store_pickup_state').'</div>';
+            $html .= '<div>'.get_option('ctcl_store_pickup_zip_code').'</div>';
+            $html .= '<div>'.get_option('ctcl_store_pickup_zip_country').'</div>';
+            $html .= !empty('ctcl_store_pickup_note')?'<div><span>'.__('Note :','ctc-lite').'</span><span>'.get_option('ctcl_store_pickup_note').'</span></div>':'';
+            $val['shipping_note'] = $html; 
             return $val;
         },10,1);
         endif;
@@ -164,7 +171,7 @@ public function processShipping(){
 
             add_filter('ctcl_shipping_option_vendor_shipping',function($val){
 
-                $val['shipping_note'] = 'This note is for vendor delivery';
+                $val['shipping_note'] =  $html .= !empty('ctcl_vendor_delivery_note')?'<div><span>'.__('Note :','ctc-lite').'</span><span>'.get_option('ctcl_vendor_delivery_note').'</span></div>':'';;
                 return $val;
             },10,1);
     

@@ -148,6 +148,12 @@ private function emailTab(){
 do_settings_sections('ctcl_email_settings');
 settings_fields('ctcl_email_settings');
 ?>
+
+<div class="ctcl-email-setting-row">
+<label for="ctcl-email-subject" class="ctcl-email-subject-label" ><?=__('Email Subject :','ctc-lite')?></label>
+<span><input id="ctcl-email-subject" required type="text" name='ctcl_email_subject' value="<?=get_option('ctcl_email_subject')?>"/></span>
+</div>
+
 <div class="ctcl-email-setting-row">
 <label for="ctcl-smtp-host" class="ctcl-smtp-host-label" ><?=__('SMTP Host :','ctc-lite')?></label>
 <span><input id="ctcl-smtp-host" required type="text" name='ctcl_smtp_host' value="<?=get_option('ctcl_smtp_host')?>"/></span>
@@ -227,28 +233,7 @@ private function completeOrderTab(){
 }
 
 
-/**
- * Payment porcessing shortcode
- */
-public function orderProcessingShortCode(){
-    if(isset($_POST)):
-      
-        $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
-        $_POST['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
-      $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST); 
-      if(1==$dataAfterPayment['charge_result']):
 
-        $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
-
-        $ctclHtml =  new ctclHtml();
-        echo '<pre>';
-        print_r($dataAfterShipping);
-        //$emailBody->createEmailBody($processPayment);
-      else:
-        echo "<p>{$processPayment['failure_message']}</p>";
-      endif;
-    endif;
-}
     /**
      * Adds payment options shortcode
      */
@@ -257,8 +242,6 @@ public function orderProcessingShortCode(){
     $htmlArr = array();
     $html =  '';
  
-    var_dump(count($paymentOptions));
-
         foreach($paymentOptions as $k=>$val):
             if(1==count($paymentOptions)):
                 $html .= '<div class="ctcl_payment_option_row">';
@@ -292,12 +275,12 @@ public function orderProcessingShortCode(){
         foreach($shippingOptions as $key=>$val):
 
             if(1==count($shippingOptions)):
-                $html .= '<div class="ctcl_shipping_option_row">';
+                $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<p style='display:none;'><input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='shipping_option' value='{$val['id']}'/></p>";
                 $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label >{$val['name']}</label></div>";
                 $shippingInput = "<input id='ctcl-shipping-type' type='hidden' name='shipping_type' value='{$val['name']}'/>";
             else:    
-                $html .= '<div class="ctcl_shipping_option_row">';
+                $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='shipping_option' value='{$val['id']}'/>";
                 $html .= "<label for='{$val['id']}' class=''ctcl_shipping_option_label >{$val['name']}</label></div>";
                 $shippingInput = '<input id="ctcl-shipping-type" type="hidden" name="shipping_type" value=""/>';
@@ -305,6 +288,34 @@ public function orderProcessingShortCode(){
         endforeach;
       $html .= $shippingInput ;
 return $html;
+    }
+
+    /**
+     * Construct email body
+     * 
+     * @param $data Order data
+     * @return $body body of email to be sent to customer
+     */
+    public function  createEmailBody($data){
+        $body = '<div>';
+        $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-name'].'</p>';
+        $body .= '<p>'.__('Thank you for your purchase, your purchase details are as follows :','ctc-lite').'</p>';
+        $body .= '<p>'.__('Order id ').' :'.$data['order_id'].'</p>';
+        $body .= '<p>'.__('You order details :','ctc-lite').'</p>';
+        $body .= '<div style="margin-left:auto;margin-right:auto;display:block;"><table style="border=1px solid black;border-collapse:collapse;"><thead';
+        $body .= '<tr style="height:40px;"><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:300px;" colspan="11">'.__('Products','ctc-lite').'</th><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:50px;" colspan="2">'.__('Qty').'</th><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:100px;" colspan="2">'.__('Item Total').'</th></tr>';
+        $body .= '<thead><tbody>';
+        foreach($data['products'] as $key=>$value):
+            $product = json_decode(stripslashes($value),TRUE);
+            $body .= "<tr style='height:30px;'><td  style='text-align:center;border: 1px solid black;border-collapse:collapse;' colspan='11'>{$product['itemName']}</td><td style='text-align:center;border: 1px solid black;border-collapse: collapse;' colspan='2'>{$product['quantity']}</td><td style='text-align:center;border: 1px solid black;border-collapse: collapse;' colspan='2'>{$product['itemTotal']}</td></tr>";
+        endforeach;
+        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Tax Rate ','ctc-lite').'</td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;"colspan="4" >'.get_option('ctcl_tax_rate').' % </td></tr>';
+        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') </td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;" colspan="4" >'.$data['shipping-total'].'</td></tr>';
+        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Sub Total ','ctc-lite').' ('.get_option('ctcl_currency').') </td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;" colspan="4" >'.$data['sub-total'].'</td></tr>';
+        $body .='</tbody></table></div>';
+        $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}<div>";
+        $body .='</div>';
+        return $body;
     }
 
 }
