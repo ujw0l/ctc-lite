@@ -184,10 +184,32 @@ display:inline-block;
 .ctcl-shipping-tab-fieldset-legend:before,
 .ctcl-email-tab-fieldset-legend:before,
 .ctcl-payment-tab-fieldset-legend:before{
-animation: rotateSettingButton 20s linear infinite;
+animation: rotateSettingButton 3s linear infinite;
 }
 
 @keyframes rotateSettingButton{
    from{transform: rotate(0deg);}
-   to{transform: rotate(3600deg);}
+   to{transform: rotate(360deg);}
+}
+
+.ctcl-pending-orders-fieldset legend{
+   padding-top:20px;
+}
+table.ctcl-pending-orders{
+   margin-left:-9px!important;
+   text-align:center!important;
+   margin-top:20px!important;
+}
+td.ctcl-pending-order-head{
+   text-align:center!important;
+}
+table.ctcl-pending-orders td{
+   vertical-align: middle;
+}
+.ctcl-pending-orders-fieldset legend{
+
+   font-weight:bold;
+}
+.ctcl-pending-special-instruct{
+   text-align:left;
 }

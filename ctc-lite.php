@@ -65,22 +65,54 @@ public function activeDeactivUinstall(){
  * Activate plugin
  */
 public function ctcLiteActivate(){
+global $wpdb;
+$charset_collate = $wpdb->get_charset_collate();
+   $sql[] =  "CREATE TABLE `".$wpdb->prefix."ctclOrders`(
+      `orderId` varchar(155) NOT NULL,
+      `orderDetail` text NOT NULL,
+      `orderStatus` varchar(155)NOT NULL,
+      `vendorNote` text NOT NULL,
+      UNIQUE KEY (`orderId`)) $charset_collate;";
 
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+dbDelta($sql);
 }
 /**
  * Deactivate plugin
  */
 
  public function ctcLiteDeactivate(){
-
+   delete_option('ctcl_email_subject');
+   delete_option('ctcl_smtp_host');
+   delete_option('ctcl_smtp_authentication');
+   delete_option('ctcl_smtp_port');
+   delete_option('ctcl_smtp_username');
+   delete_option('ctcl_smtp_password');
+   delete_option('ctcl_smtp_encryption');
+   delete_option('ctcl_smtp_from_email');
+   delete_option('ctcl_smtp_from_name');
+   delete_option('ctcl_smtp_bcc_email');
+   delete_option('ctcl_cash_on_delivery');
+   delete_option('ctcl_currency');
+   delete_option('ctcl_tax_rate');
+   delete_option('ctcl_vendor_delivery_activate');
+   delete_option('ctcl_vendor_delivery_note');
+   delete_option('ctcl_store_pickup_activate');
+   delete_option('ctcl_store_pickup_street1');
+   delete_option('ctcl_store_pickup_street2');
+   delete_option('ctcl_store_pickup_city');
+   delete_option('ctcl_store_pickup_state');
+   delete_option('ctcl_store_pickup_zip_code');
+   delete_option('ctcl_store_pickup_country');
+   delete_option('ctcl_store_pickup_note');
  }
 
  /**
   * Uninstall plugin
   */
   public function ctcLiteUnistall(){
-
-
+   global $wpdb;
+   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
   }
 
   /**
@@ -128,6 +160,11 @@ public function ctcLiteActivate(){
        'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
        'subTotal'=>__("Sub Total","ctc-lite"),
        'removeItem'=>__('Remove Item','ctc-lite'),
+       'itemHead'=>__('Product','ctc-lite'),
+       'qtyHead'=>__('Qty','ctc-lite'),
+       'priceHead'=>__('Price','ctc-lite'),
+       'itemTotalHead'=>__('Item total','ctc-lite'),
+       
       )
    );
     wp_localize_script('ctclFrontendJs','ctclCartFunc',[]);
@@ -187,15 +224,6 @@ public function requiredAjax(){
     endif;
 }
 
-   /**
-   * create admin menu content
-   */
-  public function adminPanelContent(){
-    echo "This is admin panel content";
-
-  }
-
-  
   /**
    * Register gutenberg block
    * 

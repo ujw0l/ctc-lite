@@ -52,7 +52,7 @@ font-size:23px;
 cursor:pointer;
 }
 
-
+.ctcl-checkout-item-header,
 .ctcl-checkout-item{
     width:100%!important;
     text-align:center;
@@ -61,12 +61,13 @@ cursor:pointer;
     border-bottom:1px dashed rgba(0,0,0,1);
     padding:5px;
 }
+.ctcl-checkout-item-header span,
 .ctcl-checkout-item span{
-    vertical-align: middle;
+vertical-align: middle;
     display: table-cell;
     text-align: center;
-    width:100px;
-    height:100%;
+    width: 150px;
+    height: 100%;
 }
 .ctcl-checkout-item-img-span img{
 float:left;
@@ -113,4 +114,44 @@ float:left;
 .ctcl-checkout-button{
     margin-top:20px!important;
 
+}
+.ctcl-product-loading,
+.ctcl-product-list-content{
+
+text-align:center;
+}
+
+.ctcl-product-loading:before{
+    animation: loadingCart 2s linear infinite;
+}
+
+@keyframes loadingCart{
+   from{color:rgba(0,0,0,0.5);}
+   to{color:rgba(0,0,0,);}
+}
+
+#ctcl-subtotal-container,
+#ctcl-totalshipping-cost{
+    width:100%;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+#ctcl-subtotal-container span:first-child,
+#ctcl-totalshipping-cost span:first-child{
+
+    width:300px;;
+    text-align:right;
+    max-width:75%;
+    font-weight:bold;
+}
+#ctcl-subtotal-container span:last-child,
+#ctcl-totalshipping-cost span:last-child{
+float:right;
+    width:100px;
+    text-align:right;
+    max-width:25%;
+    font-weight:bold;
+}
+.ctcl-co-instruction{
+    line-height: 1;
 }

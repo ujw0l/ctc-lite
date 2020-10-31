@@ -41,8 +41,8 @@ class ctclProcessing{
     }
 
 
-    /**
- * Payment porcessing shortcode
+/**
+ * Order porcessing shortcode
  */
 public function orderProcessingShortCode(){
     if(isset($_POST)):
@@ -54,6 +54,7 @@ public function orderProcessingShortCode(){
       $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST);
 
       if(1==$dataAfterPayment['charge_result']):
+        apply_filters('ctcl_data_for_ml',$dataAfterPayment);
         $this->enterDataToTable($dataAfterPayment);
         $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
         $custEmailBody = apply_filters('ctcl_custom_email_body','',$dataAfterShipping);
@@ -64,6 +65,7 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
+       echo "<div>".__('Order sucessesfually placed. Your order id is')." : {$_POST['order_id']} </div>";
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
       endif;
@@ -80,7 +82,7 @@ public function orderProcessingShortCode(){
 		if($emailSent):
             return __('Email sent sucessfully','ctc-lite');
         else:
-            return __("Email couldn't be sent,please check email settings.",'ctc-lite' );
+            return __("Email couldn't be sent,please check email settings and retry.",'ctc-lite' );
         endif;
     }
 
@@ -88,9 +90,31 @@ public function orderProcessingShortCode(){
      * Enter data to the table
      */
     public function enterDataToTable($data){
+     global $wpdb;
+     $wpdb->insert( $wpdb->prefix."ctclOrders", array( 'orderId'=> $data['order_id'], 'orderDetail' => json_encode($data), 'orderStatus' => 'pending' ), array('%s' ,'%s', '%s' ) );
+    }
 
-        echo '<pre>';
-        print_r($data);
+    /**
+     * get total pending order
+     */
+    public function getTotalPedingOrders(){
+        global $wpdb;
+        $sql = "SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'pending'";
+        return $wpdb->query($sql);
+    }
+
+    /**
+     * get list of pending orders
+     * 
+     * @param $offset database table offset
+     * @param $limit databse row limit
+     * 
+     * @return Item list between $offset and $limit
+     */
+    public function getPendingOrderEntries($offset,$limit){
+         global $wpdb;
+       return $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ctclOrders  WHERE orderStatus= 'pending' LIMIT $offset, $limit",ARRAY_A );
+
     }
     
 }

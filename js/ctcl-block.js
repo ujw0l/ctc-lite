@@ -157,7 +157,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
                         el(PanelBody, null,
-                            el(TextControl, { onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
+                            el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
                     )
@@ -172,7 +172,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                     el('div', { className: 'ctcl-product-list' },
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List', 'ctc-lite')),
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
-                            el('p', { className: 'ctcl-product-list-content', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
+                            el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
+                            el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
                         )),
                     el('fieldset', { className: 'ctcl-contact-form-fieldset' },
                         el('legend', { className: 'ctcl-contact-form-legend' }, __('Contact/Shipping Info', 'ctc-lite')),

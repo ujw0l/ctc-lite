@@ -223,6 +223,71 @@ settings_fields('ctcl_email_settings');
  */
 private function pendingOrderTab(){
 
+    
+
+    $ctclProcessing = new ctclProcessing();
+    $pendingOrdersCount =  $ctclProcessing->getTotalPedingOrders();
+    $pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
+    $limit = 10; // number of rows in page
+    $offset = ( $pagenum - 1 ) * $limit;
+    $num_of_pages = ceil( $pendingOrdersCount / $limit );
+
+    $items =  $ctclProcessing->getPendingOrderEntries($offset,$limit);
+
+    $page_links = paginate_links( array(
+        'base' => add_query_arg( 'pagenum', '%#%' ),
+        'format' => '',
+        'prev_text' => __( '&laquo;', 'ctc-lite' ),
+        'next_text' => __( '&raquo;', 'ctc-lite' ),
+        'total' => $num_of_pages,
+        'current' => $pagenum
+    ) );
+
+?>
+  
+  <fieldset class="ctcl-pending-orders-fieldset">
+      <legend class="dashicons-before dashicons-list-view"><?=__('Pending Orders','ctc-lite')?></legend>
+  <?php
+    if ( $page_links ) {
+        echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
+    }
+?>
+
+<table class="wp-list-table widefat fixed striped media ctcl-pending-orders">
+    <thead>
+        <tr>
+            <td class="ctcl-pending-order-head"><?=__('Order Id','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Order Date','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Shipping Type','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Special Instruction','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Order Detail','ctc-lite')?></td>
+</thead>
+<?php
+foreach ($items as $key => $value):
+    $item = json_decode(stripslashes($value['orderDetail']),TRUE);
+?>
+<tr>
+    <td>
+        <?=$item['order_id']?>
+</td>
+<td>
+<?=date('m/d/Y',$item['order_id'])?>
+</td>
+<td>
+    <?=$item['shipping_type']?>
+</td>
+<td>
+   <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+</td>
+<td>
+    <a href="Javascript:void(0)" data-order-id="<?=$item['order_id']?>" ?><?=__('Click Here','ctc-lite')?></a>
+</td>
+</tr>
+<?php
+endforeach;
+?>
+</table>
+<?php
 }
 
 /**
@@ -317,5 +382,7 @@ return $html;
         $body .='</div>';
         return $body;
     }
+
+    
 
 }
