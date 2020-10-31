@@ -38,4 +38,20 @@ window.addEventListener('load', () => {
         });
 
     }
+
+    /**
+     * get order data with ajax
+     */
+    let pendingOrderItems = document.querySelectorAll('.ctcl-get-order-data');
+
+    if (0 < pendingOrderItems.length) {
+
+
+        Array.from(pendingOrderItems).map(x => x.addEventListener('click', e => {
+            let orderId = e.target.getAttribute('data-order-id');
+            new jsOverlay({ ajaxUrl: ctclAdminObject.ajaxUrl, ajaxMethod: 'POST', ajaxData: `action=pendingOrderDetail&orderId=${orderId}`, containerHt: 800, containerWd: 1500 });
+        }));
+    }
+
+
 });

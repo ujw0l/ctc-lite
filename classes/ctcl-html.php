@@ -233,24 +233,25 @@ private function pendingOrderTab(){
     $num_of_pages = ceil( $pendingOrdersCount / $limit );
 
     $items =  $ctclProcessing->getPendingOrderEntries($offset,$limit);
-
-    $page_links = paginate_links( array(
-        'base' => add_query_arg( 'pagenum', '%#%' ),
-        'format' => '',
-        'prev_text' => __( '&laquo;', 'ctc-lite' ),
-        'next_text' => __( '&raquo;', 'ctc-lite' ),
-        'total' => $num_of_pages,
-        'current' => $pagenum
-    ) );
+    if(0<count($items)):   
+        $page_links = paginate_links( array(
+            'base' => add_query_arg( 'pagenum', '%#%' ),
+            'format' => '',
+            'prev_text' => __( '&laquo;', 'ctc-lite' ),
+            'next_text' => __( '&raquo;', 'ctc-lite' ),
+            'total' => $num_of_pages,
+            'current' => $pagenum
+        ) );
 
 ?>
   
   <fieldset class="ctcl-pending-orders-fieldset">
       <legend class="dashicons-before dashicons-list-view"><?=__('Pending Orders','ctc-lite')?></legend>
   <?php
-    if ( $page_links ) {
+    if ( $page_links ):
         echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
-    }
+    endif;
+    
 ?>
 
 <table class="wp-list-table widefat fixed striped media ctcl-pending-orders">
@@ -259,35 +260,45 @@ private function pendingOrderTab(){
             <td class="ctcl-pending-order-head"><?=__('Order Id','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Order Date','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Shipping Type','ctc-lite')?></td>
-            <td class="ctcl-pending-order-head"><?=__('Special Instruction','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Payment Type','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head" colspan="3"><?=__('Special Instruction','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Order Detail','ctc-lite')?></td>
 </thead>
 <?php
+
 foreach ($items as $key => $value):
     $item = json_decode(stripslashes($value['orderDetail']),TRUE);
 ?>
-<tr>
-    <td>
-        <?=$item['order_id']?>
-</td>
-<td>
-<?=date('m/d/Y',$item['order_id'])?>
-</td>
-<td>
-    <?=$item['shipping_type']?>
-</td>
-<td>
-   <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
-</td>
-<td>
-    <a href="Javascript:void(0)" data-order-id="<?=$item['order_id']?>" ?><?=__('Click Here','ctc-lite')?></a>
-</td>
-</tr>
+    <tr id="ctcl-pending-order-<?=$item['order_id']?>" >
+            <td>
+                <?=$item['order_id']?>
+            </td>
+            <td>
+                <?=date('m/d/Y',$item['order_id'])?>
+            </td>
+            <td>
+            <?=$item['payment_type']?>
+            </td>
+            <td>
+              <?=$item['shipping_type']?>
+            </td>
+            <td colspan="3">
+                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+            </td>
+            <td>
+                <a href="Javascript:void(0)" class="ctcl-get-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
+            </td>
+    </tr>
 <?php
 endforeach;
 ?>
 </table>
 <?php
+else:
+    ?>
+    <p class="ctc-no-pending-order" ><?=__("There is no pending order right now.",'ctc-lite')?></p>
+    <?php
+endif;
 }
 
 /**
@@ -383,6 +394,19 @@ return $html;
         return $body;
     }
 
-    
+    /**
+     * Get order detail 
+     * 
+     * @param $id order id
+     */
+    public function getPendingOrderDetail(){
+
+        $ctclProcessing =  new ctclProcessing();
+
+        print_r($_POST);
+        //print_r ( $ctclProcessing->getOrderDetail($_POST['orderId']));
+  
+        wp_die();
+    }
 
 }

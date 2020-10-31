@@ -184,7 +184,8 @@ dbDelta($sql);
 
   public function enequeAdminJs(){
    wp_enqueue_script('ctclJsMasonry', CTCL_DIR_PATH.'js/js-masonry.js',array());
-    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry'));
+   wp_enqueue_script('ctclJsOverlay', CTCL_DIR_PATH.'js/js-overlay.js',array());
+    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay'));
     wp_localize_script('ctclAdminJs','ctclAdminObject',array(
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
                                                                'emptyTestEmail'=>'Please provide email for testing.'
@@ -212,6 +213,7 @@ public function requiredShortCode(){
  */
 public function requiredAjax(){
    add_action( 'wp_ajax_sendTestEmail', array($this->ctclProcessing,'sendSmtpTestEmail') );
+   add_action('wp_ajax_pendingOrderDetail',array($this->ctclHtml,'getPendingOrderDetail'));
 }
 
    /**

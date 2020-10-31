@@ -99,8 +99,7 @@ public function orderProcessingShortCode(){
      */
     public function getTotalPedingOrders(){
         global $wpdb;
-        $sql = "SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'pending'";
-        return $wpdb->query($sql);
+        return $wpdb->get_var("SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'pending'");
     }
 
     /**
@@ -113,8 +112,16 @@ public function orderProcessingShortCode(){
      */
     public function getPendingOrderEntries($offset,$limit){
          global $wpdb;
-       return $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ctclOrders  WHERE orderStatus= 'pending' LIMIT $offset, $limit",ARRAY_A );
+       return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ctclOrders  WHERE orderStatus= 'pending' LIMIT $offset, $limit",ARRAY_A );
 
+    }
+
+    /**
+     * get order detail from database
+     */
+    public function getOrderDetail($orderId){
+        global $wpdb;
+    return  $wpdb->get_results("SELECT orderDetail FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'",ARRAY_A);
     }
     
 }

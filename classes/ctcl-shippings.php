@@ -171,7 +171,7 @@ public function processShipping(){
 
             add_filter('ctcl_shipping_option_vendor_shipping',function($val){
 
-                $val['shipping_note'] =  $html .= !empty('ctcl_vendor_delivery_note')?'<div><span>'.__('Note :','ctc-lite').'</span><span>'.get_option('ctcl_vendor_delivery_note').'</span></div>':'';;
+                $val['shipping_note'] =  !empty('ctcl_vendor_delivery_note')?'<div><span>'.__('Note :','ctc-lite').'</span><span>'.get_option('ctcl_vendor_delivery_note').'</span></div>':'';;
                 return $val;
             },10,1);
     
