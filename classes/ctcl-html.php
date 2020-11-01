@@ -259,8 +259,8 @@ private function pendingOrderTab(){
         <tr>
             <td class="ctcl-pending-order-head"><?=__('Order Id','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Order Date','ctc-lite')?></td>
-            <td class="ctcl-pending-order-head"><?=__('Shipping Type','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Payment Type','ctc-lite')?></td>
+            <td class="ctcl-pending-order-head"><?=__('Shipping Type','ctc-lite')?></td>
             <td class="ctcl-pending-order-head" colspan="3"><?=__('Special Instruction','ctc-lite')?></td>
             <td class="ctcl-pending-order-head"><?=__('Order Detail','ctc-lite')?></td>
 </thead>
@@ -373,23 +373,35 @@ return $html;
      * @return $body body of email to be sent to customer
      */
     public function  createEmailBody($data){
-        $body = '<div>';
-        $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-name'].'</p>';
+        $body = '<div style="margin-left:auto;margin-right:auto;display:block; background-color:rgba(0,0,0,0.1);padding:20px;">';
+        $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-first-name'].'</p>';
         $body .= '<p>'.__('Thank you for your purchase, your purchase details are as follows :','ctc-lite').'</p>';
         $body .= '<p>'.__('Order id ').' :'.$data['order_id'].'</p>';
         $body .= '<p>'.__('You order details :','ctc-lite').'</p>';
-        $body .= '<div style="margin-left:auto;margin-right:auto;display:block;"><table style="border=1px solid black;border-collapse:collapse;"><thead';
-        $body .= '<tr style="height:40px;"><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:300px;" colspan="11">'.__('Products','ctc-lite').'</th><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:50px;" colspan="2">'.__('Qty').'</th><th style="height:40px;text-align:center;border: 1px solid black;border-collapse: collapse;width:100px;" colspan="2">'.__('Item Total').'</th></tr>';
-        $body .= '<thead><tbody>';
+        $body .= '<div style="width:600px;">';
+        $body .= '<div style="border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .= '<span style="display:table-cell;height:30px;width:500px;" >'.__('Products','ctc-lite').'</span>';
+        $body .='<span style="display:table-cell;height:30px;width:50px;" >'.__('Qty').'</span>';
+        $body .='<span style="display:table-cell;height:30px;width:100px;" >'.__('Item Total').'</span></div>';
+    
         foreach($data['products'] as $key=>$value):
             $product = json_decode(stripslashes($value),TRUE);
-            $body .= "<tr style='height:30px;'><td  style='text-align:center;border: 1px solid black;border-collapse:collapse;' colspan='11'>{$product['itemName']}</td><td style='text-align:center;border: 1px solid black;border-collapse: collapse;' colspan='2'>{$product['quantity']}</td><td style='text-align:center;border: 1px solid black;border-collapse: collapse;' colspan='2'>{$product['itemTotal']}</td></tr>";
+            $body .= "<div style='border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;'>";
+            $body .="<span  style='display:table-cell;width:500px'>{$product['itemName']}</span>";
+            $body.="<span style='display:table-cell;width:50px;'>{$product['quantity']}</span>";
+            $body .="<span style='display:table-cell;width:100px;' >{$product['itemTotal']}</span></div>";
         endforeach;
-        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Tax Rate ','ctc-lite').'</td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;"colspan="4" >'.get_option('ctcl_tax_rate').' % </td></tr>';
-        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') </td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;" colspan="4" >'.$data['shipping-total'].'</td></tr>';
-        $body .='<tr style="height:40px;"><td style="text-align:right;border: 1px solid black;border-collapse:collapse;" colspan="13">'.__('Sub Total ','ctc-lite').' ('.get_option('ctcl_currency').') </td><td style="text-align:center;border: 1px solid black;border-collapse: collapse;" colspan="4" >'.$data['sub-total'].'</td></tr>';
-        $body .='</tbody></table></div>';
-        $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}<div>";
+        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Tax Rate ','ctc-lite').' : </span>';
+        $body.='<span style="display:table-cell;">'.get_option('ctcl_tax_rate').' % </span></div>';
+        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .='<span style="display:table-cell;width:500px;text-align:right;">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
+        $body .= '<span style="display:table-cell;" >'.$data['shipping-total'].'</span></div>';
+        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Sub Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
+        $body.='<span style="display:table-cell;" >'.$data['sub-total'].'</span></div>';
+        $body .='</div>';
+        $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}</div>";
         $body .='</div>';
         return $body;
     }
@@ -402,10 +414,26 @@ return $html;
     public function getPendingOrderDetail(){
 
         $ctclProcessing =  new ctclProcessing();
+        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
 
-        print_r($_POST);
-        //print_r ( $ctclProcessing->getOrderDetail($_POST['orderId']));
-  
+        echo "<div class='ctcl-pending-order-detail'>";
+        echo "<fieldset class='ctcl-order-list'>";
+        echo "<legend class='dashicons-before dashicons-list-view ctcl-orderdetail-legend'>".__('Items Details')."</legend>";
+        echo "<div class='ctcl-order-list-header'><span>".__('Products','ctc-lite')."</span><span>".__('Qty','ctc-lite')."</span><span>".__('Item Total','ctc-lite')."</span></div>";
+        
+        foreach($detail['products']as $key=>$order):
+        $item = json_decode($order,TRUE);
+        echo "<div class='ctcl-ordered-item'>";
+        echo "<span>{$item['itemName']}</span>";
+        echo "<span>{$item['quantity']}</span>";
+        echo "<span>{$item['itemTotal']}</span>";
+        echo '</div>';
+       endforeach;
+       echo '<hr>';
+       echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>{$detail['shipping-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
+       echo "</fieldset>";
+       echo "</div>";
         wp_die();
     }
 

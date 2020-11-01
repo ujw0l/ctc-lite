@@ -212,3 +212,75 @@ table.ctcl-pending-orders td{
 .ctcl-pending-special-instruct{
    text-align:left;
 }
+.ctcl-pending-order-detail{
+   padding:10px;
+}
+
+.ctcl-orderdetail-legend{
+   font-weight:bold;
+}
+
+fieldset.ctcl-order-list{
+   width:400px;
+   border:1px dashed rgba(0,0,0,1);
+   max-width:100%;
+   padding:15px;
+}
+
+
+
+.ctcl-order-list-header{
+   width:100%;
+   display:block;
+}
+
+
+.ctcl-ordered-item{
+   width:100%;
+margin-top:5px;
+padding-top:15px;
+margin-bottom:5px;
+border-top:1px dashed rgba(0,0,0,1);
+height:35px;
+vertical-align: middle!important;
+  
+}
+.ctcl-order-list-header span,
+.ctcl-ordered-item span{
+   width:120px;
+   display:table-cell;
+   font-size: 15px;
+   text-align:center;
+   max-width:33%;
+   
+}
+.ctcl-order-detail-sub-total span:first-child,
+.ctcl-order-detail-shipping span:first-child{
+
+   font-weight: bold;
+   text-align:right!important;;
+   
+
+}
+.ctcl-order-detail-sub-total span:last-child,
+.ctcl-order-detail-shipping span:last-child{
+   float:right;
+   font-weight:bold;
+
+}
+
+.page-numbers {
+       display: inline-block;
+       padding: 5px 10px;
+       margin: 0 2px 0 0;
+       border: 1px solid #eee;
+       line-height: 1;
+       text-decoration: none;
+       border-radius: 2px;
+       font-weight: 600;
+   }
+   .page-numbers.current,
+   a.page-numbers:hover {
+       background: #f9f9f9;
+   }
+   

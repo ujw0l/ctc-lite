@@ -155,13 +155,14 @@ public function processShipping(){
 
             $html = '<p>'.__('Pickup your order at : ').'</p>';
             $html .= '<address>';
-            $html .= '<div>'.get_option('ctcl_store_pickup_street1').'</div>';
-            $html .= !empty(get_option('ctcl_store_pickup_street2'))?:'<div>'.get_option('ctcl_store_pickup_street2').'</div>';
-            $html .= '<div>'.get_option('ctcl_store_pickup_city').'</div>';
-            $html .= '<div>'.get_option('ctcl_store_pickup_state').'</div>';
-            $html .= '<div>'.get_option('ctcl_store_pickup_zip_code').'</div>';
-            $html .= '<div>'.get_option('ctcl_store_pickup_zip_country').'</div>';
-            $html .= !empty('ctcl_store_pickup_note')?'<div><span>'.__('Note :','ctc-lite').'</span><span>'.get_option('ctcl_store_pickup_note').'</span></div>':'';
+            $html .= '<div><label>'.__("Street Address 1",'ctc-lite').' : </label><span>'.get_option('ctcl_store_pickup_street1').'</div>';
+            $html .= !empty(get_option('ctcl_store_pickup_street2'))?'<div><label>'.__("Street Address 2 ",'ctc-lite').' : </label><span>'.get_option('ctcl_store_pickup_street2').'<span></div>' :'';
+            $html .= '<div><label>'.__("City",'ctc-lite').': </label><span>'.get_option('ctcl_store_pickup_city').'<span></div>';
+            $html .= '<div><label>'.__("State",'ctc-lite').' : </label><span>'.get_option('ctcl_store_pickup_state').'</div>';
+            $html .= '<div><label>'.__('Zip Code','ctc-lite').' : </label><span>'.get_option('ctcl_store_pickup_zip_code').'</div>';
+            $html .= '<div><label>'.__('Country','ctc-lite').' : </label><span>'.get_option('ctcl_store_pickup_country').'</div>';
+            $html .= '</address><br/>';
+            $html .= !empty('ctcl_store_pickup_note')?'<div><span>'.__('Note ','ctc-lite').': </span><span>'.get_option('ctcl_store_pickup_note').'</span></div>':'';
             $val['shipping_note'] = $html; 
             return $val;
         },10,1);

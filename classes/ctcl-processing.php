@@ -45,7 +45,8 @@ class ctclProcessing{
  * Order porcessing shortcode
  */
 public function orderProcessingShortCode(){
-    if(isset($_POST)):
+
+    if(!empty($_POST)):
         $date = new DateTime();
         $_POST['order_id'] = $date->getTimestamp();
         $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
@@ -65,7 +66,7 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       echo "<div>".__('Order sucessesfually placed. Your order id is')." : {$_POST['order_id']} </div>";
+       echo "<div>".__('Order successfully placed. Your order id is')." : {$_POST['order_id']} </div>";
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
       endif;
@@ -121,7 +122,7 @@ public function orderProcessingShortCode(){
      */
     public function getOrderDetail($orderId){
         global $wpdb;
-    return  $wpdb->get_results("SELECT orderDetail FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'",ARRAY_A);
+    return  $wpdb->get_var("SELECT orderDetail FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
     
 }
