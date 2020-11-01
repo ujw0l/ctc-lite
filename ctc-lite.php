@@ -214,6 +214,7 @@ public function requiredShortCode(){
 public function requiredAjax(){
    add_action( 'wp_ajax_sendTestEmail', array($this->ctclProcessing,'sendSmtpTestEmail') );
    add_action('wp_ajax_pendingOrderDetail',array($this->ctclHtml,'getPendingOrderDetail'));
+   add_action('wp_ajax_updateVendorNote',array($this->ctclProcessing,'updateOrderVendorNote'));
 }
 
    /**

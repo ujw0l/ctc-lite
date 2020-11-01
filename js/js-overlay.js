@@ -44,6 +44,7 @@ class jsOverlay {
 
         let overlayEl = document.createElement('div');
         overlayEl.id = "js-modal-overlay";
+        overlayEl.className = undefined !== param.overlayNum ? `js-overlay-${param.overlayNum}` : '';
         overlayEl.style = `position:fixed;height:${overlayHeight}px;width:${overlayWidth}px;background-color:rgba(0,0,0,.6);z-index:100000;top:0%;left:0%;right:0%;bottom:0%;`;
 
 
@@ -55,6 +56,7 @@ class jsOverlay {
         let closeBtn = document.createElement('span');
         closeBtn.id = "overlay-close-btn";
         closeBtn.title = "Close";
+        closeBtn.className = undefined !== param.overlayNum ? `js-overlay-close-${param.overlayNum}` : '';
         closeBtn.innerHTML = "&#10539;";
         closeBtn.style = `line-height:1.5;text-align:center;position:absolute;width:30px;height:30px;cursor:pointer;top:${((overlayHeight - optHtWd.height) / 2) - 25}px;left:${((overlayWidth - optHtWd.width) / 2) + optHtWd.width - 8}px;font-size:20px;color:rgba(255,255,255,1);text-shadow:-1px -1px 1px rgba(0,0,0,1);z-index:100000;`;
         overlayEl.appendChild(closeBtn);

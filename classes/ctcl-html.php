@@ -415,8 +415,24 @@ return $html;
 
         $ctclProcessing =  new ctclProcessing();
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+        echo '<div class="ctc-order-detail-cont">';
+       echo "<div class='ctcl-pending-order-detail'>";
+       echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
+       $this ->createOrderListSection($detail);
+       $this->createCustomerInfoSection($detail);
+       $this->createFinalNoteSection($detail);
+       $this->createShippingSection($detail['order_id']);
+       echo "</div>";
+       submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',true);
+       echo "</div>";
+        wp_die();
+    }
 
-        echo "<div class='ctcl-pending-order-detail'>";
+    /**
+     * create order list
+     */
+    private function createOrderListSection($detail){
+
         echo "<fieldset class='ctcl-order-list'>";
         echo "<legend class='dashicons-before dashicons-list-view ctcl-orderdetail-legend'>".__('Items Details')."</legend>";
         echo '<div id="ctcl-orderlist">';
@@ -436,25 +452,85 @@ return $html;
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print list","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-order-list'></a></div>";
        echo "</fieldset>";
+
+    }
+
+    /**
+     * Create customer info section
+     */
+    private function createCustomerInfoSection($detail){
+
        echo '<fieldset class="ctc-pending-customer-info-fieldset">';
        echo "<legend class='dashicons-before dashicons-admin-users ctcl-cust-info-legend'>".__("Customer Info","ctc-lite")."<legend>";
+       echo '<div id="ctc-pending-customer-info">';
        echo "<address>";
        echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Customer Name",'ctc-lite')." : </label><span>{$detail['ctcl-co-first-name']} {$detail['ctcl-co-last-name']}</span></div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Street Address 1",'ctc-lite')." : </label><span>{$detail['checkout-street-address-1']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Street Address 2",'ctc-lite')." : </label><span>{$detail['checkout-street-address-2']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("City","ctc-lite")." : </label><span>{$detail['checkout-city']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("State","ctc-lite")." : </label><span>{$detail['checkout-state']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Zip Code","ctc-lite")." : </label><span>{$detail['checkout-zip-code']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Country","ctc-lite")." : </label><span>{$detail['checkout-country']}</span><div>";
-       echo '<div id="ctc-pending-customer-info">';
-
-       echo "<div class=''></div>";
+       echo "<div class='ctcl-pending-cust-info-street-add1' ><label>".__("Street Address 1",'ctc-lite')." : </label><span>{$detail['checkout-street-address-1']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-street-add2' ><label>".__("Street Address 2",'ctc-lite')." : </label><span>{$detail['checkout-street-address-2']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-city' ><label>".__("City","ctc-lite")." : </label><span>{$detail['checkout-city']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-state' ><label>".__("State","ctc-lite")." : </label><span>{$detail['checkout-state']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-zip-code' ><label>".__("Zip Code","ctc-lite")." : </label><span>{$detail['checkout-zip-code']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-country' ><label>".__("Country","ctc-lite")." : </label><span>{$detail['checkout-country']}</span><div>";
+       echo "</address>";
+       echo "<div class='ctcl-pending-cust-info-shhiping-type'><label>".__("Shipping Type",'ctc-lite')." : </label><span class='ctcl-pending-cust-info-shhiping-type-text' >{$detail['shipping_type']}</span></div>";
+       echo "<div class='ctcl-pending-cust-info-special-instruct'><label>".__("Special Instruction",'ctc-lite')." : </label><span class='ctcl-cust-info-instruction-text' >{$detail['checkout-special-instruction']}</span></div>";
+       echo "</fieldset>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print Customer Info","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-cust-info'></a></div>";
        echo "</fieldset>";
-       echo '</fieldset>';
-       echo "</div>";
-        wp_die();
+    }
+
+    /**
+     * create final note section of modal
+     */
+    private function createFinalNoteSection($detail){
+
+        echo "<fieldset>";
+        echo "<legend class='dashicons-before dashicons-clipboard'>".__("Order Status  Note" ,"ctc-lite")." : </legend>";    
+        echo "<textarea id='ctcl-order-status-note' rows='5' cols='40' name='ctcl-order-status-note' value='{$detail['vendorNote']}'>";
+        echo"</textarea>";
+        echo submit_button( __( 'Save', 'ctc-lite' ), 'primary ctcl-vendor-note-submit','submit',false );
+        echo "</fieldset>";
+    }
+
+    /**
+     * create shipping section
+     */
+    private function createShippingSection($orderId){
+
+        add_filter('ctcl_get_shipping_option',function($val,$orderId){
+            $html = "<a href='Javascript:void(0);' data-order-id='{$orderId}' >USPS</a>";
+            array_push($val,$html);
+
+            return $val;
+        },10,2);
+
+        add_filter('ctcl_get_shipping_option',function($val,$orderId){
+            $html = "<a href='Javascript:void(0);' data-order-id='{$orderId}' >FedEX</a>";
+            array_push($val,$html);
+
+            return $val;
+        },20,2);
+
+        $shippingOptions = apply_filters('ctcl_get_shipping_option',array(),$orderId);
+        
+        
+
+        if(!empty($shippingOptions )):
+            echo "<filedset>";
+            echo "<legend class='dashicons-before dashicons-car'>".__("Shipping Options",'ctc-lite')."</legend>";
+            echo "<div>";
+            echo "<p>".__('Available Options','ctc-lite')."</p>";
+            echo "<ul>";
+            foreach($shippingOptions as $key=>$value):
+                echo "<li>{$value}<li>";
+            endforeach;
+            echo "</ul>";
+            echo "</div>";
+            echo "</filedset>";
+        endif;
+
+       
     }
 
 }

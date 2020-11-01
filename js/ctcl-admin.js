@@ -79,12 +79,12 @@ class ctclAdminJs {
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
                 xhttp.addEventListener('load', event => {
                     if (event.target.status >= 200 && event.target.status < 400) {
-                        new jsOverlay({ elContent: event.target.response, containerHt: 800, containerWd: 1500 });
+                        new jsOverlay({ elContent: event.target.response, containerHt: 800, containerWd: 1500, overlayNum: 1 });
                         this.addPendingOrderModalEvent();
                     } else {
                         console.log(event.target.statusText);
                     }
-                })
+                });
                 xhttp.send(`action=pendingOrderDetail&orderId=${orderId}`);
 
             }));
@@ -97,6 +97,7 @@ class ctclAdminJs {
     addPendingOrderModalEvent() {
         this.printPendingOrderList();
         this.printPendingCustInfo();
+        this.vendorNoteSubmit();
     }
     /**
     * print ordered item list in pending order modal
@@ -122,6 +123,43 @@ class ctclAdminJs {
      * Print pending order customer info
      */
     printPendingCustInfo() {
+
+        document.querySelector('#ctcl-print-cust-info').addEventListener('click', () => {
+            let content = document.querySelector('#ctc-pending-customer-info').innerHTML;
+            let css = document.querySelector("#ctclAdminCss-css").href;
+            let a = window.open('', '', 'height=500, width=500');
+            a.document.write('<html>');
+            a.document.write('<body >');
+            a.document.write(`<link rel="stylesheet" href='${css}'/>`)
+            a.document.write(content);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        });
+    }
+
+    /**
+     * Handle vendor note submit
+     */
+    vendorNoteSubmit() {
+        document.querySelector('.ctcl-vendor-note-submit').addEventListener('click', e => {
+            let vendorNote = document.querySelector('#ctcl-order-status-note').value;
+            let orderId = document.querySelector('#ctcl-order-id').value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+            xhttp.responseType = "text";
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+            xhttp.addEventListener('load', event => {
+                if (event.target.status >= 200 && event.target.status < 400) {
+                    alert(event.target.response);
+                } else {
+                    console.log(event.target.statusText);
+                }
+            })
+            xhttp.send(`action=updateVendorNote&orderId=${orderId}&vendorNote=${vendorNote}`);
+
+        });
 
     }
 }

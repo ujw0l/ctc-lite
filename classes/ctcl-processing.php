@@ -124,5 +124,18 @@ public function orderProcessingShortCode(){
         global $wpdb;
     return  $wpdb->get_var("SELECT orderDetail FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
-    
+    /**
+     * update vendor note
+     */
+    public function updateOrderVendorNote(){
+        global $wpdb;
+        $update = $wpdb->update($wpdb->prefix.'ctclOrders',array('vendorNote'=>$_POST['vendorNote']),array('orderId'=>$_POST['orderId']));
+
+       if(1==$update):
+        _e("Note sucessfully saved","ctc-lite");
+       else:
+        _e("Note could not be saved at this time","ctc-lite");
+       endif;
+        wp_die();
+    }
 }
