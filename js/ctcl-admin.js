@@ -1,57 +1,131 @@
-window.addEventListener('load', () => {
+class ctclAdminJs {
 
-    //lay bricks on payment tab 
-    if (0 < document.querySelectorAll('.ctcl-payment-tab-fieldset').length) {
-        let masonry = new jsMasonry('.ctcl-payment-tab-fieldset', { elSelector: 'fieldset', elWidth: 370, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+    constructor() {
+
+        this.loadMasonry();
+        this.sendSmtpTestEmail();
+        this.getPendingOrderDetail();
     }
 
-    //lay bricks on shipping tab
-    if (0 < document.querySelectorAll('.ctcl-shipping-tab-fieldset').length) {
-        let masonry = new jsMasonry('.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+    /**
+     * Load masonry 
+     */
+
+    loadMasonry() {
+
+        //lay bricks on payment tab 
+        if (0 < document.querySelectorAll('.ctcl-payment-tab-fieldset').length) {
+            let masonry = new jsMasonry('.ctcl-payment-tab-fieldset', { elSelector: 'fieldset', elWidth: 370, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+        }
+
+        //lay bricks on shipping tab
+        if (0 < document.querySelectorAll('.ctcl-shipping-tab-fieldset').length) {
+            let masonry = new jsMasonry('.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+        }
     }
 
-    //script for email setting tab
-    if (null !== document.querySelector('.ctc-smtp-email-setting')) {
+    /**
+     * Send SMTP email with ajax
+     */
+    sendSmtpTestEmail() {
 
-        document.querySelector('#ctcl-send-test-email').addEventListener('click', () => {
+        //script for email setting tab
+        if (null !== document.querySelector('.ctc-smtp-email-setting')) {
 
-            let testEmail = document.querySelector('#ctcl-test-email').value;
+            document.querySelector('#ctcl-send-test-email').addEventListener('click', () => {
+
+                let testEmail = document.querySelector('#ctcl-test-email').value;
 
 
-            if (0 === testEmail.length) {
-                alert(ctclAdminObject.emptyTestEmail);
-            } else {
+                if (0 === testEmail.length) {
+                    alert(ctclAdminObject.emptyTestEmail);
+                } else {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+                    xhttp.responseType = "text";
+                    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+                    xhttp.addEventListener('load', event => {
+                        if (event.target.status >= 200 && event.target.status < 400) {
+                            alert(event.target.response);
+                        } else {
+                            console.log(event.target.statusText);
+                        }
+                    })
+                    xhttp.send(`action=sendTestEmail&email=${testEmail}`);
+
+                }
+            });
+
+        }
+
+    }
+
+    /**
+     * Get pending order detail in modal with ajax
+     */
+    getPendingOrderDetail() {
+
+        let pendingOrderItems = document.querySelectorAll('.ctcl-get-order-data');
+
+        if (0 < pendingOrderItems.length) {
+
+
+            Array.from(pendingOrderItems).map(x => x.addEventListener('click', e => {
+                let orderId = e.target.getAttribute('data-order-id');
+
                 var xhttp = new XMLHttpRequest();
                 xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
                 xhttp.responseType = "text";
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
                 xhttp.addEventListener('load', event => {
                     if (event.target.status >= 200 && event.target.status < 400) {
-                        alert(event.target.response);
+                        new jsOverlay({ elContent: event.target.response, containerHt: 800, containerWd: 1500 });
+                        this.addPendingOrderModalEvent();
                     } else {
                         console.log(event.target.statusText);
                     }
                 })
-                xhttp.send(`action=sendTestEmail&email=${testEmail}`);
+                xhttp.send(`action=pendingOrderDetail&orderId=${orderId}`);
 
-            }
+            }));
+        }
+    }
+
+    /**
+     * All of the required event listener to be loaded after modal id loaded
+     */
+    addPendingOrderModalEvent() {
+        this.printPendingOrderList();
+        this.printPendingCustInfo();
+    }
+    /**
+    * print ordered item list in pending order modal
+    */
+
+    printPendingOrderList() {
+        document.querySelector('#ctcl-print-order-list').addEventListener('click', () => {
+            let content = document.querySelector('#ctcl-orderlist').innerHTML;
+            let css = document.querySelector("#ctclAdminCss-css").href;
+            let a = window.open('', '', 'height=500, width=500');
+            a.document.write('<html>');
+            a.document.write('<body >');
+            a.document.write(`<link rel="stylesheet" href='${css}'/>`)
+            a.document.write(content);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
         });
 
     }
 
     /**
-     * get order data with ajax
+     * Print pending order customer info
      */
-    let pendingOrderItems = document.querySelectorAll('.ctcl-get-order-data');
+    printPendingCustInfo() {
 
-    if (0 < pendingOrderItems.length) {
-
-
-        Array.from(pendingOrderItems).map(x => x.addEventListener('click', e => {
-            let orderId = e.target.getAttribute('data-order-id');
-            new jsOverlay({ ajaxUrl: ctclAdminObject.ajaxUrl, ajaxMethod: 'POST', ajaxData: `action=pendingOrderDetail&orderId=${orderId}`, containerHt: 800, containerWd: 1500 });
-        }));
     }
+}
 
-
+window.addEventListener('load', () => {
+    new ctclAdminJs()
 });

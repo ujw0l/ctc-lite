@@ -219,7 +219,7 @@ table.ctcl-pending-orders td{
 .ctcl-orderdetail-legend{
    font-weight:bold;
 }
-
+fieldset.pending-customer-info,
 fieldset.ctcl-order-list{
    width:400px;
    border:1px dashed rgba(0,0,0,1);
@@ -284,3 +284,7 @@ vertical-align: middle!important;
        background: #f9f9f9;
    }
    
+   #ctcl-print-order-list{
+      text-decoration: none;
+      float:left;
+   }
