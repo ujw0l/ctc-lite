@@ -16,7 +16,7 @@ class ctclMain {
             this.onShippingRadioButtonCheck();
         }
 
-
+        this.removeLocalstorageItem();
     }
 
     /**
@@ -374,6 +374,17 @@ class ctclMain {
                 }
             })
         });
+    }
+
+    /**
+ * Rmove local storage item
+ */
+    removeLocalstorageItem() {
+
+        if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
+
+            localStorage.removeItem('ctclHiddenCart');
+        }
     }
 
 }

@@ -6,8 +6,19 @@ class ctclAdminJs {
         this.sendSmtpTestEmail();
         this.getPendingOrderDetail();
         this.getCompleteOrderDetail();
+        this.infoTabApplyMasonry();
     }
 
+    /**
+     * Apply masonry to info tab
+     */
+    infoTabApplyMasonry() {
+
+        if (undefined != document.querySelector('.ctcl-info-tab')) {
+
+            new jsMasonry('.ctcl-info-tab', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: el => el.style.opacity = '1' });
+        }
+    }
     /**
      * Load masonry 
      */

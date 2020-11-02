@@ -68,13 +68,6 @@ endif;
 }
 
 
-/**
- * Create basic info tab content
- */
-private function infoTab(){
-
-    echo "this is basic info tab";
-}
 
 /**
  * Create payment tab
@@ -226,7 +219,7 @@ private function pendingOrderTab(){
     
 
     $ctclProcessing = new ctclProcessing();
-    $pendingOrdersCount =  $ctclProcessing->getTotalPedingOrders();
+    $pendingOrdersCount =  $ctclProcessing->getTotalPendingOrders();
     $pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
     $limit = 10; 
     $offset = ( $pagenum - 1 ) * $limit;
@@ -449,14 +442,13 @@ return $html;
      */
     public function  createEmailBody($data){
 
-        
-        $body = '<div style="margin-left:auto;margin-right:auto;display:block; background-color:rgba(0,0,0,0.1);padding:20px;">';
+        $body = '<div style="margin-left:auto;margin-right:auto;display:block;padding:20px;">';
         $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-first-name'].'</p>';
         $body .= '<p>'.__('Thank you for your purchase, your purchase details are as follows :','ctc-lite').'</p>';
         $body .= '<p>'.__('Order id ').' :'.$data['order_id'].'</p>';
-        $body .= '<p>'.__('You order details :','ctc-lite').'</p>';
+        $body .= '<p>'.__('Your order details :','ctc-lite').'</p>';
         $body .= '<div style="width:600px;">';
-        $body .= '<div style="border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .= '<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
         $body .= '<span style="display:table-cell;height:30px;width:200px;" >'.__('Products','ctc-lite').'</span>';
         $body .= '<span style="display:table-cell;height:30px;width:300px;" >'.__('Variation','ctc-lite').'</span>';
         $body .='<span style="display:table-cell;height:30px;width:50px;" >'.__('Qty').'</span>';
@@ -464,19 +456,19 @@ return $html;
     
         foreach($data['products'] as $key=>$value):
             $product = json_decode(stripslashes($value),TRUE);
-            $body .= "<div style='border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;'>";
+            $body .= "<div style='border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;padding-top:10px;'>";
             $body .="<span  style='display:table-cell;width:200px'>{$product['itemName']}</span>";
             $body .="<span  style='display:table-cell;width:300px'>{$product['vari']}</span>";
             $body.="<span style='display:table-cell;width:50px;'>{$product['quantity']}</span>";
             $body .="<span style='display:table-cell;width:100px;' >{$product['itemTotal']}</span></div>";
         endforeach;
-        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
         $body .='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Tax Rate ','ctc-lite').' : </span>';
         $body.='<span style="display:table-cell;">'.get_option('ctcl_tax_rate').' % </span></div>';
-        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
         $body .='<span style="display:table-cell;width:500px;text-align:right;">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
         $body .= '<span style="display:table-cell;" >'.$data['shipping-total'].'</span></div>';
-        $body .='<div style="border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
         $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Sub Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
         $body.='<span style="display:table-cell;" >'.$data['sub-total'].'</span></div>';
         $body .='</div>';
@@ -615,24 +607,7 @@ return $html;
      * create shipping section
      */
     private function createShippingSection($orderId){
-
-        add_filter('ctcl_get_shipping_option',function($val,$orderId){
-            $html = "<a href='Javascript:void(0);' data-order-id='{$orderId}' >USPS</a>";
-            array_push($val,$html);
-
-            return $val;
-        },10,2);
-
-        add_filter('ctcl_get_shipping_option',function($val,$orderId){
-            $html = "<a href='Javascript:void(0);' data-order-id='{$orderId}' >FedEX</a>";
-            array_push($val,$html);
-
-            return $val;
-        },20,2);
-
         $shippingOptions = apply_filters('ctcl_get_shipping_option',array(),$orderId);
-        
-        
 
         if(!empty($shippingOptions )):
             echo "<fieldset class='ctcl-shipping-options'>";
@@ -648,7 +623,82 @@ return $html;
             echo "</filedset>";
         endif;
 
-       
     }
+
+    /**
+ * Create basic info tab content
+ */
+private function infoTab(){
+?>
+<div class="ctcl-info-tab-main">
+<h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header"><?=__("How to operate plugin ?",'ctc-lite')?></h3>
+<div class="ctcl-info-tab">
+
+<fieldset class="ctcl-setup-product">
+    <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"><?=__('Set up product page','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','cct-lite')?></li>
+        <li><?=__('Add CTC Lite Product block to the Page.','cct-lite')?></li>
+        <li><?=__('Click','cct-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
+        <li><?=__('Fill up the required fields like name , price etc.','cct-lite')?></li>
+        <li><?=__('Publish the page and you are done with creating product.','cct-lite')?></li>
+    </ol>
+</fieldset>
+
+<fieldset class="ctcl-setup-processing-page">
+<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','cct-lite')?></li>
+        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
+        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
+    </ol>
+</fieldset>
+
+<fieldset class="ctcl-setup-check-out-page">
+<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','cct-lite')?></li>
+        <li><?=__('Add CTC Lite Cart block to page.','cct-lite')?></li>
+        <li><?=__('Click','cct-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
+        <li><?=__('Get the Url of processing page and paste it to url field (Important).','cct-lite')?></li>
+        <li><?=__('Publish the page and you are done creating checkout page.','cct-lite')?></li>
+    </ol>
+</fieldset>
+<fieldset class="ctcl-misc-setting">
+<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
+    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
+    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
+    </ol>
+</fieldset>
+
+<fieldset class="ctcl-pending-order-info">
+<legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__('Pending order tab','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Pending order tab','cct-lite')?></li>
+    <li><?=__('Click detail link','cct-lite')?></li>
+    <li><?=__('View Order detail, print order list or customer info.','cct-lite')?></li>
+    <li><?=__('Or add vendor note to the order','cct-lite')?></li>
+    <li><?=__('Complete or Cancel order','cct-lite')?></li>
+    </ol>
+</fieldset>
+
+<fieldset class="ctcl-complete-order-info">
+<legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"><?=__('Complete order tab','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Complete order tab','cct-lite')?></li>
+    <li><?=__('Click detail link','cct-lite')?></li>
+    <li><?=__('View Order detail, print order list or customer info.','cct-lite')?></li>
+    <li><?=__('Or edit or view vendor note of the order','cct-lite')?></li>
+    
+    </ol>
+</fieldset>
+
+</div>
+</div>
+ <?php   
+}
+
 
 }

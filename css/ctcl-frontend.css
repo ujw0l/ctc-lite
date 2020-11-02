@@ -1,13 +1,16 @@
+/**
+product page styling
+*/
 .ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
-    font-size: 16px!important;
     height:40px;
     padding:10px!important;
     width:150px;
-    font-size:23px;
+    font-size:20px;
     text-transform:capitalize;
     text-decoration: none!important;
+    margin-top:10px!important;
 
 }
 
@@ -18,7 +21,20 @@
     color:rgba(255,255,255,0.9);
 }
 .product-price{
-    font-size:23px;
+    font-size:20px;
+}
+.ctcl-Variation-1-label,
+.ctcl-Variation-2-label{
+display:block;
+}
+.ctcl-Variation-1,
+.ctcl-Variation-2{
+height:40px;
+width:150px;
+font-size:14px;
+}
+.ctcl-product-qty{
+    display:block;
 }
 .ctcl-product-container{
    
@@ -102,9 +118,10 @@ vertical-align: middle;
 
 
 .ctcl-checkout-item-img-span img{
-float:left;
-    height:40px;
-    width:40px;
+    float:left;
+    height:37px;
+    width:37px;
+    border:1px dashed rgba(0,0,0,1);
     overflow:hidden;
     display:inline-block;
 }
@@ -124,11 +141,7 @@ float:left;
     display:inline-block;
     margin-left:7px;
 }
-.ctcl-co-address-row .ctcl-address-col input{}
-.ctcl-address-col .ctcl-co-first-name,
-.ctcl-address-col .ctcl-co-last-name{
-  
-}
+
 .ctcl-address-row label{
     display:block;
 }

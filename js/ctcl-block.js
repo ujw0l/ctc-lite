@@ -25,8 +25,11 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         profilePic: { type: 'string', default: ctcLiteParams.defaultPic },
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
         dummyQty: { type: 'string', default: '1' },
+        variation1Lable: { type: 'string', default: 'Variation 1' },
+        variation2Lable: { type: 'string', default: 'Variation 2' },
         variation1: { type: 'Array', default: [] },
-        variation2: { type: 'Array', default: [] }
+        variation2: { type: 'Array', default: [] },
+
 
     },
     edit: ({ attributes, setAttributes }) => {
@@ -35,10 +38,11 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         let variationTwoItem = attributes.variation2.map(x => x.value);
 
         return el('div', { className: 'ctcl-product-container' },
-            el('div', null,
-                el(SelectControl, { className: 'ctcl-variation-1', options: attributes.variation1, onChange: () => { } }),
-                el(SelectControl, { className: 'ctcl-variation-2', options: attributes.variation2, onChange: () => { } }),
+            el('div', { className: 'ctcl-gb-ac-container' },
+
                 el('div', { className: 'product-price-container' }, el('span', { className: 'price-label' }, `${__('Price', 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}): `), el('span', { className: 'product-price' }, attributes.productPrice))),
+            el(SelectControl, { className: 'ctcl-variation-select', label: `${attributes.variation1Lable} : `, className: 'ctcl-variation-1', options: attributes.variation1, }),
+            el(SelectControl, { className: 'ctcl-variation-select', label: `${attributes.variation2Lable} : `, className: 'ctcl-variation-2', options: attributes.variation2, }),
             el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
 
@@ -49,6 +53,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     el(TextControl, { name: 'shipping', className: 'inspect-shipping-cost', type: 'number', value: attributes.shippingCost, label: `${__("Shipping Cost", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ shippingCost: parseFloat(value).toFixed(2) }), help: __('Enter shipping cost', 'ctc-lite') },),
                     el(TextControl, { name: 'variations1', className: "ctcl-setting-variation1", label: `${__("Variations 1", 'ctc-lite')} : `, value: variationOneItem.join(','), onChange: val => setAttributes({ variation1: val.split(',').map(x => { return { value: x, label: x } }) }) }),
                     el(TextControl, { name: 'variations2', className: "ctcl-setting-variation2", label: `${__("Variations 2", 'ctc-lite')} : `, value: variationTwoItem.join(','), onChange: val => setAttributes({ variation2: val.split(',').map(x => { return { value: x, label: x } }) }) }),
+                    el(TextControl, { name: 'variations1label', className: "ctcl-setting-variation1-label", label: `${__("Variations 1 Label", 'ctc-lite')} : `, value: attributes.variation1Lable, onChange: val => setAttributes({ variation1Lable: val }) }),
+                    el(TextControl, { name: 'variations2label', className: "ctcl-setting-variation2-label", label: `${__("Variations 2 Label", 'ctc-lite')} : `, value: attributes.variation2Lable, onChange: val => setAttributes({ variation2Lable: val }) }),
                     el(MediaUpload, {
                         title: __('Select Product Image', 'ctc-lite'),
                         onSelect: media => setAttributes({ profilePic: media.url }),
@@ -65,12 +71,12 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
     save: ({ attributes }) => {
 
 
-        const SelectVariation = ({ selectOptions, variationName }) => {
+        const SelectVariation = ({ selectOptions, variationName, label }) => {
 
             if (0 < selectOptions.length) {
 
                 return el('div', { className: `ctcl-${variationName.replace(' ', '-')}-cont` },
-                    el('label', { htmlFor: `ctcl-${variationName.replace(' ', '-')}`, className: `ctcl-${variationName.replace(' ', '-')}-label` }, `${variationName}`),
+                    el('label', { htmlFor: `ctcl-${variationName.replace(' ', '-')}`, className: `ctcl-${variationName.replace(' ', '-')}-label` }, `${label} : `),
                     el('select', { id: `ctcl-${variationName.replace(' ', '-')}`, className: `ctcl-${variationName.replace(' ', '-')}`, }, selectOptions.map(x => el('option', { value: x.value }, x.value),)),
                 );
 
@@ -83,8 +89,9 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         return el('div', { className: 'ctcl-product-container' },
             el('div', { className: 'product-price-container' }, el('span', { className: 'price-label' }, `${__('Price', 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}): `), el('span', { className: 'product-price' }, attributes.productPrice)),
 
-            el(SelectVariation, { selectOptions: attributes.variation1, variationName: 'Variation 1' }),
-            el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2' }),
+            el(SelectVariation, { selectOptions: attributes.variation1, variationName: 'Variation 1', label: attributes.variation1Lable }),
+            el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2', label: attributes.variation2Lable }),
+            el('label', { className: 'ctcl-product-qty' }, `${__('Qty ')} : `),
             el('div', { className: 'ctcl-quantity' }, el('span', { className: 'ctcl-minus-qty' }, '-'), el('input', { className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
         )
@@ -215,7 +222,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         )),
                     el('fieldset', { className: 'ctcl-contact-form-fieldset' },
                         el('legend', { className: 'ctcl-contact-form-legend' }, __('Contact/Shipping Info', 'ctc-lite')),
-                        el('div', { className: "ctcl-co-address-row" },
+                        el('div', { className: "ctcl-address-row" },
                             el('div', { className: 'ctcl-address-col' },
                                 el('label', { htmlFor: "ctcl-co-first-name", className: "ctcl-co-fn-label" }, __("*First  Name :", 'ctc-lite')),
                                 el('input', { className: 'ctcl-co-first-name', type: 'text', required: true, name: 'ctcl-co-first-name' }),

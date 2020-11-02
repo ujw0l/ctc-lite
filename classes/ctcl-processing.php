@@ -66,7 +66,7 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       echo "<div>".__('Order successfully placed. Your order id is')." : {$_POST['order_id']} </div>";
+       echo "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$_POST['order_id']} </div>";
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
       endif;
@@ -98,7 +98,7 @@ public function orderProcessingShortCode(){
     /**
      * get total pending order
      */
-    public function getTotalPedingOrders(){
+    public function getTotalPendingOrders(){
         global $wpdb;
         return $wpdb->get_var("SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'pending'");
     }

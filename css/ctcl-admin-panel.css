@@ -1,3 +1,4 @@
+
 ctcl-shipping-tab-cintent,
 .ctcl-payment-tab-content{
  height:100%;
@@ -183,7 +184,8 @@ display:inline-block;
 }
 .ctcl-shipping-tab-fieldset-legend:before,
 .ctcl-email-tab-fieldset-legend:before,
-.ctcl-payment-tab-fieldset-legend:before{
+.ctcl-payment-tab-fieldset-legend:before,
+.ctcl-misc-setting-legend:before{
 animation: rotateSettingButton 3s linear infinite;
 }
 
@@ -382,4 +384,32 @@ table.ctcl-pending-orders td{
    #ctcl-print-cust-info{
       margin-left:10px;
       margin-bottom:10px;
+   }
+   .ctcl-info-tab{
+      opacity:0;
+   }
+   .ctcl-setup-product,
+   .ctcl-setup-processing-page,
+   .ctcl-setup-check-out-page,
+   .ctcl-misc-setting,
+   .ctcl-pending-order-info,
+   .ctcl-complete-order-info{
+
+      border:1px dashed rgba(0,0,0,1);
+      display:inline-block;
+      padding:10px;
+
+   }
+   .ctcl-setup-product-legend,
+   .ctcl-setup-processing-page-legend,
+   .ctcl-setup-check-out-page-legend,
+   .ctcl-misc-setting-legend,
+   .ctcl-pending-order-info-legend,
+   .ctcl-complete-order-info-legend{
+      text-align:center;
+   }
+   .ctcl-basic-info-header{
+      margin-top:15px;
+      margin-bottom:15px;
+      vertical-align: middle;
    }
