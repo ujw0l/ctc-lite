@@ -228,7 +228,7 @@ private function pendingOrderTab(){
     $ctclProcessing = new ctclProcessing();
     $pendingOrdersCount =  $ctclProcessing->getTotalPedingOrders();
     $pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
-    $limit = 10; // number of rows in page
+    $limit = 10; 
     $offset = ( $pagenum - 1 ) * $limit;
     $num_of_pages = ceil( $pendingOrdersCount / $limit );
 
@@ -286,7 +286,7 @@ foreach ($items as $key => $value):
                 <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
             </td>
             <td>
-                <a href="Javascript:void(0)" class="ctcl-get-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
+                <a href="Javascript:void(0)" class="ctcl-get-pending-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
             </td>
     </tr>
 <?php
@@ -305,6 +305,81 @@ endif;
  * Create complete  order tab
  */
 private function completeOrderTab(){
+
+    $ctclProcessing = new ctclProcessing();
+    $pendingOrdersCount =  $ctclProcessing->getTotalCompleteOrders();
+    $pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
+    $limit = 10; 
+    $offset = ( $pagenum - 1 ) * $limit;
+    $num_of_pages = ceil( $pendingOrdersCount / $limit );
+
+    $items =  $ctclProcessing->getCompleteOrderEntries($offset,$limit);
+    if(0<count($items)):   
+        $page_links = paginate_links( array(
+            'base' => add_query_arg( 'pagenum', '%#%' ),
+            'format' => '',
+            'prev_text' => __( '&laquo;', 'ctc-lite' ),
+            'next_text' => __( '&raquo;', 'ctc-lite' ),
+            'total' => $num_of_pages,
+            'current' => $pagenum
+        ) );
+
+?>
+  
+  <fieldset class="ctcl-pending-orders-fieldset">
+      <legend class="dashicons-before dashicons-list-view"><?=__('Complete Orders','ctc-lite')?></legend>
+  <?php
+    if ( $page_links ):
+        echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
+    endif;
+    
+?>
+
+<table class="wp-list-table widefat fixed striped media ctcl-complete-orders">
+    <thead>
+        <tr>
+            <td class="ctcl-complete-order-head"><?=__('Order Id','ctc-lite')?></td>
+            <td class="ctcl-complete-order-head"><?=__('Order Date','ctc-lite')?></td>
+            <td class="ctcl-complete-order-head"><?=__('Payment Type','ctc-lite')?></td>
+            <td class="ctcl-complete-order-head"><?=__('Shipping Type','ctc-lite')?></td>
+            <td class="ctcl-complete-order-head" colspan="3"><?=__('Special Instruction','ctc-lite')?></td>
+            <td class="ctcl-complete-order-head"><?=__('Order Detail','ctc-lite')?></td>
+</thead>
+<?php
+
+foreach ($items as $key => $value):
+    $item = json_decode(stripslashes($value['orderDetail']),TRUE);
+?>
+    <tr id="ctcl-complete-order-<?=$item['order_id']?>" >
+            <td>
+                <?=$item['order_id']?>
+            </td>
+            <td>
+                <?=date('m/d/Y',$item['order_id'])?>
+            </td>
+            <td>
+            <?=$item['payment_type']?>
+            </td>
+            <td>
+              <?=$item['shipping_type']?>
+            </td>
+            <td colspan="3">
+                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+            </td>
+            <td>
+                <a href="Javascript:void(0)" class="ctcl-get-complete-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
+            </td>
+    </tr>
+<?php
+endforeach;
+?>
+</table>
+<?php
+else:
+    ?>
+    <p class="ctc-no-complete-order" ><?=__("There is no complete order right now.",'ctc-lite')?></p>
+    <?php
+endif;
 
 }
 
@@ -373,6 +448,8 @@ return $html;
      * @return $body body of email to be sent to customer
      */
     public function  createEmailBody($data){
+
+        
         $body = '<div style="margin-left:auto;margin-right:auto;display:block; background-color:rgba(0,0,0,0.1);padding:20px;">';
         $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-first-name'].'</p>';
         $body .= '<p>'.__('Thank you for your purchase, your purchase details are as follows :','ctc-lite').'</p>';
@@ -380,14 +457,16 @@ return $html;
         $body .= '<p>'.__('You order details :','ctc-lite').'</p>';
         $body .= '<div style="width:600px;">';
         $body .= '<div style="border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body .= '<span style="display:table-cell;height:30px;width:500px;" >'.__('Products','ctc-lite').'</span>';
+        $body .= '<span style="display:table-cell;height:30px;width:200px;" >'.__('Products','ctc-lite').'</span>';
+        $body .= '<span style="display:table-cell;height:30px;width:300px;" >'.__('Variation','ctc-lite').'</span>';
         $body .='<span style="display:table-cell;height:30px;width:50px;" >'.__('Qty').'</span>';
         $body .='<span style="display:table-cell;height:30px;width:100px;" >'.__('Item Total').'</span></div>';
     
         foreach($data['products'] as $key=>$value):
             $product = json_decode(stripslashes($value),TRUE);
             $body .= "<div style='border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;'>";
-            $body .="<span  style='display:table-cell;width:500px'>{$product['itemName']}</span>";
+            $body .="<span  style='display:table-cell;width:200px'>{$product['itemName']}</span>";
+            $body .="<span  style='display:table-cell;width:300px'>{$product['vari']}</span>";
             $body.="<span style='display:table-cell;width:50px;'>{$product['quantity']}</span>";
             $body .="<span style='display:table-cell;width:100px;' >{$product['itemTotal']}</span></div>";
         endforeach;
@@ -407,9 +486,9 @@ return $html;
     }
 
     /**
-     * Get order detail 
+     * Get pending order detail 
      * 
-     * @param $id order id
+     * 
      */
     public function getPendingOrderDetail(){
 
@@ -420,10 +499,34 @@ return $html;
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
        $this ->createOrderListSection($detail);
        $this->createCustomerInfoSection($detail);
-       $this->createFinalNoteSection($detail);
+       $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
        $this->createShippingSection($detail['order_id']);
        echo "</div>";
+       echo "<div class='pending-order-modal-action'>";
+       submit_button( __( 'Cancel Order', 'ctc-lite' ), 'primary ctcl-detail-cancel-order','submit',true);
        submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',true);
+       echo '</div>';
+       echo "</div>";
+        wp_die();
+    }
+
+
+    /**
+     * Get complete detail 
+     * 
+     */
+    public function completeOrderDetail(){
+
+        $ctclProcessing =  new ctclProcessing();
+        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+        echo '<div class="ctc-order-detail-cont">';
+       echo "<div class='ctcl-complete-order-detail'>";
+       echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
+       $this ->createOrderListSection($detail);
+       $this->createCustomerInfoSection($detail);
+       $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
+       $this->createShippingSection($detail['order_id']);
+       echo "</div>";
        echo "</div>";
         wp_die();
     }
@@ -436,12 +539,17 @@ return $html;
         echo "<fieldset class='ctcl-order-list'>";
         echo "<legend class='dashicons-before dashicons-list-view ctcl-orderdetail-legend'>".__('Items Details')."</legend>";
         echo '<div id="ctcl-orderlist">';
-        echo "<div class='ctcl-order-list-header'><span>".__('Products','ctc-lite')."</span><span>".__('Qty','ctc-lite')."</span><span>".__('Item Total','ctc-lite')."</span></div>";
+        echo "<div class='ctcl-order-list-header'>";
+        echo "<span>".__('Products','ctc-lite')."</span>";
+        echo "<span>".__('Variation','ctc-lite')."</span>";
+        echo "<span>".__('Qty','ctc-lite')."</span>";
+        echo "<span>".__('Item Total','ctc-lite')."</span></div>";
         
         foreach($detail['products']as $key=>$order):
         $item = json_decode($order,TRUE);
         echo "<div class='ctcl-ordered-item'>";
         echo "<span>{$item['itemName']}</span>";
+        echo "<span>{$item['vari']}</span>";
         echo "<span>{$item['quantity']}</span>";
         echo "<span>{$item['itemTotal']}</span>";
         echo '</div>';
@@ -482,12 +590,16 @@ return $html;
 
     /**
      * create final note section of modal
+     * 
+     * @param $ctclProcessing CTCL Porcessing object
+     * @orderId $orderId Order Id
      */
-    private function createFinalNoteSection($detail){
+    private function createVendorNoteSection($ctclProcessing,$orderId){
 
+        $note = $ctclProcessing->getVendorNote($orderId);
         echo "<fieldset>";
         echo "<legend class='dashicons-before dashicons-clipboard'>".__("Order Status  Note" ,"ctc-lite")." : </legend>";    
-        echo "<textarea id='ctcl-order-status-note' rows='5' cols='40' name='ctcl-order-status-note' value='{$detail['vendorNote']}'>";
+        echo "<textarea id='ctcl-order-status-note' rows='5' cols='40' name='ctcl-order-status-note' value=''>{$note}";
         echo"</textarea>";
         echo submit_button( __( 'Save', 'ctc-lite' ), 'primary ctcl-vendor-note-submit','submit',false );
         echo "</fieldset>";

@@ -164,6 +164,7 @@ dbDelta($sql);
        'qtyHead'=>__('Qty','ctc-lite'),
        'priceHead'=>__('Price','ctc-lite'),
        'itemTotalHead'=>__('Item total','ctc-lite'),
+       'varHead'=>__('Variation','ctc-lite'),
        
       )
    );
@@ -215,6 +216,9 @@ public function requiredAjax(){
    add_action( 'wp_ajax_sendTestEmail', array($this->ctclProcessing,'sendSmtpTestEmail') );
    add_action('wp_ajax_pendingOrderDetail',array($this->ctclHtml,'getPendingOrderDetail'));
    add_action('wp_ajax_updateVendorNote',array($this->ctclProcessing,'updateOrderVendorNote'));
+   add_action('wp_ajax_orderMarkComplete',array($this->ctclProcessing,'orderMarkComplete'));
+   add_action('wp_ajax_completeOrderDetail',array($this->ctclHtml,'completeOrderDetail'));
+   add_action('wp_ajax_cancelOrder',array($this->ctclProcessing,'cancelOrder'));
 }
 
    /**

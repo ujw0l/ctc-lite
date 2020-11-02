@@ -66,17 +66,51 @@ cursor:pointer;
 vertical-align: middle;
     display: table-cell;
     text-align: center;
-    width: 150px;
     height: 100%;
 }
+.ctcl-co-image-head,
+.ctcl-checkout-item .ctcl-checkout-item-img-span{
+    width:50px;
+}
+
+.ctcl-co-name-head,
+.ctcl-checkout-item .ctcl-checkout-item-name{
+    width:150px;
+}
+
+.ctcl-co-var-head,
+.ctcl-checkout-item .ctcl-checkout-item-var{
+    width:200px;
+}
+.ctcl-co-price-head,
+.ctcl-checkout-item  .ctcl-checkout-item-price{
+    width:60px;
+}
+
+.ctcl-co-qty-head,
+.ctcl-checkout-item  .ctcl-checkout-item-qty{
+    width:50px;
+}
+.ctcl-co-item-total-head,
+.ctcl-checkout-item  .ctcl-checkout-item-total{
+    width:170px
+}
+.ctcl-co-item-remove-head,
+.ctcl-checkout-item  .ctcl-checkout-item-remove{
+    width:20px;
+} 
+
+
 .ctcl-checkout-item-img-span img{
 float:left;
     height:40px;
     width:40px;
+    overflow:hidden;
     display:inline-block;
 }
 .ctcl-checkout-item-remove{
     text-align:right!important;
+    width:20px;
 }
 .ctcl-checkout-item-remove:before{
    vertical-align: middle;
@@ -173,7 +207,7 @@ float:right;
 
 .ctcl-checkout{
 
-    width:600px;
+    width:700px;
     margin-left:auto;
     margin-right:auto;
     display:block;

@@ -73,19 +73,51 @@ class ctclMain {
         Array.from(document.querySelectorAll('.ctcl-add-cart')).map((x, i, btnArr) => btnArr[i].addEventListener('click', e => {
             let newItem = e.target.getAttribute('data-name');
 
+            let parentContainer = e.target.parentElement;
+            let variation1 = undefined != parentContainer.querySelector('#ctcl-Variation-1') ? parentContainer.querySelector('#ctcl-Variation-1').value : 'N/A';
+            let variation2 = undefined != parentContainer.querySelector('#ctcl-Variation-2') ? parentContainer.querySelector('#ctcl-Variation-2').value : 'N/A';
+
+
+
             if (null === localStorage.getItem('ctclHiddenCart')) {
-                localStorage.setItem('ctclHiddenCart', JSON.stringify([{ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target.getAttribute('data-shipping-cost') }]))
+                localStorage.setItem('ctclHiddenCart', JSON.stringify([{
+                    name: e.target.getAttribute('data-name'),
+                    price: e.target.getAttribute('data-price'),
+                    qty: e.target.getAttribute('data-qty'),
+                    pic: e.target.getAttribute('data-pic'),
+                    shippingCost: e.target.getAttribute('data-shipping-cost'),
+                    varOne: variation1,
+                    varTwo: variation2,
+
+                }]))
             } else {
                 let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
                 let prodNameCart = setCartItems.map(x => x.name);
                 for (let i in setCartItems) {
                     if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
-                        setCartItems[i] = { name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target.getAttribute('data-shipping-cost') };
+                        setCartItems[i] = {
+                            name: e.target.getAttribute('data-name'),
+                            price: e.target.getAttribute('data-price'),
+                            qty: e.target.getAttribute('data-qty'),
+                            pic: e.target.getAttribute('data-pic'),
+                            shippingCost: e.target.getAttribute('data-shipping-cost'),
+                            varOne: variation1,
+                            varTwo: variation2,
+                        };
                     } else if (setCartItems[i].name != newItem && -1 === prodNameCart.indexOf(newItem)) {
-                        setCartItems.push({ name: e.target.getAttribute('data-name'), price: e.target.getAttribute('data-price'), qty: e.target.getAttribute('data-qty'), pic: e.target.getAttribute('data-pic'), shippingCost: e.target.getAttribute('data-shipping-cost') })
+                        setCartItems.push({
+                            name: e.target.getAttribute('data-name'),
+                            price: e.target.getAttribute('data-price'),
+                            qty: e.target.getAttribute('data-qty'),
+                            pic: e.target.getAttribute('data-pic'),
+                            shippingCost: e.target.getAttribute('data-shipping-cost'),
+                            varOne: variation1,
+                            varTwo: variation2,
+                        })
                         prodNameCart.push(newItem);
                     }
                 }
+                console.log(setCartItems);
                 localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems));
                 ctclCartFunc.map(x => x(setCartItems));
             }
@@ -131,25 +163,36 @@ class ctclMain {
             headerDisplay.classList.add('ctcl-checkout-item-header');
 
             let imageHead = document.createElement('span');
+            imageHead.className = 'ctcl-co-image-head';
             headerDisplay.appendChild(imageHead);
 
             let nameHead = document.createElement('span');
+            nameHead.className = 'ctcl-co-name-head';
             nameHead.appendChild(document.createTextNode(ctclParams.itemHead));
             headerDisplay.appendChild(nameHead)
 
+            let varHead = document.createElement('span');
+            varHead.className = 'ctcl-co-var-head';
+            varHead.appendChild(document.createTextNode(ctclParams.varHead));
+            headerDisplay.appendChild(varHead)
+
             let priceHead = document.createElement('span');
+            priceHead.className = 'ctcl-co-price-head';
             priceHead.appendChild(document.createTextNode(ctclParams.priceHead));
             headerDisplay.appendChild(priceHead)
 
             let qunHead = document.createElement('span');
+            qunHead.className = 'ctcl-co-qty-head';
             qunHead.appendChild(document.createTextNode(ctclParams.qtyHead));
             headerDisplay.appendChild(qunHead)
 
             let itemTotHead = document.createElement('span');
+            itemTotHead.className = 'ctcl-co-item-total-head';
             itemTotHead.appendChild(document.createTextNode(ctclParams.itemTotalHead));
             headerDisplay.appendChild(itemTotHead)
 
             let removeHead = document.createElement('span');
+            removeHead.className = 'ctcl-co-item-remove-head';
             headerDisplay.appendChild(removeHead);
 
             listContainer.appendChild(headerDisplay);
@@ -163,7 +206,7 @@ class ctclMain {
                 let itemInput = document.createElement('input');
                 itemInput.type = 'hidden';
                 itemInput.name = `products[]`;
-                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2) });
+                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}` });
                 prodListCont.appendChild(itemInput);
 
                 let itemDisplay = document.createElement('div');
@@ -181,6 +224,11 @@ class ctclMain {
                 itemName.classList.add('ctcl-checkout-item-name');
                 itemName.appendChild(document.createTextNode(cartItems[i].name));
                 itemDisplay.append(itemName);
+
+                let itemVar = document.createElement('span');
+                itemVar.classList.add('ctcl-checkout-item-var');
+                itemVar.appendChild(document.createTextNode(cartItems[i].varOne + ',' + cartItems[i].varTwo));
+                itemDisplay.append(itemVar);
 
                 let itemPrice = document.createElement('span');
                 itemPrice.classList.add('ctcl-checkout-item-price');
@@ -208,7 +256,6 @@ class ctclMain {
 
             let finalShippingCost = undefined != storePickUp ? storePickUp : shippingCost;
 
-            console.log(ctclParams);
             let totalShippingCostLabel = document.createElement('span');
             totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
             totalShippingCostLabel.appendChild(document.createTextNode(ctclParams.totalShipping + ' (' + ctclParams.currency + ') : '));

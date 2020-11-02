@@ -192,23 +192,26 @@ animation: rotateSettingButton 3s linear infinite;
    to{transform: rotate(360deg);}
 }
 
-.ctcl-pending-orders-fieldset legend{
-   padding-top:20px;
-}
+
+table.ctcl-complete-orders,
 table.ctcl-pending-orders{
    margin-left:-9px!important;
    text-align:center!important;
 }
+td.ctcl-complete-order-head,
 td.ctcl-pending-order-head{
    text-align:center!important;
 }
 table.ctcl-pending-orders td{
    vertical-align: middle;
 }
+.ctcl-pending-complete-fieldset legend,
 .ctcl-pending-orders-fieldset legend{
-
+   padding-top:20px;
+   margin-bottom:10px;
    font-weight:bold;
 }
+.ctcl-complete-special-instruct,
 .ctcl-pending-special-instruct{
    text-align:left;
 }

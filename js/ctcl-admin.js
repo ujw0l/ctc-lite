@@ -5,6 +5,7 @@ class ctclAdminJs {
         this.loadMasonry();
         this.sendSmtpTestEmail();
         this.getPendingOrderDetail();
+        this.getCompleteOrderDetail();
     }
 
     /**
@@ -65,9 +66,11 @@ class ctclAdminJs {
      */
     getPendingOrderDetail() {
 
-        let pendingOrderItems = document.querySelectorAll('.ctcl-get-order-data');
+        let pendingOrderItems = document.querySelectorAll('.ctcl-get-pending-order-data');
+
 
         if (0 < pendingOrderItems.length) {
+
 
 
             Array.from(pendingOrderItems).map(x => x.addEventListener('click', e => {
@@ -95,15 +98,17 @@ class ctclAdminJs {
      * All of the required event listener to be loaded after modal id loaded
      */
     addPendingOrderModalEvent() {
-        this.printPendingOrderList();
-        this.printPendingCustInfo();
+        this.printOrderList();
+        this.printCustInfo();
         this.vendorNoteSubmit();
+        this.cancelPendingOrder();
+        this.pendingOrderMarkComplete();
     }
+
     /**
     * print ordered item list in pending order modal
     */
-
-    printPendingOrderList() {
+    printOrderList() {
         document.querySelector('#ctcl-print-order-list').addEventListener('click', () => {
             let content = document.querySelector('#ctcl-orderlist').innerHTML;
             let css = document.querySelector("#ctclAdminCss-css").href;
@@ -122,7 +127,7 @@ class ctclAdminJs {
     /**
      * Print pending order customer info
      */
-    printPendingCustInfo() {
+    printCustInfo() {
 
         document.querySelector('#ctcl-print-cust-info').addEventListener('click', () => {
             let content = document.querySelector('#ctc-pending-customer-info').innerHTML;
@@ -162,6 +167,110 @@ class ctclAdminJs {
         });
 
     }
+
+    /**
+     * Mark  order complete
+     */
+
+    pendingOrderMarkComplete() {
+
+        document.querySelector('.ctcl-detail-mark-complete').addEventListener('click', e => {
+            let orderId = document.querySelector('#ctcl-order-id').value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+            xhttp.responseType = "text";
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+            xhttp.addEventListener('load', event => {
+                if (event.target.status >= 200 && event.target.status < 400) {
+                    let trToRemove = document.querySelector(`#ctcl-pending-order-${orderId}`);
+                    trToRemove.parentElement.removeChild(trToRemove);
+                    document.querySelector('#overlay-close-btn').click();
+                    alert(event.target.response);
+                } else {
+                    console.log(event.target.statusText);
+                }
+            })
+            xhttp.send(`action=orderMarkComplete&orderId=${orderId}`);
+
+        });
+
+    }
+
+
+    /**
+     * Cancel order
+     */
+    cancelPendingOrder() {
+        document.querySelector('.ctcl-detail-cancel-order').addEventListener('click', e => {
+            let orderId = document.querySelector('#ctcl-order-id').value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+            xhttp.responseType = "text";
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+            xhttp.addEventListener('load', event => {
+                if (event.target.status >= 200 && event.target.status < 400) {
+                    let trToRemove = document.querySelector(`#ctcl-pending-order-${orderId}`);
+                    trToRemove.parentElement.removeChild(trToRemove);
+                    document.querySelector('#overlay-close-btn').click();
+                    alert(event.target.response);
+                } else {
+                    console.log(event.target.statusText);
+                }
+            })
+            xhttp.send(`action=cancelOrder&orderId=${orderId}`);
+        });
+    }
+
+
+
+
+
+
+    /**
+    * Get complete order detail in modal with ajax
+    */
+    getCompleteOrderDetail() {
+
+        let pendingOrderItems = document.querySelectorAll('.ctcl-get-complete-order-data');
+
+        if (0 < pendingOrderItems.length) {
+
+
+            Array.from(pendingOrderItems).map(x => x.addEventListener('click', e => {
+                let orderId = e.target.getAttribute('data-order-id');
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+                xhttp.responseType = "text";
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+                xhttp.addEventListener('load', event => {
+                    if (event.target.status >= 200 && event.target.status < 400) {
+                        new jsOverlay({ elContent: event.target.response, containerHt: 800, containerWd: 1500, overlayNum: 1 });
+                        this.addCompleteOrderModalEvent();
+                    } else {
+                        console.log(event.target.statusText);
+                    }
+                });
+                xhttp.send(`action=completeOrderDetail&orderId=${orderId}`);
+
+            }));
+        }
+    }
+
+    /**
+     * All of the required event listener to be loaded after modal id loaded
+     */
+    addCompleteOrderModalEvent() {
+        this.printOrderList();
+        this.printCustInfo();
+        this.vendorNoteSubmit();
+
+    }
+
+
+
 }
 
 window.addEventListener('load', () => {

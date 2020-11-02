@@ -104,6 +104,13 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * 
+     */
+    public function getTotalCompleteOrders(){
+        global $wpdb;
+        return $wpdb->get_var("SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'complete'");
+    }
+    /**
      * get list of pending orders
      * 
      * @param $offset database table offset
@@ -116,6 +123,20 @@ public function orderProcessingShortCode(){
        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ctclOrders  WHERE orderStatus= 'pending' LIMIT $offset, $limit",ARRAY_A );
 
     }
+
+    /**
+     * get list of complete orders
+     * 
+     * @param $offset database table offset
+     * @param $limit databse row limit
+     * 
+     * @return Item list between $offset and $limit
+     */
+    public function getCompleteOrderEntries($offset,$limit){
+        global $wpdb;
+      return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ctclOrders  WHERE orderStatus= 'complete' LIMIT $offset, $limit",ARRAY_A );
+
+   }
 
     /**
      * get order detail from database
@@ -137,5 +158,44 @@ public function orderProcessingShortCode(){
         _e("Note could not be saved at this time","ctc-lite");
        endif;
         wp_die();
+    }
+
+    /**
+     * Mark order complete
+     */
+    public function orderMarkComplete(){
+        global $wpdb;
+        $complete = $wpdb->update($wpdb->prefix.'ctclOrders',array('orderStatus'=>'complete'),array('orderId'=>$_POST['orderId']));
+
+        if(1==$complete):
+            _e("Order marked complete","ctc-lite");
+           else:
+            _e("Order could not be marked complete at this time","ctc-lite");
+           endif;
+        wp_die();
+    }
+
+    /**
+     * Cancel order
+     */
+    public function cancelOrder(){
+        global $wpdb;
+        $delete = $wpdb->delete($wpdb->prefix.'ctclOrders', array('orderId'=>$_POST['orderId']),array('%d'));
+       
+        if(1 == $delete):
+            _e("Order sucessfully canceled","ctc-lite");
+           else:
+            _e("Order could not be cancled at this time","ctc-lite");
+           endif;
+        wp_die();
+
+    }
+
+    /**
+     * Get vendor node for order
+     */
+    public function getVendorNote($orderId){
+        global $wpdb;
+        return  $wpdb->get_var("SELECT vendorNote FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
 }
