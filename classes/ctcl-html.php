@@ -326,7 +326,7 @@ private function completeOrderTab(){
 
 ?>
   
-  <fieldset class="ctcl-pending-orders-fieldset">
+  <fieldset class="ctcl-complete-orders-fieldset">
       <legend class="dashicons-before dashicons-list-view"><?=__('Complete Orders','ctc-lite')?></legend>
   <?php
     if ( $page_links ):
@@ -494,7 +494,10 @@ return $html;
 
         $ctclProcessing =  new ctclProcessing();
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+        echo '<fieldset class="ctcl-order-detail-main-cont">';
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
         echo '<div class="ctc-order-detail-cont">';
+      
        echo "<div class='ctcl-pending-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
        $this ->createOrderListSection($detail);
@@ -503,10 +506,11 @@ return $html;
        $this->createShippingSection($detail['order_id']);
        echo "</div>";
        echo "<div class='pending-order-modal-action'>";
-       submit_button( __( 'Cancel Order', 'ctc-lite' ), 'primary ctcl-detail-cancel-order','submit',true);
-       submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',true);
+       submit_button( __( 'Cancel Order', 'ctc-lite' ), 'primary ctcl-detail-cancel-order','submit',false);
+       submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',false);
        echo '</div>';
        echo "</div>";
+       echo "</fieldset>";
         wp_die();
     }
 
@@ -519,6 +523,8 @@ return $html;
 
         $ctclProcessing =  new ctclProcessing();
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+        echo '<fieldset class="ctcl-order-detail-main-cont">';
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
         echo '<div class="ctc-order-detail-cont">';
        echo "<div class='ctcl-complete-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
@@ -528,6 +534,7 @@ return $html;
        $this->createShippingSection($detail['order_id']);
        echo "</div>";
        echo "</div>";
+       echo "</fieldset>";
         wp_die();
     }
 
@@ -540,18 +547,18 @@ return $html;
         echo "<legend class='dashicons-before dashicons-list-view ctcl-orderdetail-legend'>".__('Items Details')."</legend>";
         echo '<div id="ctcl-orderlist">';
         echo "<div class='ctcl-order-list-header'>";
-        echo "<span>".__('Products','ctc-lite')."</span>";
-        echo "<span>".__('Variation','ctc-lite')."</span>";
-        echo "<span>".__('Qty','ctc-lite')."</span>";
-        echo "<span>".__('Item Total','ctc-lite')."</span></div>";
+        echo "<span class='ctcl-order-list-header-name'>".__('Products','ctc-lite')."</span>";
+        echo "<span class='ctcl-order-list-header-var'>".__('Variation','ctc-lite')."</span>";
+        echo "<span class='ctcl-order-list-header-qty'>".__('Qty','ctc-lite')."</span>";
+        echo "<span class='ctcl-order-list-header-total'>".__('Item Total','ctc-lite')."</span></div>";
         
         foreach($detail['products']as $key=>$order):
         $item = json_decode($order,TRUE);
         echo "<div class='ctcl-ordered-item'>";
-        echo "<span>{$item['itemName']}</span>";
-        echo "<span>{$item['vari']}</span>";
-        echo "<span>{$item['quantity']}</span>";
-        echo "<span>{$item['itemTotal']}</span>";
+        echo "<span class='ctcl-ordered-item-name'>{$item['itemName']}</span>";
+        echo "<span class='ctcl-ordered-item-var' >{$item['vari']}</span>";
+        echo "<span class='ctcl-ordered-item-qty'>{$item['quantity']}</span>";
+        echo "<span class='ctcl-ordered-item-total'>{$item['itemTotal']}</span>";
         echo '</div>';
        endforeach;
        echo '<hr>';
@@ -569,7 +576,7 @@ return $html;
     private function createCustomerInfoSection($detail){
 
        echo '<fieldset class="ctc-pending-customer-info-fieldset">';
-       echo "<legend class='dashicons-before dashicons-admin-users ctcl-cust-info-legend'>".__("Customer Info","ctc-lite")."<legend>";
+       echo "<legend class='dashicons-before dashicons-admin-users ctcl-cust-info-legend'>".__("Customer Info","ctc-lite")."</legend>";
        echo '<div id="ctc-pending-customer-info">';
        echo "<address>";
        echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Customer Name",'ctc-lite')." : </label><span>{$detail['ctcl-co-first-name']} {$detail['ctcl-co-last-name']}</span></div>";
@@ -582,7 +589,6 @@ return $html;
        echo "</address>";
        echo "<div class='ctcl-pending-cust-info-shhiping-type'><label>".__("Shipping Type",'ctc-lite')." : </label><span class='ctcl-pending-cust-info-shhiping-type-text' >{$detail['shipping_type']}</span></div>";
        echo "<div class='ctcl-pending-cust-info-special-instruct'><label>".__("Special Instruction",'ctc-lite')." : </label><span class='ctcl-cust-info-instruction-text' >{$detail['checkout-special-instruction']}</span></div>";
-       echo "</fieldset>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print Customer Info","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-cust-info'></a></div>";
        echo "</fieldset>";
@@ -597,9 +603,9 @@ return $html;
     private function createVendorNoteSection($ctclProcessing,$orderId){
 
         $note = $ctclProcessing->getVendorNote($orderId);
-        echo "<fieldset>";
-        echo "<legend class='dashicons-before dashicons-clipboard'>".__("Order Status  Note" ,"ctc-lite")." : </legend>";    
-        echo "<textarea id='ctcl-order-status-note' rows='5' cols='40' name='ctcl-order-status-note' value=''>{$note}";
+        echo "<fieldset class='ctcl-vendor-note'>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-vendor-note-legend'>".__("Order Status  Note" ,"ctc-lite")." : </legend>";    
+        echo "<textarea id='ctcl-order-status-note' rows='5' cols='60' name='ctcl-order-status-note' value=''>{$note}";
         echo"</textarea>";
         echo submit_button( __( 'Save', 'ctc-lite' ), 'primary ctcl-vendor-note-submit','submit',false );
         echo "</fieldset>";
@@ -629,13 +635,13 @@ return $html;
         
 
         if(!empty($shippingOptions )):
-            echo "<filedset>";
-            echo "<legend class='dashicons-before dashicons-car'>".__("Shipping Options",'ctc-lite')."</legend>";
+            echo "<fieldset class='ctcl-shipping-options'>";
+            echo "<legend class='dashicons-before dashicons-car ctcl-shipping-options-legend'>".__("Shipping Options",'ctc-lite')."</legend>";
             echo "<div>";
             echo "<p>".__('Available Options','ctc-lite')."</p>";
             echo "<ul>";
             foreach($shippingOptions as $key=>$value):
-                echo "<li>{$value}<li>";
+                echo "<li>{$value}</li>";
             endforeach;
             echo "</ul>";
             echo "</div>";
