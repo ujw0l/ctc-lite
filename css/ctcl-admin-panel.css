@@ -388,6 +388,7 @@ table.ctcl-pending-orders td{
    .ctcl-info-tab{
       opacity:0;
    }
+   .ctcl-complete-other-info,
    .ctcl-setup-product,
    .ctcl-setup-processing-page,
    .ctcl-setup-check-out-page,
@@ -400,6 +401,7 @@ table.ctcl-pending-orders td{
       padding:10px;
 
    }
+   .ctcl-complete-other-info-legend,
    .ctcl-setup-product-legend,
    .ctcl-setup-processing-page-legend,
    .ctcl-setup-check-out-page-legend,
