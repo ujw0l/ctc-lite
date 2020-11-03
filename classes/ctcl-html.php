@@ -696,7 +696,7 @@ private function infoTab(){
 </fieldset>
 
 <fieldset class="ctcl-complete-other-info">
-<legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
     <ol>
     <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','cct-lite')?></li>
     <li><?=__('However it works best with Astra Theme','cct-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>

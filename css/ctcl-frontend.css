@@ -4,13 +4,12 @@ product page styling
 .ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
-    height:40px;
-    padding:10px!important;
-    width:150px;
-    font-size:20px;
+    width:190px!important;
+    vertical-align: middle!important;
     text-transform:capitalize;
     text-decoration: none!important;
     margin-top:10px!important;
+    text-align:center;
 
 }
 
@@ -30,7 +29,7 @@ display:block;
 .ctcl-Variation-1,
 .ctcl-Variation-2{
 height:40px;
-width:150px;
+width:190px;
 font-size:14px;
 }
 .ctcl-product-qty{
@@ -59,8 +58,8 @@ font-size:14px;
 
 .ctcl-quantity input{
     display:inline-block!important;
-    margin-left:13px!important;
-    margin-right:13px!important;
+    margin-left:30px!important;
+    margin-right:30px!important;
 }
 .ctcl-plus-qty,
 .ctcl-minus-qty{
@@ -173,8 +172,9 @@ vertical-align: middle;
 .ctcl-shipping-option-row label{
     display:inline-block;
 }
-.ctcl-checkout-button{
+input[name="ctcl-checkout-button"]{
     margin-top:20px!important;
+    color:rgba(255,255,255,1)!important;
 
 }
 .ctcl-product-loading,

@@ -265,7 +265,7 @@ wp_register_script(
  register_block_type(
      'ctc-lite/ctc-lite-block',
     array(
-       'style'         => 'ctcl-block-frontend-styles',
+       'style'         => '',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
     )
