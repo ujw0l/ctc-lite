@@ -150,7 +150,7 @@ public function orderProcessingShortCode(){
      */
     public function updateOrderVendorNote(){
         global $wpdb;
-        $update = $wpdb->update($wpdb->prefix.'ctclOrders',array('vendorNote'=>$_POST['vendorNote']),array('orderId'=>$_POST['orderId']));
+        $update = $wpdb->update($wpdb->prefix.'ctclOrders',array('vendorNote'=>sanitize_textarea_field($_POST['vendorNote'])),array('orderId'=>absint($_POST['orderId'])));
 
        if(1==$update):
         _e("Note sucessfully saved","ctc-lite");
@@ -165,7 +165,7 @@ public function orderProcessingShortCode(){
      */
     public function orderMarkComplete(){
         global $wpdb;
-        $complete = $wpdb->update($wpdb->prefix.'ctclOrders',array('orderStatus'=>'complete'),array('orderId'=>$_POST['orderId']));
+        $complete = $wpdb->update($wpdb->prefix.'ctclOrders',array('orderStatus'=>'complete'),array('orderId'=>absint($_POST['orderId'])));
 
         if(1==$complete):
             _e("Order marked complete","ctc-lite");
@@ -180,7 +180,7 @@ public function orderProcessingShortCode(){
      */
     public function cancelOrder(){
         global $wpdb;
-        $delete = $wpdb->delete($wpdb->prefix.'ctclOrders', array('orderId'=>$_POST['orderId']),array('%d'));
+        $delete = $wpdb->delete($wpdb->prefix.'ctclOrders', array('orderId'=>absint($_POST['orderId'])),array('%d'));
        
         if(1 == $delete):
             _e("Order sucessfully canceled","ctc-lite");
