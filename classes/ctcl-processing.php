@@ -9,7 +9,7 @@ class ctclProcessing{
     public function sendSmtpTestEmail(){
         $subject = __('Test email','ctc-lite');
         $emailBody = '<p>'.__('This is test email, you may ignore it.').'</p>';
-       echo  $this->sendConfirmationEmail( $_POST['email'],$subject,$emailBody);
+       echo  $this->sendConfirmationEmail( sanitize_email($_POST['email']),$subject,$emailBody);
         wp_die();
     }
 
@@ -48,11 +48,14 @@ public function orderProcessingShortCode(){
 
     if(!empty($_POST)):
         $date = new DateTime();
-        $_POST['order_id'] = $date->getTimestamp();
-        $_POST['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
-        $_POST['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
 
-      $dataAfterPayment = apply_filters('ctcl_process_payment_'.$_POST['payment_option'],$_POST);
+        $postArr = $_POST;
+
+        $postArr['order_id'] = $date->getTimestamp();
+        $postArr['checkout-email-address'] = sanitize_email( $_POST['checkout-email-address']);
+        $postArr['checkout-special-instruction'] = sanitize_text_field($_POST['checkout-special-instruction']);
+
+      $dataAfterPayment = apply_filters('ctcl_process_payment_'.$postArr['payment_option'],$postArr);
 
       if(1==$dataAfterPayment['charge_result']):
         apply_filters('ctcl_data_for_ml',$dataAfterPayment);
@@ -66,7 +69,7 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       echo "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$_POST['order_id']} </div>";
+       echo "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$postArr['order_id']} </div>";
       else:
         echo "<p>{$processPayment['failure_message']}</p>";
       endif;
