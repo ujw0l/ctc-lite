@@ -485,7 +485,8 @@ return $html;
     public function getPendingOrderDetail(){
 
         $ctclProcessing =  new ctclProcessing();
-        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+        $orderId = sanitize_text_field( $_POST['orderId']);
+        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId)),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
         echo '<div class="ctc-order-detail-cont">';
@@ -514,7 +515,10 @@ return $html;
     public function completeOrderDetail(){
 
         $ctclProcessing =  new ctclProcessing();
-        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($_POST['orderId'])),TRUE);
+
+        $orderId = sanitize_text_field( $_POST['orderId']);
+
+        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId )),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
         echo '<div class="ctc-order-detail-cont">';
