@@ -1,0 +1,26 @@
+{
+  "name": "ctc-lite",
+  "version": "1.0.0",
+  "description": "ecommerce plugin for wordpress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ujw0l/ctc-lite.git"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "UjW0L",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/ujw0l/ctc-lite/issues"
+  },
+  "dependencies": {
+    "js-masonry": "^1.1.0",
+    "js-overlay": "^1.0.9"
+  },
+  "homepage": "https://github.com/ujw0l/ctc-lite#readme"
+}

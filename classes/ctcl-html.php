@@ -9,7 +9,7 @@ public function adminPanelHtml(){
 
     $additionalTabs = apply_filters('ctcl-additional_tab',array());
 
-    $activeTab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'info';
+    $activeTab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field($_GET[ 'tab' ]) : 'info';
     $dynmTab = array();
     $arrTab=array();
 ?>
