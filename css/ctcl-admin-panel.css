@@ -330,14 +330,15 @@ table.ctcl-pending-orders td{
       float:left;
    }
    .pending-order-modal-action{
-      display:block;
+      position: -webkit-sticky;
+      position: sticky;
       height:40px;
-      vertical-align: middle;
-    
+   
    }
    .pending-order-modal-action input:first-child,
    .pending-order-modal-action input:last-child{
       float:right;
+      vertical-align: middle;
       
    }
    .pending-order-modal-action input:first-child{

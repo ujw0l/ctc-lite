@@ -7,6 +7,7 @@ class ctclAdminJs {
         this.getPendingOrderDetail();
         this.getCompleteOrderDetail();
         this.infoTabApplyMasonry();
+        this.onDismissNoticeClick();
     }
 
     /**
@@ -93,7 +94,7 @@ class ctclAdminJs {
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
                 xhttp.addEventListener('load', event => {
                     if (event.target.status >= 200 && event.target.status < 400) {
-                        new jsOverlay({ elContent: event.target.response, containerHt: 630, containerWd: 1080, overlayNum: 1 });
+                        new jsOverlay({ elContent: event.target.response, containerHt: 600, containerWd: 1080, overlayNum: 1 });
                         new jsMasonry('.ctcl-pending-order-detail', { elWidth: 500, heightSort: 'desc', elMargin: 10 });
                         this.addPendingOrderModalEvent();
                     } else {
@@ -287,7 +288,19 @@ class ctclAdminJs {
 
     }
 
+    /**
+     * Dispacch event resize on notice dismiss
+     */
+    onDismissNoticeClick() {
 
+        let dismissNotice = document.querySelectorAll('.notice-dismiss');
+
+        if (1 <= dismissNotice.length) {
+            console.log(Array.from(dismissNotice));
+            Array.from(dismissNotice).map(x => x.addEventListener('click', (e) => setTimeout(() => window.dispatchEvent(new Event('resize')), 200)))
+        }
+
+    }
 
 }
 

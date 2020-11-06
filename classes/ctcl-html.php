@@ -488,7 +488,7 @@ return $html;
         $orderId = sanitize_text_field( $_POST['orderId']);
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId)),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
-        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." : {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
 
         echo "<div class='pending-order-modal-action'>";
