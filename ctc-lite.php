@@ -189,7 +189,8 @@ dbDelta($sql);
     wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay'));
     wp_localize_script('ctclAdminJs','ctclAdminObject',array(
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
-                                                               'emptyTestEmail'=>'Please provide email for testing.'
+                                                               'emptyTestEmail'=>__('Please provide email for testing.','ctc-lite'),
+                                                               'confirmCancelOrder'=>__("This will remove order. Are you sure?",'ctc-lite'),
                                                             ));
    }
 

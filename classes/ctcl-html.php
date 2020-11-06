@@ -490,6 +490,11 @@ return $html;
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
         echo '<div class="ctc-order-detail-cont">';
+
+        echo "<div class='pending-order-modal-action'>";
+        submit_button( __( 'Cancel Order', 'ctc-lite' ), 'primary ctcl-detail-cancel-order','submit',false);
+        submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',false);
+        echo '</div>';
       
        echo "<div class='ctcl-pending-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
@@ -498,10 +503,7 @@ return $html;
        $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
        $this->createShippingSection($detail['order_id']);
        echo "</div>";
-       echo "<div class='pending-order-modal-action'>";
-       submit_button( __( 'Cancel Order', 'ctc-lite' ), 'primary ctcl-detail-cancel-order','submit',false);
-       submit_button( __( 'Mark Complete', 'ctc-lite' ), 'primary ctcl-detail-mark-complete','submit',false);
-       echo '</div>';
+      
        echo "</div>";
        echo "</fieldset>";
         wp_die();

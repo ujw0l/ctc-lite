@@ -187,6 +187,8 @@ class ctclAdminJs {
     pendingOrderMarkComplete() {
 
         document.querySelector('.ctcl-detail-mark-complete').addEventListener('click', e => {
+
+
             let orderId = document.querySelector('#ctcl-order-id').value;
 
             var xhttp = new XMLHttpRequest();
@@ -207,6 +209,7 @@ class ctclAdminJs {
 
         });
 
+
     }
 
 
@@ -216,22 +219,23 @@ class ctclAdminJs {
     cancelPendingOrder() {
         document.querySelector('.ctcl-detail-cancel-order').addEventListener('click', e => {
             let orderId = document.querySelector('#ctcl-order-id').value;
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
-            xhttp.responseType = "text";
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
-            xhttp.addEventListener('load', event => {
-                if (event.target.status >= 200 && event.target.status < 400) {
-                    let trToRemove = document.querySelector(`#ctcl-pending-order-${orderId}`);
-                    trToRemove.parentElement.removeChild(trToRemove);
-                    document.querySelector('#overlay-close-btn').click();
-                    alert(event.target.response);
-                } else {
-                    console.log(event.target.statusText);
-                }
-            })
-            xhttp.send(`action=cancelOrder&orderId=${orderId}`);
+            if (confirm(ctclAdminObject.confirmCancelOrder)) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+                xhttp.responseType = "text";
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+                xhttp.addEventListener('load', event => {
+                    if (event.target.status >= 200 && event.target.status < 400) {
+                        let trToRemove = document.querySelector(`#ctcl-pending-order-${orderId}`);
+                        trToRemove.parentElement.removeChild(trToRemove);
+                        document.querySelector('#overlay-close-btn').click();
+                        alert(event.target.response);
+                    } else {
+                        console.log(event.target.statusText);
+                    }
+                })
+                xhttp.send(`action=cancelOrder&orderId=${orderId}`);
+            }
         });
     }
 
