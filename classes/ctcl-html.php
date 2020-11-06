@@ -652,11 +652,12 @@ private function infoTab(){
 </fieldset>
 
 <fieldset class="ctcl-setup-processing-page">
-<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
     <ol>
         <li><?=__('Create a page','cct-lite')?></li>
         <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
         <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
+        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
     </ol>
 </fieldset>
 

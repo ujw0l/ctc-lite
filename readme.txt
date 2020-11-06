@@ -1,9 +1,9 @@
 === CTC Lite ===
-Contributors: Ujwol
-Tags: ecommerce,
+Contributors: UjW0L
+Tags: ecommerce, any-themes
 Requires at least: 5.5.2
 Tested up to: 5.5.2
-Stable tag: 1
+Stable tag: 1.0.0 Alpha
 License: GPLv2 or later
 
 Lightweight WordPress e-commerce plugin.Works with almost any Theme without customization.
@@ -24,13 +24,19 @@ e.g.
 4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
 
 == Screenshots ==
-
-1. /assets/screenshot-1.png
-2. /assets/screenshot-2.png
-3. /assets/screenshot-3.png
+1. Product Page
+2. Checkout page
+3. Billing Tab
+4. Shipping Tab
+5. Email Tab
+6. Peding Order Tab
+7. Order detail modal
+8. Add product gutenberg blocks
+9. Checkout page gutenberg blocks
+10. Processing page gutenberg block
 
 
 == Changelog ==
 
-===1.0.0===
-*First Stable version
+=1.0.0=
+*First Stable Alpha version

@@ -3,7 +3,7 @@
  Plugin Name:CTC Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 1.0.0
+ Version: 1.0.0 Alpha
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -266,7 +266,7 @@ wp_register_script(
  register_block_type(
      'ctc-lite/ctc-lite-block',
     array(
-       'style'         => '',
+       'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
     )
