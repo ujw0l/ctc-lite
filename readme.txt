@@ -6,7 +6,7 @@ Tested up to: 5.5.2
 Stable tag: 1.0.0 Alpha
 License: GPLv2 or later
 
-Lightweight WordPress e-commerce plugin.Works with almost any Theme without customization.
+Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
 
 == Description ==
 
