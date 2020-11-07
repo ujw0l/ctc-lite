@@ -10,8 +10,7 @@ Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor t
 
 == Description ==
 
-Plugins that lets you create a ecommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (is just 160kb )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also 
-works with any Theme with minor to none CSS tweaks. 
+Plugins that lets you create a ecommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (is just 160kb )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
 
 == Installation ==
 
