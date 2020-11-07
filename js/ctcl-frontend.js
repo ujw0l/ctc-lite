@@ -2,6 +2,9 @@
 class ctclMain {
 
     constructor() {
+        if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
+            this.removeLocalstorageItem();
+        }
 
         if (1 <= document.querySelectorAll('.ctcl-add-cart').length) {
             this.reduceItemQyty();
@@ -16,7 +19,6 @@ class ctclMain {
             this.onShippingRadioButtonCheck();
         }
 
-        this.removeLocalstorageItem();
     }
 
     /**
@@ -77,8 +79,6 @@ class ctclMain {
             let variation1 = undefined != parentContainer.querySelector('#ctcl-Variation-1') ? parentContainer.querySelector('#ctcl-Variation-1').value : 'N/A';
             let variation2 = undefined != parentContainer.querySelector('#ctcl-Variation-2') ? parentContainer.querySelector('#ctcl-Variation-2').value : 'N/A';
 
-
-
             if (null === localStorage.getItem('ctclHiddenCart')) {
                 localStorage.setItem('ctclHiddenCart', JSON.stringify([{
                     name: e.target.getAttribute('data-name'),
@@ -117,7 +117,6 @@ class ctclMain {
                         prodNameCart.push(newItem);
                     }
                 }
-                console.log(setCartItems);
                 localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems));
                 ctclCartFunc.map(x => x(setCartItems));
             }
@@ -380,11 +379,7 @@ class ctclMain {
  * Rmove local storage item
  */
     removeLocalstorageItem() {
-
-        if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
-
-            localStorage.removeItem('ctclHiddenCart');
-        }
+        localStorage.removeItem('ctclHiddenCart');
     }
 
 }
