@@ -387,6 +387,6 @@ class ctclMain {
 
 
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     new ctclMain();
 });

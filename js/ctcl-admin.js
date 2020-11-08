@@ -304,6 +304,6 @@ class ctclAdminJs {
 
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     new ctclAdminJs()
 });
