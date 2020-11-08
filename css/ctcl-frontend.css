@@ -1,7 +1,7 @@
 /**
 product page styling
 */
-.ctcl-add-cart{
+button.ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
     width:190px!important;
@@ -10,7 +10,7 @@ product page styling
     text-decoration: none!important;
     margin-top:10px!important;
     text-align:center;
-    font-size:16px;
+  padding-top:15px;
 }
 
 .ctcl-add-cart:active{
@@ -20,7 +20,11 @@ product page styling
     color:rgba(255,255,255,0.9);
 }
 .ctcl-add-cart:before{
-    font-size:14px;
+    margin-top:-3px;
+    font-size:17px;
+}
+.ctcl-add-cart-text{
+    vertical-align: middle;
 }
 .product-price{
     font-size:20px;
