@@ -4,12 +4,15 @@ product page styling
 button.ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
-    width:190px!important;
+    width:190px;
+    min-height:40px;
     text-transform:capitalize;
     text-decoration: none!important;
     margin-top:10px!important;
     text-align:center;
-  padding-top:15px;
+display:flex;
+  align-items:center;
+justify-content:center;
 }
 
 .ctcl-add-cart:active{
@@ -19,11 +22,9 @@ button.ctcl-add-cart{
     color:rgba(255,255,255,0.9);
 }
 .ctcl-add-cart:before{
-    margin-top:-3px;
-    font-size:17px;
-}
-.ctcl-add-cart-text{
-    vertical-align: middle;
+    display:flex;
+  align-items:center;
+justify-content:center;
 }
 .product-price{
     font-size:20px;
