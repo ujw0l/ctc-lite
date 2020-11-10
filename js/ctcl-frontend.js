@@ -89,6 +89,7 @@ class ctclMain {
                     varOne: variation1,
                     varTwo: variation2,
 
+
                 }]))
             } else {
                 let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
@@ -118,7 +119,6 @@ class ctclMain {
                     }
                 }
                 localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems));
-                ctclCartFunc.map(x => x(setCartItems));
             }
 
         }))
@@ -299,6 +299,7 @@ class ctclMain {
             loadingP.parentElement.removeChild(loadingP);
         }
 
+        ctclCartFunc.map(x => x(localStorage.getItem('ctclHiddenCart')));
     }
 
     /**

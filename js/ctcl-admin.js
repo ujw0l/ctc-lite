@@ -125,7 +125,7 @@ class ctclAdminJs {
         document.querySelector('#ctcl-print-order-list').addEventListener('click', () => {
             let content = document.querySelector('#ctcl-orderlist').innerHTML;
             let css = document.querySelector("#ctclAdminCss-css").href;
-            let a = window.open('', '', 'height=500, width=500');
+            let a = window.open('', '', 'height=500, width=550');
             a.document.write('<html>');
             a.document.write('<body >');
             a.document.write(`<link rel="stylesheet" href='${css}'/>`)
@@ -145,7 +145,7 @@ class ctclAdminJs {
         document.querySelector('#ctcl-print-cust-info').addEventListener('click', () => {
             let content = document.querySelector('#ctc-pending-customer-info').innerHTML;
             let css = document.querySelector("#ctclAdminCss-css").href;
-            let a = window.open('', '', 'height=500, width=500');
+            let a = window.open('', '', 'height=400, width=400');
             a.document.write('<html>');
             a.document.write('<body >');
             a.document.write(`<link rel="stylesheet" href='${css}'/>`)
