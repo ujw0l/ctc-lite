@@ -15,7 +15,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
     title: __("CTC Lite Product", 'ctc-lite'),
     icon: 'products',
     description: __("Create product", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Add Product', 'ctc-lite')],
     example: {},
     attributes: {
@@ -117,7 +117,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     title: __("CTC Lite Cart", 'ctc-lite'),
     icon: 'cart',
     description: __("CTC Lite block to create checkout page", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Checkout', 'ctc-lite')],
     example: {},
     attributes: {
@@ -304,7 +304,7 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
     title: __('CTC Lite Order Processing', 'ctc-lite'),
     icon: 'money',
     description: __("CTC Lite block to create Order processing page", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Order Processing', 'ctc-lite')],
     example: {},
     attributes: {},

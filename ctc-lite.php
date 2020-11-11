@@ -128,6 +128,9 @@ dbDelta($sql);
     add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
     add_filter( 'wp_mail_from', function(){return get_option('ctcl_smtp_from_email');} );
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
+    add_filter( 'block_categories', array($this,'ctcLiteBlocks'), 10, 2);
+
+
     
   }
 
@@ -264,7 +267,7 @@ wp_register_script(
   );
  
  register_block_type(
-     'ctc-lite/ctc-lite-block',
+     'ctc-lite/ctc-lite',
     array(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
@@ -274,6 +277,20 @@ wp_register_script(
 
   }
 
+/**
+ * Create block caegory for plugin
+ */
+  public function ctcLiteBlocks( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'ctc-lite-blocks',
+				'title' => __( 'CTC Lite', 'ctc-lite' ),
+			),
+		)
+	);
+}
 
 }
 
