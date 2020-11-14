@@ -107,7 +107,7 @@ public function orderProcessingShortCode(){
     }
 
     /**
-     * 
+     * Get Complete order list
      */
     public function getTotalCompleteOrders(){
         global $wpdb;

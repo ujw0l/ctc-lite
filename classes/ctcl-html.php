@@ -7,7 +7,7 @@ class ctclHtml{
  */
 public function adminPanelHtml(){
 
-    $additionalTabs = apply_filters('ctcl-additional_tab',array());
+    $additionalTabs = apply_filters('ctcl_additional_tab',array());
 
     $activeTab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field($_GET[ 'tab' ]) : 'info';
     $dynmTab = array();
@@ -28,8 +28,9 @@ public function adminPanelHtml(){
         foreach($additionalTabs as $key=>$value):
             $arrTab[] = $value['id'];
             $dynmTab[$value['id']] = $key;
+            $navIcon = !empty($value['icon'])?$value['icon']:'admin-generic ';
 ?>
-        <a href="?page=ctclAdminPanel&tab=<?=$value['id']?>" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == $value['id'] ? 'nav-tab-active' : ''; ?> "><?=$value['name']?></a>
+        <a href="?page=ctclAdminPanel&tab=<?=$value['id']?>" class="nav-tab dashicons-before dashicons-<?=$navIcon?>  <?=$activeTab == $value['id'] ? 'nav-tab-active' : ''; ?> "><?=$value['name']?></a>
   <?php 
         endforeach;
    endif;  
@@ -489,7 +490,7 @@ return $html;
         $orderId = sanitize_text_field( $_POST['orderId']);
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId)),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
-        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." : {$orderId}</legend>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
 
         echo "<div class='pending-order-modal-action'>";
@@ -523,7 +524,7 @@ return $html;
 
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId )),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
-        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
        echo "<div class='ctcl-complete-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
@@ -652,15 +653,7 @@ private function infoTab(){
     </ol>
 </fieldset>
 
-<fieldset class="ctcl-setup-processing-page">
-<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
-    <ol>
-        <li><?=__('Create a page','cct-lite')?></li>
-        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
-        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
-        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
-    </ol>
-</fieldset>
+
 
 <fieldset class="ctcl-setup-check-out-page">
 <legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
@@ -670,6 +663,16 @@ private function infoTab(){
         <li><?=__('Click','cct-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
         <li><?=__('Get the Url of processing page and paste it to url field (Important).','cct-lite')?></li>
         <li><?=__('Publish the page and you are done creating checkout page.','cct-lite')?></li>
+    </ol>
+</fieldset>
+
+<fieldset class="ctcl-setup-processing-page">
+<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','cct-lite')?></li>
+        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
+        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
+        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
     </ol>
 </fieldset>
 <fieldset class="ctcl-misc-setting">
