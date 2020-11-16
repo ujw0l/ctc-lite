@@ -299,7 +299,6 @@ class ctclMain {
             loadingP.parentElement.removeChild(loadingP);
         }
 
-        ctclCartFunc.map(x => x(localStorage.getItem('ctclHiddenCart')));
     }
 
     /**

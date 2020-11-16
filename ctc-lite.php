@@ -171,7 +171,7 @@ dbDelta($sql);
        
       )
    );
-    wp_localize_script('ctclFrontendJs','ctclCartFunc',[]);
+   
    }
 
    /**
