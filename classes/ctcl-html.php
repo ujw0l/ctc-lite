@@ -342,6 +342,7 @@ private function completeOrderTab(){
 <?php
 
 foreach ($items as $key => $value):
+
     $item = json_decode(stripslashes($value['orderDetail']),TRUE);
 ?>
     <tr id="ctcl-complete-order-<?=$item['order_id']?>" >
