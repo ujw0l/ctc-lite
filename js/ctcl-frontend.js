@@ -85,6 +85,7 @@ class ctclMain {
                     price: e.target.getAttribute('data-price'),
                     qty: e.target.getAttribute('data-qty'),
                     pic: e.target.getAttribute('data-pic'),
+                    postId: e.target.getAttribute('data-post-id'),
                     shippingCost: e.target.getAttribute('data-shipping-cost'),
                     varOne: variation1,
                     varTwo: variation2,
@@ -101,6 +102,7 @@ class ctclMain {
                             price: e.target.getAttribute('data-price'),
                             qty: e.target.getAttribute('data-qty'),
                             pic: e.target.getAttribute('data-pic'),
+                            postId: e.target.getAttribute('data-post-id'),
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
@@ -111,6 +113,7 @@ class ctclMain {
                             price: e.target.getAttribute('data-price'),
                             qty: e.target.getAttribute('data-qty'),
                             pic: e.target.getAttribute('data-pic'),
+                            postId: e.target.getAttribute('data-post-id'),
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
@@ -205,7 +208,7 @@ class ctclMain {
                 let itemInput = document.createElement('input');
                 itemInput.type = 'hidden';
                 itemInput.name = `products[]`;
-                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}` });
+                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}`, postId: cartItems[i].postId });
                 prodListCont.appendChild(itemInput);
 
                 let itemDisplay = document.createElement('div');
@@ -313,16 +316,13 @@ class ctclMain {
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
-        localStorage.removeItem(hiddenCart);
         if (1 <= setItems.length) {
             localStorage.setItem(hiddenCart, JSON.stringify(setItems));
         } else {
 
             localStorage.removeItem('ctclHiddenCart');
         }
-
         conts.map(x => x.parentElement.removeChild(x));
-        ctclCartFunc.map(x => x(setItems));
         this.loadCartItems();
     }
 

@@ -78,17 +78,19 @@ cursor:pointer;
     height:50px;
     margin-bottom:2px;
     border-bottom:1px dashed rgba(0,0,0,1);
-    padding:5px;
+    display:table;
 }
 .ctcl-checkout-item-header span,
 .ctcl-checkout-item span{
 vertical-align: middle;
     display: table-cell;
     text-align: center;
+    height:50px;
     height: 100%;
 }
 .ctcl-co-image-head,
 .ctcl-checkout-item .ctcl-checkout-item-img-span{
+ 
     width:50px;
 }
 
@@ -124,9 +126,9 @@ vertical-align: middle;
     float:left;
     height:37px;
     width:37px;
-    border:1px dashed rgba(0,0,0,1);
     overflow:hidden;
     display:inline-block;
+    vertical-align: middle!important;
 }
 .ctcl-checkout-item-remove{
     text-align:right!important;
