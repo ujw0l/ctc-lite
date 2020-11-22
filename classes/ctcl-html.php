@@ -653,7 +653,24 @@ private function infoTab(){
     </ol>
 </fieldset>
 
+<fieldset class="ctcl-setup-processing-page">
+<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','cct-lite')?></li>
+        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
+        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
+        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
+    </ol>
+</fieldset>
 
+<fieldset class="ctcl-misc-setting">
+<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
+    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
+    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
+    </ol>
+</fieldset>
 
 <fieldset class="ctcl-setup-check-out-page">
 <legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
@@ -666,23 +683,12 @@ private function infoTab(){
     </ol>
 </fieldset>
 
-<fieldset class="ctcl-setup-processing-page">
-<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
-    <ol>
-        <li><?=__('Create a page','cct-lite')?></li>
-        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
-        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
-        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
-    </ol>
-</fieldset>
-<fieldset class="ctcl-misc-setting">
-<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
-    <ol>
-    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
-    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
-    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
-    </ol>
-</fieldset>
+
+
+
+
+
+
 
 <fieldset class="ctcl-pending-order-info">
 <legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__('Pending order tab','ctc-lite')?></legend>
