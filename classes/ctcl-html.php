@@ -286,7 +286,7 @@ foreach ($items as $key => $value):
               <?=$item['shipping_type']?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
             </td>
             <td>
                 <a href="Javascript:void(0)" class="ctcl-get-pending-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
@@ -370,7 +370,7 @@ foreach ($items as $key => $value):
               <?=$item['shipping_type']?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
             </td>
             <td>
                 <a href="Javascript:void(0)" class="ctcl-get-complete-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
