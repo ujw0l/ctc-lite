@@ -22,6 +22,8 @@ class ctclMain {
     }
 
     /**
+     *  @since 1.0.0
+     *
      * user clicks minus quantity
      * 
      */
@@ -39,9 +41,11 @@ class ctclMain {
     }
 
     /**
-    * user clicks plus quantity
-    * 
-    */
+     * @since 1.0.0
+     *
+     * user clicks plus quantity
+     * 
+     */
     increaseItemQty() {
         Array.from(document.querySelectorAll('.ctcl-plus-qty')).map(x => x.addEventListener('click', e => {
             let superParent = e.target.parentElement.parentElement;
@@ -55,9 +59,11 @@ class ctclMain {
     }
 
     /**
-    * changes quantity with html5 number
-    * 
-    */
+     * @since 1.0.0
+     *
+     * changes quantity with html5 number
+     * 
+     */
     addReduceItemQty() {
         Array.from(document.querySelectorAll('.ctcl-qty')).map(x => x.addEventListener('change', e => {
 
@@ -68,8 +74,10 @@ class ctclMain {
     }
 
     /**
-    * on add to cart button click
-    */
+     * @since 1.0.0
+     *
+     * on add to cart button click
+     */
 
     addItemToCart() {
         Array.from(document.querySelectorAll('.ctcl-add-cart')).map((x, i, btnArr) => btnArr[i].addEventListener('click', e => {
@@ -129,6 +137,8 @@ class ctclMain {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Load cart item to main checkout cart
      * 
      */
@@ -305,6 +315,8 @@ class ctclMain {
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Remove item from cart
      * 
      * @param i item number in cart 
@@ -327,6 +339,8 @@ class ctclMain {
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Hide display payment container 
      */
     hideShowPaymentContainer() {
@@ -358,6 +372,8 @@ class ctclMain {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Add ahipping option to hidden input field
      */
     onShippingRadioButtonCheck() {
@@ -376,8 +392,10 @@ class ctclMain {
     }
 
     /**
- * Rmove local storage item
- */
+    * @since 1.0.0
+    *
+    * Rmove local storage item
+    */
     removeLocalstorageItem() {
         localStorage.removeItem('ctclHiddenCart');
     }

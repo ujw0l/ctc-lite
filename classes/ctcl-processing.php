@@ -4,6 +4,8 @@ class ctclProcessing{
     
 
     /**
+     * @since 1.0.0
+     *
      * Send test email with ajax
      */
     public function sendSmtpTestEmail(){
@@ -14,6 +16,8 @@ class ctclProcessing{
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Php mailer email setup
      */
     public function smtpEmailSetting($mail){
@@ -42,6 +46,8 @@ class ctclProcessing{
 
 
 /**
+ * @since 1.0.0
+ *
  * Order porcessing shortcode
  */
 public function orderProcessingShortCode(){
@@ -77,6 +83,8 @@ public function orderProcessingShortCode(){
 }
 
     /**
+     *  @since 1.0.0
+     *
      * Send confirmation email
      */
     public function sendConfirmationEmail($emailAddress,$subject,$emailBody){
@@ -91,6 +99,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * Enter data to the table
      */
     public function enterDataToTable($data){
@@ -99,6 +109,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * get total pending order
      */
     public function getTotalPendingOrders(){
@@ -107,6 +119,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     *@since 1.0.0
+     *
      * Get Complete order list
      */
     public function getTotalCompleteOrders(){
@@ -114,6 +128,8 @@ public function orderProcessingShortCode(){
         return $wpdb->get_var("SELECT COUNT(`orderId`) FROM {$wpdb->prefix}ctclOrders WHERE orderStatus= 'complete'");
     }
     /**
+     * @since 1.0.0
+     *
      * get list of pending orders
      * 
      * @param $offset database table offset
@@ -128,6 +144,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * get list of complete orders
      * 
      * @param $offset database table offset
@@ -142,6 +160,8 @@ public function orderProcessingShortCode(){
    }
 
     /**
+     * @since 1.0.0
+     *
      * get order detail from database
      */
     public function getOrderDetail($orderId){
@@ -149,6 +169,8 @@ public function orderProcessingShortCode(){
     return  $wpdb->get_var("SELECT orderDetail FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
     /**
+     * @since 1.0.0
+     *
      * update vendor note
      */
     public function updateOrderVendorNote(){
@@ -164,6 +186,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * Mark order complete
      */
     public function orderMarkComplete(){
@@ -179,6 +203,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * Cancel order
      */
     public function cancelOrder(){
@@ -195,6 +221,8 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * Get vendor node for order
      */
     public function getVendorNote($orderId){

@@ -2,11 +2,15 @@
 
 class ctclBillings{
     /**
+     * @since 1.0.0
+     *
      * payment id
      */
 public $paymentId = 'ctcl_cash';
 
 /**
+ * @since 1.0.0
+ *
  * payment name
  */
 public $paymentName = 'Cash On Delivery';
@@ -19,6 +23,8 @@ public function __construct(){
 }
 
 /**
+* @since 1.0.0
+*
 * create radio buttons
 */
     public function displayOptionsUser(){
@@ -35,6 +41,8 @@ public function __construct(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * register wp options wordpress
      */
     public function registerOptions(){
@@ -44,6 +52,8 @@ public function __construct(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * create admin panel content
      */
     public function addRequiredFilter(){
@@ -54,6 +64,8 @@ public function __construct(){
 
 
     /**
+     * @since 1.0.0
+     *
      * basic setting admin html
      * 
      */
@@ -79,6 +91,8 @@ public function __construct(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * Cash on delivery admin html
      */
     public function cashOnDeliveryAdminHtml($val){
@@ -100,6 +114,8 @@ public function __construct(){
     }
 
     /**
+     * @since 1.0.0
+     *
      * process payments
      */
 
@@ -109,6 +125,8 @@ public function __construct(){
      }
 
      /**
+      * @since 1.0.0
+      *
       * html for frontend
       */
       public function frontendHtml(){

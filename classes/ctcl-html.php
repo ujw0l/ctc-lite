@@ -3,6 +3,8 @@ class ctclHtml{
 
 
 /**
+ * @since 1.0.0
+ *
  * display admin panel content
  */
 public function adminPanelHtml(){
@@ -71,6 +73,8 @@ endif;
 
 
 /**
+ * @since 1.0.0
+ *
  * Create payment tab
  */
 private function paymentTab(){
@@ -97,6 +101,8 @@ endfor;
 }
 
 /**
+* @since 1.0.0
+*
  * Create shipping tab
  */
 private function shippingTab(){
@@ -126,6 +132,8 @@ endfor;
 }
 
 /**
+ * @since 1.0.0
+ *
  * Create email tab and setting form
  */
 private function emailTab(){
@@ -213,6 +221,8 @@ settings_fields('ctcl_email_settings');
 
 
 /**
+ * @since 1.0.0
+ *
  * Create pending  order tab
  */
 private function pendingOrderTab(){
@@ -295,6 +305,8 @@ endif;
 }
 
 /**
+ * @since 1.0.0
+ *
  * Create complete  order tab
  */
 private function completeOrderTab(){
@@ -380,6 +392,8 @@ endif;
 
 
     /**
+     * @since 1.0.0
+     *
      * Adds payment options shortcode
      */
    public function paymentOptionsShortCode(){
@@ -411,6 +425,8 @@ endif;
    }
 
    /**
+    * @since 1.0.0
+    *
     * Shipping options shortcode
     */
     public function shippingOptionsShortCode(){
@@ -436,7 +452,9 @@ endif;
 return $html;
     }
 
-    /**
+    /** 
+     * @since 1.0.0
+     *
      * Construct email body
      * 
      * @param $data Order data
@@ -480,6 +498,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * Get pending order detail 
      * 
      * 
@@ -513,6 +533,8 @@ return $html;
 
 
     /**
+     * @since 1.0.0
+     *
      * Get complete detail 
      * 
      */
@@ -539,6 +561,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create order list
      */
     private function createOrderListSection($detail){
@@ -571,6 +595,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * Create customer info section
      */
     private function createCustomerInfoSection($detail){
@@ -595,6 +621,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create final note section of modal
      * 
      * @param $ctclProcessing CTCL Porcessing object
@@ -612,6 +640,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create shipping section
      */
     private function createShippingSection($orderId){
@@ -633,7 +663,9 @@ return $html;
 
     }
 
-    /**
+/**
+ * @since 1.0.0
+ *
  * Create basic info tab content
  */
 private function infoTab(){

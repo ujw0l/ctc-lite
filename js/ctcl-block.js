@@ -7,6 +7,8 @@ const { registerBlockType } = wp.blocks;
 ctcLiteParams.currency = 'usd';
 
 /**
+ *  @since 1.0.0
+*
  * Create add product block
  */
 registerBlockType('ctc-lite/ctc-lite-product-block', {
@@ -101,12 +103,12 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
 
 
-/**
- * Create checkout block
- */
+
 
 /**
- * checkout page block componenet
+ *  @since 1.0.0
+ *
+ * checkout page block component
  */
 
 const CheckoutPage = (props) => {
@@ -296,6 +298,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 })
 
 /**
+ *  @since 1.0.0
+ *
  * Register order prosseing block
  */
 

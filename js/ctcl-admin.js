@@ -11,6 +11,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Apply masonry to info tab
      */
     infoTabApplyMasonry() {
@@ -21,6 +23,8 @@ class ctclAdminJs {
         }
     }
     /**
+     *  @since 1.0.0
+     *
      * Load masonry 
      */
 
@@ -38,6 +42,8 @@ class ctclAdminJs {
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Send SMTP email with ajax
      */
     sendSmtpTestEmail() {
@@ -74,6 +80,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Get pending order detail in modal with ajax
      */
     getPendingOrderDetail() {
@@ -108,6 +116,8 @@ class ctclAdminJs {
     }
 
     /**
+     *@since 1.0.0
+     *
      * All of the required event listener to be loaded after modal id loaded
      */
     addPendingOrderModalEvent() {
@@ -119,8 +129,10 @@ class ctclAdminJs {
     }
 
     /**
-    * print ordered item list in pending order modal
-    */
+     *  @since 1.0.0
+     *
+     * print ordered item list in pending order modal
+     */
     printOrderList() {
         document.querySelector('#ctcl-print-order-list').addEventListener('click', () => {
             let content = document.querySelector('#ctcl-orderlist').innerHTML;
@@ -138,6 +150,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Print pending order customer info
      */
     printCustInfo() {
@@ -157,6 +171,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Handle vendor note submit
      */
     vendorNoteSubmit() {
@@ -182,6 +198,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Mark  order complete
      */
 
@@ -215,6 +233,8 @@ class ctclAdminJs {
 
 
     /**
+     * @since 1.0.0
+     *
      * Cancel order
      */
     cancelPendingOrder() {
@@ -246,8 +266,10 @@ class ctclAdminJs {
 
 
     /**
-    * Get complete order detail in modal with ajax
-    */
+     * @since 1.0.0
+     *
+     * Get complete order detail in modal with ajax
+     */
     getCompleteOrderDetail() {
 
         let pendingOrderItems = document.querySelectorAll('.ctcl-get-complete-order-data');
@@ -279,6 +301,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * All of the required event listener to be loaded after modal id loaded
      */
     addCompleteOrderModalEvent() {
@@ -289,6 +313,8 @@ class ctclAdminJs {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Dispacch event resize on notice dismiss
      */
     onDismissNoticeClick() {
