@@ -22,16 +22,22 @@ class ctcLite{
    public $ctclHtml;
 
    /**
+    * @since 1.0.0
+    *
     * Variable for plugin precessing
     */
    public $ctclProcessing;
 
    /**
+    *  @since 1.0.0
+    *
     * Payments options
     */
     public  $ctclBillings;
 
     /**
+     * @since 1.0.0
+     *
      * Shipping Options
      */
     public $ctclShippings;
@@ -53,6 +59,8 @@ public function __construct(){
 }
 
 /** 
+* @since 1.0.0
+*
 * Plugin activation, deactivation and uninstall
 */
 public function activeDeactivUinstall(){   
@@ -62,6 +70,8 @@ public function activeDeactivUinstall(){
 }
 
 /**
+ * @since 1.0.0
+ *
  * Activate plugin
  */
 public function ctcLiteActivate(){
@@ -78,6 +88,8 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 dbDelta($sql);
 }
 /**
+ * @since 1.0.0
+ *
  * Deactivate plugin
  */
 
@@ -108,6 +120,8 @@ dbDelta($sql);
  }
 
  /**
+  * @since 1.0.0
+  *
   * Uninstall plugin
   */
   public function ctcLiteUnistall(){
@@ -116,6 +130,8 @@ dbDelta($sql);
   }
 
   /**
+   * @since 1.0.0
+   *
    * Register required wp action
    */
   public function requiredWpAction(){
@@ -128,10 +144,15 @@ dbDelta($sql);
     add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
     add_filter( 'wp_mail_from', function(){return get_option('ctcl_smtp_from_email');} );
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
+    add_filter( 'block_categories', array($this,'ctcLiteBlocks'), 10, 2);
+
+
     
   }
 
   /**
+   * @since 1.0.0
+   *
    * Register wp form settings 
    */
   private function registerWpSetting(){
@@ -149,6 +170,8 @@ dbDelta($sql);
   }
 
   /**
+   * @since 1.0.0
+   *
    * eneque frontend JS files
    */
 
@@ -168,10 +191,12 @@ dbDelta($sql);
        
       )
    );
-    wp_localize_script('ctclFrontendJs','ctclCartFunc',[]);
+   
    }
 
    /**
+   * @since 1.0.0
+   *
    * eneque frontend CSS files
    */
 
@@ -179,7 +204,9 @@ dbDelta($sql);
     wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-frontend.css'); 
 }
 
-/**
+   /**
+   * @since 1.0.0
+   *
    * eneque admin JS files
    */
 
@@ -195,6 +222,8 @@ dbDelta($sql);
    }
 
    /**
+   * @since 1.0.0
+   *
    * eneque frontend CSS files
    */
 
@@ -202,6 +231,8 @@ dbDelta($sql);
     wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin-panel.css'); 
 }
 /**
+ * @since 1.0.0
+ *
  * Required shortcode 
  */
 public function requiredShortCode(){
@@ -211,6 +242,8 @@ public function requiredShortCode(){
 }
 
 /**
+ * @since 1.0.0
+ *
  * Required AJAX hooks 
  */
 public function requiredAjax(){
@@ -223,6 +256,8 @@ public function requiredAjax(){
 }
 
    /**
+   * @since 1.0.0
+   *
    * create admin menu 
    */
 
@@ -234,6 +269,8 @@ public function requiredAjax(){
 }
 
   /**
+   * @since 1.0.0
+   *
    * Register gutenberg block
    * 
    */
@@ -264,7 +301,7 @@ wp_register_script(
   );
  
  register_block_type(
-     'ctc-lite/ctc-lite-block',
+     'ctc-lite/ctc-lite',
     array(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
@@ -274,6 +311,22 @@ wp_register_script(
 
   }
 
+/**
+ * @since 1.0.0
+ *
+ * Create block category for plugin
+ */
+  public function ctcLiteBlocks( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'ctc-lite-blocks',
+				'title' => __( 'CTC Lite', 'ctc-lite' ),
+			),
+		)
+	);
+}
 
 }
 

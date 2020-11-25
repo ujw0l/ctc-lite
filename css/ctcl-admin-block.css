@@ -7,7 +7,7 @@
     margin-top:5px!important;
 }
 .ctcl-checkout-button{
-    color:rgba(255,255,255,1);
+    color:rgba(255,255,255,1)!important;
     background-color:rgba(61,148,218,1);
     font-size: 16px!important;
 
@@ -20,11 +20,15 @@
 .ctcl-add-cart:hover{
     color:rgba(255,255,255,1);
 }
+.ctcl-setting-variation2-label,
+.ctcl-setting-variation1-label,
+.ctcl-setting-variation2,
+.ctcl-setting-variation1,
 .inspect-product-price,
 .inspect-shipping-cost,
 .inspect-product-name{
-    width:80%;
-    margin-left:20px;
+    width:90%;
+    margin-left:10px;
 }
 .ctcl-media-button{
     
@@ -79,6 +83,6 @@ cursor:pointer;
 }
 .ctcl-variation-2 select,
 .ctcl-variation-1 select{
-width:150px!important;
+width:190px!important;
 }
 

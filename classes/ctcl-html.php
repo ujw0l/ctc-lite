@@ -3,11 +3,13 @@ class ctclHtml{
 
 
 /**
+ * @since 1.0.0
+ *
  * display admin panel content
  */
 public function adminPanelHtml(){
 
-    $additionalTabs = apply_filters('ctcl-additional_tab',array());
+    $additionalTabs = apply_filters('ctcl_additional_tab',array());
 
     $activeTab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field($_GET[ 'tab' ]) : 'info';
     $dynmTab = array();
@@ -28,8 +30,9 @@ public function adminPanelHtml(){
         foreach($additionalTabs as $key=>$value):
             $arrTab[] = $value['id'];
             $dynmTab[$value['id']] = $key;
+            $navIcon = !empty($value['icon'])?$value['icon']:'admin-generic ';
 ?>
-        <a href="?page=ctclAdminPanel&tab=<?=$value['id']?>" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == $value['id'] ? 'nav-tab-active' : ''; ?> "><?=$value['name']?></a>
+        <a href="?page=ctclAdminPanel&tab=<?=$value['id']?>" class="nav-tab dashicons-before dashicons-<?=$navIcon?>  <?=$activeTab == $value['id'] ? 'nav-tab-active' : ''; ?> "><?=$value['name']?></a>
   <?php 
         endforeach;
    endif;  
@@ -70,6 +73,8 @@ endif;
 
 
 /**
+ * @since 1.0.0
+ *
  * Create payment tab
  */
 private function paymentTab(){
@@ -96,6 +101,8 @@ endfor;
 }
 
 /**
+* @since 1.0.0
+*
  * Create shipping tab
  */
 private function shippingTab(){
@@ -125,6 +132,8 @@ endfor;
 }
 
 /**
+ * @since 1.0.0
+ *
  * Create email tab and setting form
  */
 private function emailTab(){
@@ -212,11 +221,12 @@ settings_fields('ctcl_email_settings');
 
 
 /**
+ * @since 1.0.0
+ *
  * Create pending  order tab
  */
 private function pendingOrderTab(){
 
-    
 
     $ctclProcessing = new ctclProcessing();
     $pendingOrdersCount =  $ctclProcessing->getTotalPendingOrders();
@@ -276,7 +286,7 @@ foreach ($items as $key => $value):
               <?=$item['shipping_type']?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
             </td>
             <td>
                 <a href="Javascript:void(0)" class="ctcl-get-pending-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
@@ -295,6 +305,8 @@ endif;
 }
 
 /**
+ * @since 1.0.0
+ *
  * Create complete  order tab
  */
 private function completeOrderTab(){
@@ -341,6 +353,7 @@ private function completeOrderTab(){
 <?php
 
 foreach ($items as $key => $value):
+
     $item = json_decode(stripslashes($value['orderDetail']),TRUE);
 ?>
     <tr id="ctcl-complete-order-<?=$item['order_id']?>" >
@@ -357,7 +370,7 @@ foreach ($items as $key => $value):
               <?=$item['shipping_type']?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=$item['checkout-special-instruction']?></p>
+                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
             </td>
             <td>
                 <a href="Javascript:void(0)" class="ctcl-get-complete-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
@@ -379,6 +392,8 @@ endif;
 
 
     /**
+     * @since 1.0.0
+     *
      * Adds payment options shortcode
      */
    public function paymentOptionsShortCode(){
@@ -410,19 +425,22 @@ endif;
    }
 
    /**
+    * @since 1.0.0
+    *
     * Shipping options shortcode
     */
     public function shippingOptionsShortCode(){
 
         $shippingOptions = apply_filters('ctcl_shipping_option_display',array());
         $html = '';
+        $shippingInput ='';
         foreach($shippingOptions as $key=>$val):
 
             if(1==count($shippingOptions)):
                 $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<p style='display:none;'><input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' checked id='{$val['id']}' name='shipping_option' value='{$val['id']}'/></p>";
                 $html .= "<label for='{$val['id']}' class=''ctcl_payment_option_label > {$val['name']}</label></div>";
-                $shippingInput = "<input id='ctcl-shipping-type' type='hidden' name='shipping_type' value='{$val['name']}'/>";
+                $shippingInput .= "<input id='ctcl-shipping-type' type='hidden' name='shipping_type' value='{$val['name']}'/>";
             else:    
                 $html .= '<div class="ctcl-shipping-option-row">';
                 $html .= "<input required class='ctcl-shipping-option' data-name='{$val['name']}' type='radio' id='{$val['id']}' name='shipping_option' value='{$val['id']}'/>";
@@ -434,7 +452,9 @@ endif;
 return $html;
     }
 
-    /**
+    /** 
+     * @since 1.0.0
+     *
      * Construct email body
      * 
      * @param $data Order data
@@ -478,6 +498,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * Get pending order detail 
      * 
      * 
@@ -488,7 +510,7 @@ return $html;
         $orderId = sanitize_text_field( $_POST['orderId']);
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId)),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
-        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." : {$orderId}</legend>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
 
         echo "<div class='pending-order-modal-action'>";
@@ -511,6 +533,8 @@ return $html;
 
 
     /**
+     * @since 1.0.0
+     *
      * Get complete detail 
      * 
      */
@@ -522,7 +546,7 @@ return $html;
 
         $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId )),TRUE);
         echo '<fieldset class="ctcl-order-detail-main-cont">';
-        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail")."</legend>";
+        echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
        echo "<div class='ctcl-complete-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
@@ -537,6 +561,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create order list
      */
     private function createOrderListSection($detail){
@@ -569,6 +595,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * Create customer info section
      */
     private function createCustomerInfoSection($detail){
@@ -593,6 +621,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create final note section of modal
      * 
      * @param $ctclProcessing CTCL Porcessing object
@@ -610,6 +640,8 @@ return $html;
     }
 
     /**
+     * @since 1.0.0
+     *
      * create shipping section
      */
     private function createShippingSection($orderId){
@@ -631,7 +663,9 @@ return $html;
 
     }
 
-    /**
+/**
+ * @since 1.0.0
+ *
  * Create basic info tab content
  */
 private function infoTab(){
@@ -661,6 +695,15 @@ private function infoTab(){
     </ol>
 </fieldset>
 
+<fieldset class="ctcl-misc-setting">
+<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
+    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
+    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
+    </ol>
+</fieldset>
+
 <fieldset class="ctcl-setup-check-out-page">
 <legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
     <ol>
@@ -671,14 +714,13 @@ private function infoTab(){
         <li><?=__('Publish the page and you are done creating checkout page.','cct-lite')?></li>
     </ol>
 </fieldset>
-<fieldset class="ctcl-misc-setting">
-<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
-    <ol>
-    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
-    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
-    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
-    </ol>
-</fieldset>
+
+
+
+
+
+
+
 
 <fieldset class="ctcl-pending-order-info">
 <legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__('Pending order tab','ctc-lite')?></legend>
@@ -705,8 +747,9 @@ private function infoTab(){
 <fieldset class="ctcl-complete-other-info">
 <legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
     <ol>
-    <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','cct-lite')?></li>
-    <li><?=__('However it works best with Astra Theme','cct-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>
+    <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('Click Here','ctc-lite')?> </a></li>
+    <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','ctc-lite')?></li>
+    <li><?=__('However it works best with Astra Theme ','ctc-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>
     </ol>
 </fieldset>
 

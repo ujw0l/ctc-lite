@@ -2,6 +2,9 @@
 class ctclMain {
 
     constructor() {
+        if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
+            this.removeLocalstorageItem();
+        }
 
         if (1 <= document.querySelectorAll('.ctcl-add-cart').length) {
             this.reduceItemQyty();
@@ -16,10 +19,11 @@ class ctclMain {
             this.onShippingRadioButtonCheck();
         }
 
-        this.removeLocalstorageItem();
     }
 
     /**
+     *  @since 1.0.0
+     *
      * user clicks minus quantity
      * 
      */
@@ -37,9 +41,11 @@ class ctclMain {
     }
 
     /**
-    * user clicks plus quantity
-    * 
-    */
+     * @since 1.0.0
+     *
+     * user clicks plus quantity
+     * 
+     */
     increaseItemQty() {
         Array.from(document.querySelectorAll('.ctcl-plus-qty')).map(x => x.addEventListener('click', e => {
             let superParent = e.target.parentElement.parentElement;
@@ -53,9 +59,11 @@ class ctclMain {
     }
 
     /**
-    * changes quantity with html5 number
-    * 
-    */
+     * @since 1.0.0
+     *
+     * changes quantity with html5 number
+     * 
+     */
     addReduceItemQty() {
         Array.from(document.querySelectorAll('.ctcl-qty')).map(x => x.addEventListener('change', e => {
 
@@ -66,8 +74,10 @@ class ctclMain {
     }
 
     /**
-    * on add to cart button click
-    */
+     * @since 1.0.0
+     *
+     * on add to cart button click
+     */
 
     addItemToCart() {
         Array.from(document.querySelectorAll('.ctcl-add-cart')).map((x, i, btnArr) => btnArr[i].addEventListener('click', e => {
@@ -77,17 +87,17 @@ class ctclMain {
             let variation1 = undefined != parentContainer.querySelector('#ctcl-Variation-1') ? parentContainer.querySelector('#ctcl-Variation-1').value : 'N/A';
             let variation2 = undefined != parentContainer.querySelector('#ctcl-Variation-2') ? parentContainer.querySelector('#ctcl-Variation-2').value : 'N/A';
 
-
-
             if (null === localStorage.getItem('ctclHiddenCart')) {
                 localStorage.setItem('ctclHiddenCart', JSON.stringify([{
                     name: e.target.getAttribute('data-name'),
                     price: e.target.getAttribute('data-price'),
                     qty: e.target.getAttribute('data-qty'),
                     pic: e.target.getAttribute('data-pic'),
+                    postId: e.target.getAttribute('data-post-id'),
                     shippingCost: e.target.getAttribute('data-shipping-cost'),
                     varOne: variation1,
                     varTwo: variation2,
+
 
                 }]))
             } else {
@@ -100,6 +110,7 @@ class ctclMain {
                             price: e.target.getAttribute('data-price'),
                             qty: e.target.getAttribute('data-qty'),
                             pic: e.target.getAttribute('data-pic'),
+                            postId: e.target.getAttribute('data-post-id'),
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
@@ -110,6 +121,7 @@ class ctclMain {
                             price: e.target.getAttribute('data-price'),
                             qty: e.target.getAttribute('data-qty'),
                             pic: e.target.getAttribute('data-pic'),
+                            postId: e.target.getAttribute('data-post-id'),
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
@@ -117,9 +129,7 @@ class ctclMain {
                         prodNameCart.push(newItem);
                     }
                 }
-                console.log(setCartItems);
                 localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems));
-                ctclCartFunc.map(x => x(setCartItems));
             }
 
         }))
@@ -127,6 +137,8 @@ class ctclMain {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Load cart item to main checkout cart
      * 
      */
@@ -206,7 +218,7 @@ class ctclMain {
                 let itemInput = document.createElement('input');
                 itemInput.type = 'hidden';
                 itemInput.name = `products[]`;
-                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}` });
+                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}`, postId: cartItems[i].postId });
                 prodListCont.appendChild(itemInput);
 
                 let itemDisplay = document.createElement('div');
@@ -303,6 +315,8 @@ class ctclMain {
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Remove item from cart
      * 
      * @param i item number in cart 
@@ -314,20 +328,19 @@ class ctclMain {
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
-        localStorage.removeItem(hiddenCart);
         if (1 <= setItems.length) {
             localStorage.setItem(hiddenCart, JSON.stringify(setItems));
         } else {
 
             localStorage.removeItem('ctclHiddenCart');
         }
-
         conts.map(x => x.parentElement.removeChild(x));
-        ctclCartFunc.map(x => x(setItems));
         this.loadCartItems();
     }
 
     /**
+     *  @since 1.0.0
+     *
      * Hide display payment container 
      */
     hideShowPaymentContainer() {
@@ -359,6 +372,8 @@ class ctclMain {
     }
 
     /**
+     * @since 1.0.0
+     *
      * Add ahipping option to hidden input field
      */
     onShippingRadioButtonCheck() {
@@ -377,14 +392,12 @@ class ctclMain {
     }
 
     /**
- * Rmove local storage item
- */
+    * @since 1.0.0
+    *
+    * Rmove local storage item
+    */
     removeLocalstorageItem() {
-
-        if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
-
-            localStorage.removeItem('ctclHiddenCart');
-        }
+        localStorage.removeItem('ctclHiddenCart');
     }
 
 }
@@ -392,6 +405,6 @@ class ctclMain {
 
 
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     new ctclMain();
 });

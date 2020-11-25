@@ -1,13 +1,14 @@
 const { CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl } = wp.components;
 const { InspectorControls, MediaUpload, } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
-const { useSelect } = wp.data;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
 const { registerBlockType } = wp.blocks;
 ctcLiteParams.currency = 'usd';
 
 /**
+ *  @since 1.0.0
+*
  * Create add product block
  */
 registerBlockType('ctc-lite/ctc-lite-product-block', {
@@ -15,7 +16,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
     title: __("CTC Lite Product", 'ctc-lite'),
     icon: 'products',
     description: __("Create product", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Add Product', 'ctc-lite')],
     example: {},
     attributes: {
@@ -29,6 +30,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         variation2Lable: { type: 'string', default: 'Variation 2' },
         variation1: { type: 'Array', default: [] },
         variation2: { type: 'Array', default: [] },
+
 
 
     },
@@ -93,7 +95,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2', label: attributes.variation2Lable }),
             el('label', { className: 'ctcl-product-qty' }, `${__('Qty ')} : `),
             el('div', { className: 'ctcl-quantity' }, el('span', { className: 'ctcl-minus-qty' }, '-'), el('input', { className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { className: 'ctcl-plus-qty' }, '+')),
-            el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
+            el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, __("Add To Cart", 'ctc-lite')),
         )
     }
 
@@ -101,12 +103,12 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
 
 
-/**
- * Create checkout block
- */
+
 
 /**
- * checkout page block componenet
+ *  @since 1.0.0
+ *
+ * checkout page block component
  */
 
 const CheckoutPage = (props) => {
@@ -117,7 +119,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     title: __("CTC Lite Cart", 'ctc-lite'),
     icon: 'cart',
     description: __("CTC Lite block to create checkout page", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Checkout', 'ctc-lite')],
     example: {},
     attributes: {
@@ -296,6 +298,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 })
 
 /**
+ *  @since 1.0.0
+ *
  * Register order prosseing block
  */
 
@@ -304,7 +308,7 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
     title: __('CTC Lite Order Processing', 'ctc-lite'),
     icon: 'money',
     description: __("CTC Lite block to create Order processing page", "ctc-lite"),
-    category: 'common',
+    category: 'ctc-lite-blocks',
     keywords: [__('eCommerce', 'ctc-lite'), __('Order Processing', 'ctc-lite')],
     example: {},
     attributes: {},

@@ -2,11 +2,15 @@
 class ctclShippings{
 
     /**
+     * @since 1.0.0
+     *
      * Shipping option id
      */
     public $shippingId ;
 
     /**
+     * @since 1.0.0
+     *
      * Shipinng name 
      */
     public $shippingsName;
@@ -20,6 +24,8 @@ class ctclShippings{
     }
 
     /**
+     * @since 1.0.0
+     *
      * Register options
      */
     public function registerOptions(){
@@ -39,6 +45,8 @@ class ctclShippings{
     }
 
     /**
+     * @since 1.0.0
+     *
      * Forms for admin panel setting
      */
 
@@ -48,6 +56,8 @@ class ctclShippings{
      }
 
      /**
+      * @since 1.0.0
+      *
       * Create vendor delivery form
       */
       public function vendorDelivery($val){
@@ -72,6 +82,8 @@ class ctclShippings{
   return $val;
       }
 /**
+ *  @since 1.0.0
+ *
  * Store pickup
  */
       public function storePickup($val){
@@ -113,6 +125,8 @@ class ctclShippings{
       }
 
       /**
+       * @since 1.0.0
+       *
        * Display shipping option on frontend
        */
 public function frontendShiipingOptions(){
@@ -147,6 +161,8 @@ public function frontendShiipingOptions(){
 }
 
 /**
+ * @since 1.0.0
+ *
  * Process shipping on checkout
  */
 public function processShipping(){
