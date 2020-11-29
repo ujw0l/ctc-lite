@@ -4,7 +4,7 @@ Tags: ecommerce, responsive, store, sell, shop, cart
 Requires at least: 5.5.2
 Tested up to: 5.5.2
 Requires PHP: 7.4.9
-Stable tag: 1.0.0 Alpha
+Stable tag: 1.0.0 Beta
 License: GPLv2 or later
 
 Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
@@ -41,3 +41,6 @@ e.g.
 
 =1.0.0 Alpha=
 *First Stable Alpha version
+
+=1.0.0 Beta=
+*Minor bug fixes and Tweaks
