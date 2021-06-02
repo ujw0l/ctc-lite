@@ -42,7 +42,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
         useSelect(select => setAttributes({ postId: select("core/editor").getCurrentPostId() }));
         useEffect(() => {
-            let metaData = { name: attributes.productName, price: attributes.productPrice, shippingCost: attributes.shippingCost, profilePic: attributes.profilePic, buttonColor: attributes.buttonColor, dummyQty: attributes.dummyQty, variation1Lable: attributes.variation1Lable, variation2Label: attributes.variation2Lable, variattion1: attributes.variation1, variation2: attributes.variation2 };
+            let metaData = { productName: attributes.productName, productPrice: attributes.productPrice, shippingCost: attributes.shippingCost, profilePic: attributes.profilePic, buttonColor: attributes.buttonColor, dummyQty: attributes.dummyQty, variation1Lable: attributes.variation1Lable, variation2Label: attributes.variation2Lable, variattion1: attributes.variation1, variation2: attributes.variation2 };
             var xhttp = new XMLHttpRequest();
             xhttp.open('POST', ctcLiteParams.ajaxUrl, true);
             xhttp.responseType = "text";
