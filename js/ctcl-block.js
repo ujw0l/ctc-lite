@@ -1,10 +1,12 @@
+const { useEffect } = React;
 const { CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl } = wp.components;
 const { InspectorControls, MediaUpload, } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
 const { registerBlockType } = wp.blocks;
-ctcLiteParams.currency = 'usd';
+const { useSelect } = wp.data;
+
 
 /**
  *  @since 1.0.0
@@ -30,14 +32,28 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         variation2Lable: { type: 'string', default: 'Variation 2' },
         variation1: { type: 'Array', default: [] },
         variation2: { type: 'Array', default: [] },
-
-
-
+        postId: { 'type': 'String', default: '' },
     },
     edit: ({ attributes, setAttributes }) => {
 
         let variationOneItem = attributes.variation1.map(x => x.value);
         let variationTwoItem = attributes.variation2.map(x => x.value);
+        setAttributes({ postId: useSelect(select => select("core/editor").getCurrentPostId()) });
+
+        useSelect(select => setAttributes({ postId: select("core/editor").getCurrentPostId() }));
+        useEffect(() => {
+            let metaData = { name: attributes.productName, price: attributes.productPrice, shippingCost: attributes.shippingCost, profilePic: attributes.profilePic, buttonColor: attributes.buttonColor, dummyQty: attributes.dummyQty, variation1Lable: attributes.variation1Lable, variation2Label: attributes.variation2Lable, variattion1: attributes.variation1, variation2: attributes.variation2 };
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('POST', ctcLiteParams.ajaxUrl, true);
+            xhttp.responseType = "text";
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+            xhttp.addEventListener('load', event => {
+                if (event.target.status < 200 && event.target.status > 400) {
+                    console.log(event.target.statusText);
+                }
+            })
+            xhttp.send(`action=addUpdatePostMeta&postId=${attributes.postId}&meta=${JSON.stringify(metaData)}`);
+        }, [attributes.productName, attributes.productPrice, attributes.shippingCost, attributes.profilePic, attributes.buttonColor, attributes.dummyQty, attributes.variation1Lable, attributes.variation2Lable, attributes.variation1, attributes.variation2])
 
         return el('div', { className: 'ctcl-product-container' },
             el('div', { className: 'ctcl-gb-ac-container' },
@@ -50,6 +66,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
             el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
                 el(PanelBody, null,
+                    el('h5', null, `${__('Post Id', 'ctc-lite')} : ${attributes.postId}`),
                     el(TextControl, { name: 'name', className: 'inspect-product-name', type: "text", value: attributes.productName, label: `${__("Name", 'ctc-lite')} : `, onChange: value => setAttributes({ productName: value }), help: __('Enter product name.', 'ctc-lite') }),
                     el(TextControl, { name: 'price', className: 'inspect-product-price', type: 'number', value: attributes.productPrice, label: `${__("Price", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ productPrice: parseFloat(value).toFixed(2) }), help: __('Enter product price.', 'ctc-lite') }),
                     el(TextControl, { name: 'shipping', className: 'inspect-shipping-cost', type: 'number', value: attributes.shippingCost, label: `${__("Shipping Cost", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ shippingCost: parseFloat(value).toFixed(2) }), help: __('Enter shipping cost', 'ctc-lite') },),
