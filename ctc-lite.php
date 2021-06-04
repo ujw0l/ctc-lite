@@ -247,7 +247,7 @@ public function requiredShortCode(){
  * Required AJAX hooks 
  */
 public function requiredAjax(){
-   add_action('wp_ajax_addUpdatePostMeta',array($this->ctclProcessing,'addUpdatePostMeta'));
+
    add_action( 'wp_ajax_sendTestEmail', array($this->ctclProcessing,'sendSmtpTestEmail') );
    add_action('wp_ajax_pendingOrderDetail',array($this->ctclHtml,'getPendingOrderDetail'));
    add_action('wp_ajax_updateVendorNote',array($this->ctclProcessing,'updateOrderVendorNote'));
@@ -288,7 +288,6 @@ wp_register_script(
  
  wp_localize_script( 'ctcl-block-editor', 'ctcLiteParams', array(
     'currency'=> !empty(get_option('ctcl_currency'))?get_option('ctcl_currency'): '',
-    'ajaxUrl'=>admin_url( 'admin-ajax.php' ),
     'defaultPic'=>plugins_url( 'misc/image/ctclite-default.png',__FILE__ )
    ));
   // Block front end styles.

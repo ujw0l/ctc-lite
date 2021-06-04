@@ -230,16 +230,4 @@ public function orderProcessingShortCode(){
         return  $wpdb->get_var("SELECT vendorNote FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
 
-     /**
-     * @since 1.1.0
-     *
-     * Update post meta
-     */
-    public function addUpdatePostMeta(){
-       
-        delete_post_meta($_POST['postId'],'ctclData');
-        add_post_meta($_POST['postId'],'ctclData',stripslashes($_POST['meta']),true);
-        wp_die();
-    }
-
 }
