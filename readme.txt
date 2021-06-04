@@ -47,5 +47,4 @@ e.g.
 
 
 =1.1.0=
-*Minor bug fixe
-*Product data now saved in post meta
+*Minor bug fix
