@@ -44,3 +44,8 @@ e.g.
 
 =1.0.0 Beta=
 *Minor bug fixes and Tweaks
+
+
+=1.1.0=
+*Minor bug fixe
+*Product data now saved in post meta
