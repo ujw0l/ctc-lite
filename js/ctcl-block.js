@@ -1,11 +1,11 @@
-const { useEffect } = React;
+
 const { CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl } = wp.components;
 const { InspectorControls, MediaUpload, } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
 const { registerBlockType } = wp.blocks;
-const { useSelect } = wp.data;
+
 
 
 /**
@@ -39,27 +39,9 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
         let variationOneItem = attributes.variation1.map(x => x.value);
         let variationTwoItem = attributes.variation2.map(x => x.value);
-        const posId = useSelect(select => select("core/editor").getCurrentPostId());
-        const postPermaLink = useSelect(select => select("core/editor").getPermalink());
 
 
-        setAttributes({ postId: posId });
-        setAttributes({ postPermalink: postPermaLink });
-        useEffect(() => {
 
-            let metaData = { postPermalink: attributes.postPermalink, productName: attributes.productName, productPrice: attributes.productPrice, shippingCost: attributes.shippingCost, profilePic: attributes.profilePic, buttonColor: attributes.buttonColor, dummyQty: attributes.dummyQty, variation1Lable: attributes.variation1Lable, variation2Label: attributes.variation2Lable, variattion1: attributes.variation1, variation2: attributes.variation2 };
-            var xhttp = new XMLHttpRequest();
-            xhttp.open('POST', ctcLiteParams.ajaxUrl, true);
-            xhttp.responseType = "text";
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
-            xhttp.addEventListener('load', event => {
-                if (event.target.status < 200 && event.target.status > 400) {
-                    console.log(event.target.statusText);
-                }
-            })
-            xhttp.send(`action=addUpdatePostMeta&postId=${attributes.postId}&meta=${JSON.stringify(metaData)}`);
-
-        }, [attributes.productName, attributes.productPrice, attributes.shippingCost, attributes.profilePic, attributes.buttonColor, attributes.dummyQty, attributes.variation1Lable, attributes.variation2Lable, attributes.variation1, attributes.variation2])
 
         return el('div', { className: 'ctcl-product-container' },
             el('div', { className: 'ctcl-gb-ac-container' },
