@@ -32,8 +32,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         variation2Lable: { type: 'string', default: 'Variation 2' },
         variation1: { type: 'Array', default: [] },
         variation2: { type: 'Array', default: [] },
-        postId: { 'type': 'String', default: '' },
-        postPermalink: { type: 'string', default: '' },
+
     },
     edit: ({ attributes, setAttributes }) => {
 
