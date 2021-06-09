@@ -223,10 +223,11 @@ public function orderProcessingShortCode(){
     /**
      * @since 1.0.0
      *
-     * Get vendor node for order
+     * Get vendor note for order
      */
     public function getVendorNote($orderId){
         global $wpdb;
         return  $wpdb->get_var("SELECT vendorNote FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
+
 }
