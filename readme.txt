@@ -1,6 +1,6 @@
 === CTC Lite ===
 Contributors: UjW0L
-Tags: ecommerce, responsive, store, sell, shop, cart
+Tags: block,ecommerce, responsive, store, sell, shop, cart
 Requires at least: 5.5.2
 Tested up to: 5.7.2
 Requires PHP: 7.4.9
