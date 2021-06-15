@@ -83,6 +83,15 @@ cursor:pointer;
 }
 .ctcl-variation-2 select,
 .ctcl-variation-1 select{
-width:190px!important;
+width:195px!important;
 }
 
+#ctcl-variation-1,
+#ctcl-variation-2{
+    min-height:40px;
+    min-width:195px;
+}
+
+.css-bmkl3j-Container{
+    width:200px!important;
+}

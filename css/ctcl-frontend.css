@@ -4,7 +4,7 @@ product page styling
 button.ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
-    width:190px;
+    min-width:195px;
     min-height:40px;
     text-transform:capitalize;
     text-decoration: none!important;
@@ -36,7 +36,7 @@ display:block;
 .ctcl-Variation-1,
 .ctcl-Variation-2{
 height:40px;
-width:190px;
+width:195px;
 font-size:14px;
 }
 .ctcl-product-qty{

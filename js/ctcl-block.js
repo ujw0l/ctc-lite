@@ -42,12 +42,13 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
 
 
+
         return el('div', { className: 'ctcl-product-container' },
             el('div', { className: 'ctcl-gb-ac-container' },
 
                 el('div', { className: 'product-price-container' }, el('span', { className: 'price-label' }, `${__('Price', 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}): `), el('span', { className: 'product-price' }, attributes.productPrice))),
-            el(SelectControl, { className: 'ctcl-variation-select', label: `${attributes.variation1Lable} : `, className: 'ctcl-variation-1', options: attributes.variation1, }),
-            el(SelectControl, { className: 'ctcl-variation-select', label: `${attributes.variation2Lable} : `, className: 'ctcl-variation-2', options: attributes.variation2, }),
+            1 < attributes.variation1.length ? el(SelectControl, { 'id': 'ctcl-variation-1', label: `${attributes.variation1Lable} : `, options: attributes.variation1, }) : '',
+            1 < attributes.variation2.length ? el(SelectControl, { 'id': 'ctcl-variation-2', label: `${attributes.variation2Lable} : `, options: attributes.variation2, }) : '',
             el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
 
@@ -79,7 +80,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
         const SelectVariation = ({ selectOptions, variationName, label }) => {
 
-            if (0 < selectOptions.length) {
+            if (1 < selectOptions.length) {
 
                 return el('div', { className: `ctcl-${variationName.replace(' ', '-')}-cont` },
                     el('label', { htmlFor: `ctcl-${variationName.replace(' ', '-')}`, className: `ctcl-${variationName.replace(' ', '-')}-label` }, `${label} : `),
