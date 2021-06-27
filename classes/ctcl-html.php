@@ -519,7 +519,7 @@ return $html;
         echo '</div>';
       
        echo "<div class='ctcl-pending-order-detail'>";
-       echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
+       echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
        $this ->createOrderListSection($detail);
        $this->createCustomerInfoSection($detail);
        $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
@@ -549,7 +549,7 @@ return $html;
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
        echo "<div class='ctcl-complete-order-detail'>";
-       echo "<input id='ctcl-order-id' type='hidden' value='{$detail[order_id]}'/>";
+       echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
        $this ->createOrderListSection($detail);
        $this->createCustomerInfoSection($detail);
        $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);

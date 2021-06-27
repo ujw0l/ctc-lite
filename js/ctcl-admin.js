@@ -101,7 +101,11 @@ class ctclAdminJs {
                 xhttp.responseType = "text";
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
                 xhttp.addEventListener('load', event => {
+
                     if (event.target.status >= 200 && event.target.status < 400) {
+
+
+
                         new jsOverlay({ elContent: event.target.response, containerHt: 600, containerWd: 1080, overlayNum: 1 });
                         new jsMasonry('.ctcl-pending-order-detail', { elWidth: 500, heightSort: 'desc', elMargin: 10 });
                         this.addPendingOrderModalEvent();
