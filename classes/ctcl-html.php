@@ -18,12 +18,12 @@ public function adminPanelHtml(){
 <div class="ctclAdminPanel">	               
 <h2><span class="dashicons-before dashicons-store"></span>CTC Lite Admin Panel</h2>
     <h4 class="nav-tab-wrapper">
-        <a href="?page=ctclAdminPanel&tab=info" class="nav-tab dashicons-before dashicons-info <?=$activeTab == 'info' ? 'nav-tab-active' : ''; ?> ">Information</a>
-        <a href="?page=ctclAdminPanel&tab=billing" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'billing' ? 'nav-tab-active' : ''; ?> ">Billing</a>
-        <a href="?page=ctclAdminPanel&tab=shipping" class="nav-tab dashicons-before dashicons-car <?=$activeTab == 'shipping' ? 'nav-tab-active' : ''; ?> ">Shipping</a>
-        <a href="?page=ctclAdminPanel&tab=email" class="nav-tab dashicons-before dashicons-email-alt2 <?=$activeTab == 'email' ? 'nav-tab-active' : ''; ?> ">Email</a>
-        <a href="?page=ctclAdminPanel&tab=pending_order" class="nav-tab dashicons-before dashicons-clipboard <?=$activeTab == 'pending_order' ? 'nav-tab-active' : ''; ?> ">Pending Orders</a>
-        <a href="?page=ctclAdminPanel&tab=complete_order" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == 'complete_order' ? 'nav-tab-active' : ''; ?> ">Complete Orders</a>
+        <a href="?page=ctclAdminPanel&tab=info" class="nav-tab dashicons-before dashicons-info <?=$activeTab == 'info' ? 'nav-tab-active' : ''; ?> "><?=__('Information','ctc-lite')?></a>
+        <a href="?page=ctclAdminPanel&tab=billing" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'billing' ? 'nav-tab-active' : ''; ?> "><?=__('Billing','ctc-lite')?></a>
+        <a href="?page=ctclAdminPanel&tab=shipping" class="nav-tab dashicons-before dashicons-car <?=$activeTab == 'shipping' ? 'nav-tab-active' : ''; ?> "><?=__('Shipping','ctc-lite')?></a>
+        <a href="?page=ctclAdminPanel&tab=email" class="nav-tab dashicons-before dashicons-email-alt2 <?=$activeTab == 'email' ? 'nav-tab-active' : ''; ?> "><?=__('Email','ctc-lite')?></a>
+        <a href="?page=ctclAdminPanel&tab=pending_order" class="nav-tab dashicons-before dashicons-clipboard <?=$activeTab == 'pending_order' ? 'nav-tab-active' : ''; ?> "><?=__('Pending Orders','ctc-lite')?></a>
+        <a href="?page=ctclAdminPanel&tab=complete_order" class="nav-tab dashicons-before dashicons-archive <?=$activeTab == 'complete_order' ? 'nav-tab-active' : ''; ?> "><?=__('Complete Orders','ctc-lite')?></a>
 
     <?php
     if(!empty($additionalTabs )):
@@ -677,41 +677,41 @@ private function infoTab(){
 <fieldset class="ctcl-setup-product">
     <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"><?=__('Set up product page','ctc-lite')?></legend>
     <ol>
-        <li><?=__('Create a page','cct-lite')?></li>
-        <li><?=__('Add CTC Lite Product block to the Page.','cct-lite')?></li>
-        <li><?=__('Click','cct-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
-        <li><?=__('Fill up the required fields like name , price etc.','cct-lite')?></li>
-        <li><?=__('Publish the page and you are done with creating product.','cct-lite')?></li>
+        <li><?=__('Create a page','ctc-lite')?></li>
+        <li><?=__('Add CTC Lite Product block to the Page.','ctc-lite')?></li>
+        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
+        <li><?=__('Fill up the required fields like name , price etc.','ctc-lite')?></li>
+        <li><?=__('Publish the page and you are done with creating product.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
 <fieldset class="ctcl-setup-processing-page">
 <legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__('Set up order processing page (Important)','ctc-lite')?></legend>
     <ol>
-        <li><?=__('Create a page','cct-lite')?></li>
-        <li><?=__('Add CTC Lite Order Processing block to page.','cct-lite')?></li>
-        <li><?=__('Publish the page and you are done creating processing page.','cct-lite')?></li>
-        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','cct-lite')?></li>
+        <li><?=__('Create a page','ctc-lite')?></li>
+        <li><?=__('Add CTC Lite Order Processing block to page.','ctc-lite')?></li>
+        <li><?=__('Publish the page and you are done creating processing page.','ctc-lite')?></li>
+        <li><?=__('This page do not need to be on menu, you can keep it hidden but accessible.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
 <fieldset class="ctcl-misc-setting">
 <legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__('Other important settings','ctc-lite')?></legend>
     <ol>
-    <li><?=__('Go to Billings tab and setup payment information','cct-lite')?></li>
-    <li><?=__('Go to Shipping tab and setup shipping Setting','cct-lite')?></li>
-    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','cct-lite')?></li>
+    <li><?=__('Go to Billings tab and setup payment information','ctc-lite')?></li>
+    <li><?=__('Go to Shipping tab and setup shipping Setting','ctc-lite')?></li>
+    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
 <fieldset class="ctcl-setup-check-out-page">
 <legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
     <ol>
-        <li><?=__('Create a page','cct-lite')?></li>
-        <li><?=__('Add CTC Lite Cart block to page.','cct-lite')?></li>
-        <li><?=__('Click','cct-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
-        <li><?=__('Get the Url of processing page and paste it to url field (Important).','cct-lite')?></li>
-        <li><?=__('Publish the page and you are done creating checkout page.','cct-lite')?></li>
+        <li><?=__('Create a page','ctc-lite')?></li>
+        <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
+        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
+        <li><?=__('Get the Url of processing page and paste it to url field (Important).','ctc-lite')?></li>
+        <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
@@ -725,21 +725,21 @@ private function infoTab(){
 <fieldset class="ctcl-pending-order-info">
 <legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__('Pending order tab','ctc-lite')?></legend>
     <ol>
-    <li><?=__('Go to Pending order tab','cct-lite')?></li>
-    <li><?=__('Click detail link','cct-lite')?></li>
-    <li><?=__('View Order detail, print order list or customer info.','cct-lite')?></li>
-    <li><?=__('Or add vendor note to the order','cct-lite')?></li>
-    <li><?=__('Complete or Cancel order','cct-lite')?></li>
+    <li><?=__('Go to Pending order tab','ctc-lite')?></li>
+    <li><?=__('Click detail link','ctc-lite')?></li>
+    <li><?=__('View Order detail, print order list or customer info.','ctc-lite')?></li>
+    <li><?=__('Or add vendor note to the order','ctc-lite')?></li>
+    <li><?=__('Complete or Cancel order','ctc-lite')?></li>
     </ol>
 </fieldset>
 
 <fieldset class="ctcl-complete-order-info">
 <legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"><?=__('Complete order tab','ctc-lite')?></legend>
     <ol>
-    <li><?=__('Go to Complete order tab','cct-lite')?></li>
-    <li><?=__('Click detail link','cct-lite')?></li>
-    <li><?=__('View Order detail, print order list or customer info.','cct-lite')?></li>
-    <li><?=__('Or edit or view vendor note of the order','cct-lite')?></li>
+    <li><?=__('Go to Complete order tab','ctc-lite')?></li>
+    <li><?=__('Click detail link','ctc-lite')?></li>
+    <li><?=__('View Order detail, print order list or customer info.','ctc-lite')?></li>
+    <li><?=__('Or edit or view vendor note of the order','ctc-lite')?></li>
     
     </ol>
 </fieldset>

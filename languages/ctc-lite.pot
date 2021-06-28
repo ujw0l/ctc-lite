@@ -1,21 +1,21 @@
-# Copyright (C) 2020 Ujwol Bastakoti
+# Copyright (C) 2021 Ujwol Bastakoti
 # This file is distributed under the same license as the CTC Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: CTC Lite 1.0.0 Alpha\n"
+"Project-Id-Version: CTC Lite 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ctc-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-25T02:31:51+00:00\n"
+"POT-Creation-Date: 2021-06-28T06:18:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ctc-lite\n"
 
 #. Plugin Name of the plugin
-#: ctc-lite.php:325
+#: ctc-lite.php:329
 msgid "CTC Lite"
 msgstr ""
 
@@ -53,6 +53,33 @@ msgstr ""
 
 #: classes/ctcl-billings.php:108
 msgid "Cash On Delivery Payment"
+msgstr ""
+
+#: classes/ctcl-html.php:21
+msgid "Information"
+msgstr ""
+
+#: classes/ctcl-html.php:22
+msgid "Billing"
+msgstr ""
+
+#: classes/ctcl-html.php:23
+msgid "Shipping"
+msgstr ""
+
+#: classes/ctcl-html.php:24
+msgid "Email"
+msgstr ""
+
+#: classes/ctcl-html.php:25
+#: classes/ctcl-html.php:252
+#: ctc-lite.php:267
+msgid "Pending Orders"
+msgstr ""
+
+#: classes/ctcl-html.php:26
+#: classes/ctcl-html.php:335
+msgid "Complete Orders"
 msgstr ""
 
 #: classes/ctcl-html.php:85
@@ -136,11 +163,6 @@ msgstr ""
 msgid "&raquo;"
 msgstr ""
 
-#: classes/ctcl-html.php:252
-#: ctc-lite.php:266
-msgid "Pending Orders"
-msgstr ""
-
 #: classes/ctcl-html.php:263
 #: classes/ctcl-html.php:346
 msgid "Order Id"
@@ -182,10 +204,6 @@ msgstr ""
 
 #: classes/ctcl-html.php:302
 msgid "There is no pending order right now."
-msgstr ""
-
-#: classes/ctcl-html.php:335
-msgid "Complete Orders"
 msgstr ""
 
 #: classes/ctcl-html.php:386
@@ -307,7 +325,7 @@ msgid "Order Status  Note"
 msgstr ""
 
 #: classes/ctcl-html.php:652
-#: js/ctcl-block.js:285
+#: js/ctcl-block.js:289
 msgid "Shipping Options"
 msgstr ""
 
@@ -323,29 +341,118 @@ msgstr ""
 msgid "Set up product page"
 msgstr ""
 
+#: classes/ctcl-html.php:680
+#: classes/ctcl-html.php:691
+#: classes/ctcl-html.php:710
+msgid "Create a page"
+msgstr ""
+
+#: classes/ctcl-html.php:681
+msgid "Add CTC Lite Product block to the Page."
+msgstr ""
+
+#: classes/ctcl-html.php:682
+#: classes/ctcl-html.php:712
+msgid "Click"
+msgstr ""
+
 #: classes/ctcl-html.php:682
 #: classes/ctcl-html.php:712
 msgid " On the Left side"
+msgstr ""
+
+#: classes/ctcl-html.php:683
+msgid "Fill up the required fields like name , price etc."
+msgstr ""
+
+#: classes/ctcl-html.php:684
+msgid "Publish the page and you are done with creating product."
 msgstr ""
 
 #: classes/ctcl-html.php:689
 msgid "Set up order processing page (Important)"
 msgstr ""
 
+#: classes/ctcl-html.php:692
+msgid "Add CTC Lite Order Processing block to page."
+msgstr ""
+
+#: classes/ctcl-html.php:693
+msgid "Publish the page and you are done creating processing page."
+msgstr ""
+
+#: classes/ctcl-html.php:694
+msgid "This page do not need to be on menu, you can keep it hidden but accessible."
+msgstr ""
+
 #: classes/ctcl-html.php:699
 msgid "Other important settings"
+msgstr ""
+
+#: classes/ctcl-html.php:701
+msgid "Go to Billings tab and setup payment information"
+msgstr ""
+
+#: classes/ctcl-html.php:702
+msgid "Go to Shipping tab and setup shipping Setting"
+msgstr ""
+
+#: classes/ctcl-html.php:703
+msgid "Go to Email tab and setup email Setting to send order confirmation email."
 msgstr ""
 
 #: classes/ctcl-html.php:708
 msgid "Set up checkout page"
 msgstr ""
 
+#: classes/ctcl-html.php:711
+msgid "Add CTC Lite Cart block to page."
+msgstr ""
+
+#: classes/ctcl-html.php:713
+msgid "Get the Url of processing page and paste it to url field (Important)."
+msgstr ""
+
+#: classes/ctcl-html.php:714
+msgid "Publish the page and you are done creating checkout page."
+msgstr ""
+
 #: classes/ctcl-html.php:726
 msgid "Pending order tab"
 msgstr ""
 
+#: classes/ctcl-html.php:728
+msgid "Go to Pending order tab"
+msgstr ""
+
+#: classes/ctcl-html.php:729
+#: classes/ctcl-html.php:740
+msgid "Click detail link"
+msgstr ""
+
+#: classes/ctcl-html.php:730
+#: classes/ctcl-html.php:741
+msgid "View Order detail, print order list or customer info."
+msgstr ""
+
+#: classes/ctcl-html.php:731
+msgid "Or add vendor note to the order"
+msgstr ""
+
+#: classes/ctcl-html.php:732
+msgid "Complete or Cancel order"
+msgstr ""
+
 #: classes/ctcl-html.php:737
 msgid "Complete order tab"
+msgstr ""
+
+#: classes/ctcl-html.php:739
+msgid "Go to Complete order tab"
+msgstr ""
+
+#: classes/ctcl-html.php:742
+msgid "Or edit or view vendor note of the order"
 msgstr ""
 
 #: classes/ctcl-html.php:748
@@ -485,9 +592,9 @@ msgid "Product"
 msgstr ""
 
 #: ctc-lite.php:188
-#: js/ctcl-block.js:45
-#: js/ctcl-block.js:54
-#: js/ctcl-block.js:92
+#: js/ctcl-block.js:49
+#: js/ctcl-block.js:58
+#: js/ctcl-block.js:96
 msgid "Price"
 msgstr ""
 
@@ -503,243 +610,243 @@ msgstr ""
 msgid "This will remove order. Are you sure?"
 msgstr ""
 
-#: js/ctcl-block.js:16
+#: js/ctcl-block.js:18
 msgid "CTC Lite Product"
 msgstr ""
 
-#: js/ctcl-block.js:18
+#: js/ctcl-block.js:20
 msgid "Create product"
 msgstr ""
 
-#: js/ctcl-block.js:20
-#: js/ctcl-block.js:123
-#: js/ctcl-block.js:312
+#: js/ctcl-block.js:22
+#: js/ctcl-block.js:127
+#: js/ctcl-block.js:316
 msgid "eCommerce"
 msgstr ""
 
-#: js/ctcl-block.js:20
+#: js/ctcl-block.js:22
 msgid "Add Product"
 msgstr ""
 
-#: js/ctcl-block.js:49
-#: js/ctcl-block.js:98
+#: js/ctcl-block.js:53
+#: js/ctcl-block.js:102
 msgid "Add To Cart"
 msgstr ""
 
-#: js/ctcl-block.js:51
+#: js/ctcl-block.js:55
 msgid "Product Information"
 msgstr ""
 
-#: js/ctcl-block.js:53
+#: js/ctcl-block.js:57
 msgid "Name"
 msgstr ""
 
-#: js/ctcl-block.js:53
+#: js/ctcl-block.js:57
 msgid "Enter product name."
 msgstr ""
 
-#: js/ctcl-block.js:54
+#: js/ctcl-block.js:58
 msgid "Enter product price."
 msgstr ""
 
-#: js/ctcl-block.js:55
+#: js/ctcl-block.js:59
 msgid "Shipping Cost"
 msgstr ""
 
-#: js/ctcl-block.js:55
+#: js/ctcl-block.js:59
 msgid "Enter shipping cost"
 msgstr ""
 
-#: js/ctcl-block.js:56
+#: js/ctcl-block.js:60
 msgid "Variations 1"
 msgstr ""
 
-#: js/ctcl-block.js:56
-#: js/ctcl-block.js:57
+#: js/ctcl-block.js:60
+#: js/ctcl-block.js:61
 msgid "Comma separated."
 msgstr ""
 
-#: js/ctcl-block.js:57
+#: js/ctcl-block.js:61
 msgid "Variations 2"
 msgstr ""
 
-#: js/ctcl-block.js:58
+#: js/ctcl-block.js:62
 msgid "Variations 1 Label"
 msgstr ""
 
-#: js/ctcl-block.js:59
+#: js/ctcl-block.js:63
 msgid "Variations 2 Label"
 msgstr ""
 
-#: js/ctcl-block.js:61
+#: js/ctcl-block.js:65
 msgid "Select Product Image"
 msgstr ""
 
-#: js/ctcl-block.js:65
+#: js/ctcl-block.js:69
 msgid " Select  Product Image"
 msgstr ""
 
-#: js/ctcl-block.js:67
-#: js/ctcl-block.js:208
+#: js/ctcl-block.js:71
+#: js/ctcl-block.js:212
 msgid "Select button color"
 msgstr ""
 
-#: js/ctcl-block.js:119
+#: js/ctcl-block.js:123
 msgid "CTC Lite Cart"
 msgstr ""
 
-#: js/ctcl-block.js:121
+#: js/ctcl-block.js:125
 msgid "CTC Lite block to create checkout page"
 msgstr ""
 
-#: js/ctcl-block.js:123
+#: js/ctcl-block.js:127
 msgid "Checkout"
 msgstr ""
 
-#: js/ctcl-block.js:135
+#: js/ctcl-block.js:139
 msgid "Product List :"
 msgstr ""
 
-#: js/ctcl-block.js:137
+#: js/ctcl-block.js:141
 msgid "Contains Product List"
 msgstr ""
 
-#: js/ctcl-block.js:140
+#: js/ctcl-block.js:144
 msgid "Shipping/Contact Info"
 msgstr ""
 
-#: js/ctcl-block.js:144
+#: js/ctcl-block.js:148
 msgid "*First Name :"
 msgstr ""
 
-#: js/ctcl-block.js:147
-#: js/ctcl-block.js:233
+#: js/ctcl-block.js:151
+#: js/ctcl-block.js:237
 msgid "*Last Name :"
 msgstr ""
 
-#: js/ctcl-block.js:152
-#: js/ctcl-block.js:239
+#: js/ctcl-block.js:156
+#: js/ctcl-block.js:243
 msgid "*Street Address 1 :"
 msgstr ""
 
-#: js/ctcl-block.js:155
-#: js/ctcl-block.js:243
+#: js/ctcl-block.js:159
+#: js/ctcl-block.js:247
 msgid "Street Address 2 :"
 msgstr ""
 
-#: js/ctcl-block.js:161
-#: js/ctcl-block.js:249
+#: js/ctcl-block.js:165
+#: js/ctcl-block.js:253
 msgid "*City :"
 msgstr ""
 
-#: js/ctcl-block.js:164
-#: js/ctcl-block.js:253
+#: js/ctcl-block.js:168
+#: js/ctcl-block.js:257
 msgid "*State/Province :"
 msgstr ""
 
-#: js/ctcl-block.js:169
-#: js/ctcl-block.js:259
+#: js/ctcl-block.js:173
+#: js/ctcl-block.js:263
 msgid "*Zip Code :"
 msgstr ""
 
-#: js/ctcl-block.js:172
-#: js/ctcl-block.js:263
+#: js/ctcl-block.js:176
+#: js/ctcl-block.js:267
 msgid "*Country :"
 msgstr ""
 
-#: js/ctcl-block.js:177
-#: js/ctcl-block.js:269
+#: js/ctcl-block.js:181
+#: js/ctcl-block.js:273
 msgid "*Email Address :"
 msgstr ""
 
-#: js/ctcl-block.js:180
-#: js/ctcl-block.js:273
+#: js/ctcl-block.js:184
+#: js/ctcl-block.js:277
 msgid "Phone Number :"
 msgstr ""
 
-#: js/ctcl-block.js:185
+#: js/ctcl-block.js:189
 msgid "Special Instruction : "
 msgstr ""
 
-#: js/ctcl-block.js:188
+#: js/ctcl-block.js:192
 msgid "Special Instructions :"
 msgstr ""
 
-#: js/ctcl-block.js:191
-#: js/ctcl-block.js:283
+#: js/ctcl-block.js:195
+#: js/ctcl-block.js:287
 msgid "* Are Required Fields."
 msgstr ""
 
-#: js/ctcl-block.js:193
+#: js/ctcl-block.js:197
 msgid "Shipping Options :"
 msgstr ""
 
-#: js/ctcl-block.js:195
+#: js/ctcl-block.js:199
 msgid "Contains Shipping Options"
 msgstr ""
 
-#: js/ctcl-block.js:198
+#: js/ctcl-block.js:202
 msgid "Payment Options :"
 msgstr ""
 
-#: js/ctcl-block.js:200
+#: js/ctcl-block.js:204
 msgid "Contains Payment Options."
 msgstr ""
 
-#: js/ctcl-block.js:203
-#: js/ctcl-block.js:292
+#: js/ctcl-block.js:207
+#: js/ctcl-block.js:296
 msgid "Check Out"
 msgstr ""
 
-#: js/ctcl-block.js:205
+#: js/ctcl-block.js:209
 msgid "Checkout page setting"
 msgstr ""
 
-#: js/ctcl-block.js:207
+#: js/ctcl-block.js:211
 msgid "URL of page with ctc lite payment processing block :"
 msgstr ""
 
-#: js/ctcl-block.js:220
+#: js/ctcl-block.js:224
 msgid "Product List"
 msgstr ""
 
-#: js/ctcl-block.js:222
+#: js/ctcl-block.js:226
 msgid "Loading ..."
 msgstr ""
 
-#: js/ctcl-block.js:223
+#: js/ctcl-block.js:227
 msgid "Empty Cart"
 msgstr ""
 
-#: js/ctcl-block.js:226
+#: js/ctcl-block.js:230
 msgid "Contact/Shipping Info"
 msgstr ""
 
-#: js/ctcl-block.js:229
+#: js/ctcl-block.js:233
 msgid "*First  Name :"
 msgstr ""
 
-#: js/ctcl-block.js:279
+#: js/ctcl-block.js:283
 msgid "Special Instruction :"
 msgstr ""
 
-#: js/ctcl-block.js:289
+#: js/ctcl-block.js:293
 msgid "Payment Options"
 msgstr ""
 
-#: js/ctcl-block.js:308
+#: js/ctcl-block.js:312
 msgid "CTC Lite Order Processing"
 msgstr ""
 
-#: js/ctcl-block.js:310
+#: js/ctcl-block.js:314
 msgid "CTC Lite block to create Order processing page"
 msgstr ""
 
-#: js/ctcl-block.js:312
-#: js/ctcl-block.js:318
+#: js/ctcl-block.js:316
+#: js/ctcl-block.js:322
 msgid "Order Processing"
 msgstr ""
 
-#: js/ctcl-block.js:319
+#: js/ctcl-block.js:323
 msgid "Contains Order outcome message."
 msgstr ""
