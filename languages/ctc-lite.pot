@@ -2,19 +2,20 @@
 # This file is distributed under the same license as the CTC Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: CTC Lite 1.1.1\n"
+"Project-Id-Version: CTC Lite 1.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ctc-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-28T06:18:18+00:00\n"
+"POT-Creation-Date: 2021-06-28T13:21:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ctc-lite\n"
 
 #. Plugin Name of the plugin
+#: ctc-lite.php:268
 #: ctc-lite.php:329
 msgid "CTC Lite"
 msgstr ""
@@ -53,6 +54,10 @@ msgstr ""
 
 #: classes/ctcl-billings.php:108
 msgid "Cash On Delivery Payment"
+msgstr ""
+
+#: classes/ctcl-html.php:19
+msgid "CTC Lite Admin Panel"
 msgstr ""
 
 #: classes/ctcl-html.php:21
@@ -608,6 +613,10 @@ msgstr ""
 
 #: ctc-lite.php:220
 msgid "This will remove order. Are you sure?"
+msgstr ""
+
+#: ctc-lite.php:268
+msgid "CTC Lite "
 msgstr ""
 
 #: js/ctcl-block.js:18
