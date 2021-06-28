@@ -16,7 +16,7 @@ public function adminPanelHtml(){
     $arrTab=array();
 ?>
 <div class="ctclAdminPanel">	               
-<h2><span class="dashicons-before dashicons-store"></span>CTC Lite Admin Panel</h2>
+<h2><span class="dashicons-before dashicons-store"></span><?=__('CTC Lite Admin Panel','ctc-lite')?></h2>
     <h4 class="nav-tab-wrapper">
         <a href="?page=ctclAdminPanel&tab=info" class="nav-tab dashicons-before dashicons-info <?=$activeTab == 'info' ? 'nav-tab-active' : ''; ?> "><?=__('Information','ctc-lite')?></a>
         <a href="?page=ctclAdminPanel&tab=billing" class="nav-tab dashicons-before dashicons-money <?=$activeTab == 'billing' ? 'nav-tab-active' : ''; ?> "><?=__('Billing','ctc-lite')?></a>
