@@ -135,7 +135,7 @@ public function frontendShiipingOptions(){
         
         $shippingArr =  array(
                                 'id'=>'store_pickup',
-                                'name'=>'Store Pickup'
+                                'name'=>__('Store Pickup','ctc-lite')
         );
 
         array_push($val,$shippingArr);
@@ -150,7 +150,7 @@ public function frontendShiipingOptions(){
         
             $shippingArr =  array(
                                     'id'=>'vendor_shipping',
-                                    'name'=>'Vendor Shipping'
+                                    'name'=>__('Vendor Shipping','ctc-lite')
             );
     
             array_push($val,$shippingArr);
