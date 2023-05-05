@@ -137,19 +137,34 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     example: {},
     attributes: {
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
-        paymentPage: { type: 'string', default: '' }
+        paymentPage: { type: 'string', default: '' },
+        prodListDis :{type:"Boolean",default:true},
+        contFormDis:{type:'Boolean',default:false}
     },
 
     edit: ({ attributes, setAttributes }) => {
         return el('div', { className: 'ctcl-checkout-container' },
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-form', },
-                    el('div', { className: 'ctcl-product-list' },
+                    el('div', { style:{display:attributes.prodListDis? '' :'none'},className: 'ctcl-product-list' },
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List :', 'ctc-lite')),
                         el('div', { className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-list-content' }, __('Contains Product List', 'ctc-lite')),
-                        )),
-                    el('fieldset', { className: 'ctcl-contact-form-fieldset' },
+                        ),
+                        el("div",{},
+                        el(Button,
+                            
+                            {   onClick:()=>{
+                                setAttributes({prodListDis:false})
+                                setAttributes({contFormDis:true})
+                             },
+                            style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button' },
+                          
+                            __("Next", 'ctc-lite')),
+                        )
+                        ),
+                 el("div", {style:{display:attributes.contFormDis? '' :'none'} ,},
+                    el('fieldset', {  className: 'ctcl-contact-form-fieldset' },
                         el('legend', { className: 'ctcl-contact-form-legend' }, __('Shipping/Contact Info', 'ctc-lite')),
                         el('div', { className: 'ctcl-input-container' },
                             el('div', { className: 'ctcl-address-row' },
@@ -212,9 +227,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { className: 'ctcl-payment-options-container' },
                             el('p', { className: 'ctcl-payment-options-content' }, __('Contains Payment Options.', 'ctc-lite')),
                         )),
+                        el('div',{},
 
-                    el(Button, { style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
-
+                        el(Button, { onClick:()=>{
+                            setAttributes({prodListDis:true})
+                                setAttributes({contFormDis:false})
+                        },style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
+                        el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
+                        )
+                 ),
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
                         el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
@@ -229,12 +250,22 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
         return el('div', null,
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-from', method: 'post', action: attributes.paymentPage },
+
                     el('div', { className: 'ctcl-product-list' },
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List', 'ctc-lite')),
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
                             el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
-                        )),
+                        ),
+                        el("div",{},
+                        el("button",{
+                            style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-next' },
+                          
+                            __("Next", 'ctc-lite')),
+                        
+                        ),
+                        ),
+                    el('div',{className:"ctcl-multip-contact", style:{display:"none"}},    
                     el('fieldset', { className: 'ctcl-contact-form-fieldset' },
                         el('legend', { className: 'ctcl-contact-form-legend' }, __('Contact/Shipping Info', 'ctc-lite')),
                         el('div', { className: "ctcl-address-row" },
@@ -302,7 +333,10 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('strong', { className: 'ctcl-payment-options-header' }, __('Payment Options', 'ctc-lite')),
                         el('div', { id: 'ctcl-checkout-payment-option', className: 'ctcl-payment-options-container' }, '[ctcl_payment_options]'
                         )),
+                     
+                    el('button', {  style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
                     el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
+                    ),
                 ),
             ),
         )
@@ -351,7 +385,7 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
     title: __('CTC Lite Image Gallery', 'ctc-lite'),
     icon: 'format-gallery',
     description: __("CTC Lite block to create image gallery", "ctc-lite"),
-    category: 'media',
+    category: 'ctc-lite-blocks',
     keywords: [__('image gallery', 'ctc-lite'), __('product album', 'ctc-lite')],
     example: {},
     attributes: {

@@ -17,6 +17,7 @@ class ctclMain {
             this.loadCartItems();
             this.hideShowPaymentContainer();
             this.onShippingRadioButtonCheck();
+            this.showHideMultipartForm();
         }
 
         if(null !== document.querySelector('.ctclig-image-list')){
@@ -317,6 +318,29 @@ class ctclMain {
         if (null != loadingP) {
             loadingP.parentElement.removeChild(loadingP);
         }
+
+    }
+
+    /**
+     * Since 2.0.0
+     * 
+     * Showhide multipart checkout form
+     * 
+     */
+
+    showHideMultipartForm(){
+
+        document.querySelector('.ctcl-checkout-next').addEventListener('click',()=>{
+
+            document.querySelector('.ctcl-product-list').style.display = 'none';
+            document.querySelector('.ctcl-multip-contact').style.display = '';
+        })
+
+        document.querySelector('.ctcl-checkout-back').addEventListener('click',()=>{
+
+            document.querySelector('.ctcl-product-list').style.display = '';
+            document.querySelector('.ctcl-multip-contact').style.display = 'none';
+        })
 
     }
 
