@@ -19,6 +19,12 @@ class ctclMain {
             this.onShippingRadioButtonCheck();
         }
 
+        if(null !== document.querySelector('.ctclig-image-list')){
+
+            this.applyGallery();
+
+        }
+
     }
 
     /**
@@ -390,6 +396,38 @@ class ctclMain {
             })
         });
     }
+
+    /**
+     * since 2.0.0
+     * 
+     * Apply Gallery
+     */
+  
+applyGallery(){
+
+    new ctcOverlayViewer('.ctclig-image-list')
+   
+
+    Array.from(document.querySelectorAll('.ctcl-image-gallery')).map(x => {
+
+        Array.from(x.querySelectorAll('.ctclig-image-list div img')).map(y => {
+            y.addEventListener('mouseover', e => {
+                x.querySelector('.ctclig-main-image').style.backgroundImage = `url("${e.target.src}")`;
+                x.querySelector('.ctclig-main-image').setAttribute('data-img-num', e.target.getAttribute('data-image-num'));
+            })
+
+
+
+        });
+
+        x.querySelector('.ctclig-main-image').addEventListener('click', e => {
+            x.querySelector(`#ctclif-gal-img-${e.target.getAttribute('data-ts')}-${e.target.getAttribute('data-img-num')}`).click();
+        });
+    })
+
+
+}
+
 
     /**
     * @since 1.0.0

@@ -106,7 +106,7 @@ class ctclAdminJs {
 
 
 
-                        new jsOverlay({ elContent: event.target.response, containerHt: 600, containerWd: 1080, overlayNum: 1 });
+                        new jsOverlay({ elContent: event.target.response, containerHt: 600, containerWd: 1200, overlayNum: 1 });
                         new jsMasonry('.ctcl-pending-order-detail', { elWidth: 500, heightSort: 'desc', elMargin: 10 });
                         this.addPendingOrderModalEvent();
                     } else {

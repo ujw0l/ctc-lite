@@ -1,5 +1,6 @@
 
-const { CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl } = wp.components;
+const { useEffect } = React;
+const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl } = wp.components;
 const { InspectorControls, MediaUpload, } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
@@ -26,21 +27,27 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         productPrice: { type: 'string', default: '0.00' },
         shippingCost: { type: 'string', default: '0.00' },
         profilePic: { type: 'string', default: ctcLiteParams.defaultPic },
+     
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
         dummyQty: { type: 'string', default: '1' },
         variation1Lable: { type: 'string', default: 'Variation 1' },
         variation2Lable: { type: 'string', default: 'Variation 2' },
         variation1: { type: 'Array', default: [] },
         variation2: { type: 'Array', default: [] },
+        galItems: { type: 'Array', default: [] },
+        mainImage: { type: 'String', default: '' },
+        clntId: { type: 'String', default: '' },
+        mainImgWd: { type: 'Number', default: 70 },
+        mainImgHt: { type: 'Number', default: 60 },
+        mainImgFinalWd: { type: 'Number', default: 70 },
+        mainImgFinalHt: { type: 'Number', default:60  },
 
     },
-    edit: ({ attributes, setAttributes }) => {
+    edit: ({ attributes, setAttributes,clientId }) => {
 
+        setAttributes({clntId:clientId})
         let variationOneItem = attributes.variation1.map(x => x.value);
         let variationTwoItem = attributes.variation2.map(x => x.value);
-
-
-
 
 
         return el('div', { className: 'ctcl-product-container' },
@@ -61,14 +68,16 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     el(TextControl, { name: 'variations2', className: "ctcl-setting-variation2", label: `${__("Variations 2", 'ctc-lite')} : `, value: variationTwoItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation2: val.split(',').map(x => { return { value: x, label: x } }) }) }),
                     el(TextControl, { name: 'variations1label', className: "ctcl-setting-variation1-label", label: `${__("Variations 1 Label", 'ctc-lite')} : `, value: attributes.variation1Lable, onChange: val => setAttributes({ variation1Lable: val }) }),
                     el(TextControl, { name: 'variations2label', className: "ctcl-setting-variation2-label", label: `${__("Variations 2 Label", 'ctc-lite')} : `, value: attributes.variation2Lable, onChange: val => setAttributes({ variation2Lable: val }) }),
+                   el(PanelBody,{},
                     el(MediaUpload, {
                         title: __('Select Product Image', 'ctc-lite'),
                         onSelect: media => setAttributes({ profilePic: media.url }),
                         render: ({ open }) => el(Button, {
                             className: "ctcl-media-button dashicons-before dashicons-admin-media", onClick: open
-                        }, __(" Select  Product Image", "ctc-lite")),
-                    }),
-                    el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
+                        }, __("Product Cart Image", "ctc-lite")),
+                    })),
+                  
+                    el('h4', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                     el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },)
 
                 ))
@@ -99,7 +108,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2', label: attributes.variation2Lable }),
             el('label', { className: 'ctcl-product-qty' }, `${__('Qty ')} : `),
             el('div', { className: 'ctcl-quantity' }, el('span', { className: 'ctcl-minus-qty' }, '-'), el('input', { className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { className: 'ctcl-plus-qty' }, '+')),
-            el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, __("Add To Cart", 'ctc-lite')),
+            el('button', { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, __("Add To Cart", 'ctc-lite')),
         )
     }
 
@@ -324,8 +333,108 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
         );
 
     },
-    save: () => el('div', { className: 'ctcl-order-message' }, '[ctcl_order_page]'),
+    
 
 
 
+});
+
+
+/**
+ *  @since 1.0.0
+ *
+ * Register order prosseing block
+ */
+
+registerBlockType('ctc-lite/ctcl-image-gallery', {
+
+    title: __('CTC Lite Image Gallery', 'ctc-lite'),
+    icon: 'format-gallery',
+    description: __("CTC Lite block to create image gallery", "ctc-lite"),
+    category: 'media',
+    keywords: [__('image gallery', 'ctc-lite'), __('product album', 'ctc-lite')],
+    example: {},
+    attributes: {
+        galItems: { type: 'Array', default: [] },
+        mainImage: { type: 'String', default: '' },
+        clntId: { type: 'String', default: '' },
+        mainImgWd: { type: 'Number', default: 450 },
+        mainImgHt: { type: 'Number', default: 700 },
+        mainImgFinalWd: { type: 'Number', default: 450 },
+        mainImgFinalHt: { type: 'Number', default: 700 },
+    },
+
+    edit: ({ attributes, setAttributes, clientId }) => {
+        setAttributes({ clntId: clientId });
+        useEffect(() => {
+            let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
+            if (null != elem) {
+                setAttributes({ mainImgFinalWd: elem.offsetWidth });
+                setAttributes({ mainImgFinalHt: elem.offsetHeight })
+            }
+
+
+        }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
+
+
+        return el('div', { className: 'ctcl-image-gallery-block' },
+
+
+            0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+            0 < attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '95px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                el('div', { style: { width: `${attributes.galItems.length * 70}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                    attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
+            ) : '',
+            el('div', { style: { border: '1px solid rgb(61, 148, 218)', backgroundColor: 'rgba(255,255,255,1)', } },
+
+                el(MediaUpload, {
+                    title: __('Select  product images for gallery ', 'ctcl-image-gallery'),
+                    multiple: true,
+                    value: attributes.galItems.map(x => x.id),
+                    gallery: true,
+                    onSelect: gal => {
+                        setAttributes({ galItems: gal });
+                        setAttributes({ mainImage: gal[0].url });
+                    },
+                    render: ({ open }) => el('div', { style: { width: '100%', backgroundColor: 'rgba(255,255,,255,1)', color: 'rgb(61, 148, 218)', padding: '10px' } },
+                       
+                        el(Button, { style: { marginLeft: 'auto', marginRight: 'auto', display: 'block', color: 'rgb(61, 148, 218)', border: '1px solid rgb(61, 148, 218)' }, className: "ctclig-media-button dashicons-before dashicons-format-gallery", onClick: open }, __(" Select Gallery Images", "ctcl-image-gallery")),
+                    ),
+                }),
+
+                el(InspectorControls, null,
+                    el(PanelBody, null,
+                        el(RangeControl, {
+                            label: __('Image width in pixel (px)', 'ctc-gal'),
+                            min: 148,
+                            max: window.innerWidth,
+                            onChange: val => setAttributes({ mainImgWd: val }),
+                            value: attributes.mainImageWd,
+                        }),
+
+                        el(RangeControl, {
+                            label: __('Image height in pixel(px)', 'ctc-gal'),
+                            min: 148,
+                            max: window.innerHeight,
+                            onChange: val => setAttributes({ mainImgHt: val }),
+                            value: attributes.mainImageHt,
+                        })
+
+                    ))
+
+            ),
+
+
+        )
+
+
+    },
+    save: ({ attributes }) => el('div', { className: 'ctcl-image-gallery' },
+
+        0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+        0 < attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '95px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+            el('div', { style: { width: `${attributes.galItems.length * 70}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
+        ) : '',
+    ),
 });

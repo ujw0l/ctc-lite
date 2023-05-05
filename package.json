@@ -1,6 +1,6 @@
 {
   "name": "ctc-lite",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "ecommerce plugin for wordpress",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,10 @@
   },
   "dependencies": {
     "js-masonry": "^1.1.0",
-    "js-overlay": "^1.0.9"
+    "js-overlay": "^1.0.9",
+    "ctc-gallery-viewer": "^1.6.0"
   },
-  "homepage": "https://github.com/ujw0l/ctc-lite#readme"
+  "homepage": "https://github.com/ujw0l/ctc-lite#readme",
+  "devDependencies": {
+  }
 }

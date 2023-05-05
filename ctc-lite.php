@@ -176,7 +176,8 @@ dbDelta($sql);
    */
 
    public function enequeFrontendJs(){
-    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js');
+      wp_enqueue_script('ctcOvrlayJs', CTCL_DIR_PATH.'js/ctc_overlay.js'); 
+    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js',array('ctcOvrlayJs'));
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
@@ -201,6 +202,7 @@ dbDelta($sql);
    */
 
   public function enequeFrontendCss(){
+   
     wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-frontend.css'); 
 }
 
@@ -238,7 +240,7 @@ dbDelta($sql);
 public function requiredShortCode(){
    add_shortcode('ctcl_payment_options', array($this->ctclHtml,'paymentOptionsShortCode'));
    add_shortcode('ctcl_shipping_options', array($this->ctclHtml,'shippingOptionsShortCode'));
-   add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
+  // add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
 }
 
 /**
@@ -312,8 +314,17 @@ wp_register_script(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
-    )
+      
+    ),
  );
+
+ register_block_type(
+   'ctc-lite/ctc-lite-order-processing',
+   array(
+      'render_callback'=>array($this->ctclProcessing,'orderProcessingShortCode'),
+   ),
+
+);
 
   }
 
