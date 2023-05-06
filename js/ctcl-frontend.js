@@ -7,6 +7,9 @@ class ctclMain {
         }
 
         if (1 <= document.querySelectorAll('.ctcl-add-cart').length) {
+
+            this.onVariationOneSelect();
+            this.onVariationTwoSelect();
             this.reduceItemQyty();
             this.increaseItemQty();
             this.addReduceItemQty();
@@ -81,6 +84,49 @@ class ctclMain {
     }
 
     /**
+     * @since 2.0.0
+     * 
+     * On Variation one select
+     */
+    onVariationOneSelect(){
+      if(undefined != document.querySelector('#ctcl-Variation-1')) { 
+        document.querySelector('#ctcl-Variation-1').addEventListener('change',e=>{
+            let val =  e.target.value ;
+            if(val.includes('~')){
+                let parentContainer = e.target.parentElement.parentElement;
+                let vals = val.split('~');
+                parentContainer.querySelector('.product-price').innerHTML =  parseFloat(vals[1]).toFixed(2);
+                parentContainer.querySelector('.ctcl-add-cart').setAttribute('data-price',parseFloat(vals[1]).toFixed(2));  
+            }
+        })
+    }
+    }
+
+/**
+     * @since 2.0.0
+     * 
+     * On Variation two select
+     */
+    onVariationTwoSelect(){
+
+        if(undefined != document.querySelector('#ctcl-Variation-2')) { 
+            document.querySelector('#ctcl-Variation-2').addEventListener('change',e=>{
+                let val =  e.target.value ;
+                if(val.includes('~')){
+                    let parentContainer = e.target.parentElement.parentElement;
+                    let vals = val.split('~');
+                    if(undefined !=  document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image')){
+                        document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image').style.backgroundImage = `url("${vals[1]}")`;
+                    }
+                    
+                    parentContainer.querySelector('.ctcl-add-cart').setAttribute('data-pic',vals[1]);  
+                }
+            })
+        }
+
+    }
+
+    /**
      * @since 1.0.0
      *
      * on add to cart button click
@@ -91,8 +137,8 @@ class ctclMain {
             let newItem = e.target.getAttribute('data-name');
 
             let parentContainer = e.target.parentElement;
-            let variation1 = undefined != parentContainer.querySelector('#ctcl-Variation-1') ? parentContainer.querySelector('#ctcl-Variation-1').value : 'N/A';
-            let variation2 = undefined != parentContainer.querySelector('#ctcl-Variation-2') ? parentContainer.querySelector('#ctcl-Variation-2').value : 'N/A';
+            let variation1 = undefined != parentContainer.querySelector('#ctcl-Variation-1') ? parentContainer.querySelector('#ctcl-Variation-1').value.split('~')[0] : 'N/A';
+            let variation2 = undefined != parentContainer.querySelector('#ctcl-Variation-2') ? parentContainer.querySelector('#ctcl-Variation-2').value.split('~')[0] : 'N/A';
 
             if (null === localStorage.getItem('ctclHiddenCart')) {
                 localStorage.setItem('ctclHiddenCart', JSON.stringify([{
