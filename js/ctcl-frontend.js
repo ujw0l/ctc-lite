@@ -109,16 +109,15 @@ class ctclMain {
      */
     onVariationTwoSelect(){
 
-        if(undefined != document.querySelector('#ctcl-Variation-2')) { 
+        if(null != document.querySelector('#ctcl-Variation-2')) { 
             document.querySelector('#ctcl-Variation-2').addEventListener('change',e=>{
                 let val =  e.target.value ;
                 if(val.includes('~')){
                     let parentContainer = e.target.parentElement.parentElement;
                     let vals = val.split('~');
-                    if(undefined !=  document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image')){
+                    if(null !=  document.querySelector('.ctcl-image-gallery')){
                         document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image').style.backgroundImage = `url("${vals[1]}")`;
                     }
-                    
                     parentContainer.querySelector('.ctcl-add-cart').setAttribute('data-pic',vals[1]);  
                 }
             })
@@ -376,14 +375,15 @@ class ctclMain {
 
     showHideMultipartForm(){
 
-        document.querySelector('.ctcl-checkout-next').addEventListener('click',()=>{
+        document.querySelector('.ctcl-checkout-next').addEventListener('click',e=>{
 
+            e.preventDefault();
             document.querySelector('.ctcl-product-list').style.display = 'none';
             document.querySelector('.ctcl-multip-contact').style.display = '';
         })
 
-        document.querySelector('.ctcl-checkout-back').addEventListener('click',()=>{
-
+        document.querySelector('.ctcl-checkout-back').addEventListener('click',e=>{
+            e.preventDefault();
             document.querySelector('.ctcl-product-list').style.display = '';
             document.querySelector('.ctcl-multip-contact').style.display = 'none';
         })

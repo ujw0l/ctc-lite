@@ -53,7 +53,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             1 < attributes.variation2.length && el(SelectControl, { 'id': 'ctcl-variation-2', label: `${attributes.variation2Lable} : `, options: attributes.variation2, onChange:val => {
 
                 let mainImg =  document.querySelector('.ctcl-image-gallery-block .ctclig-main-image');
-                if(mainImg != 'undefined'){
+                if(mainImg != null){
 
                     mainImg.style.backgroundImage = `url("${val.split('~')[1]}")`;
                 }
@@ -80,9 +80,24 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     el(PanelBody,{}, 
                     el(TextControl, { name: 'variations1', className: "ctcl-setting-variation1", label: `${__("Variations 1", 'ctc-lite')} : `, value: variationOneItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation1: val.split(',').map(x => { return { value: x+'~'+attributes.productPrice, label: x } }) }) }),
                     el(TextControl, { name: 'variations1label', className: "ctcl-setting-variation1-label", label: `${__("Variations 1 Label", 'ctc-lite')} : `, value: attributes.variation1Lable, onChange: val => setAttributes({ variation1Lable: val }) }),
-                    el(ToggleControl,{ label:__("Different price for variation",'ctc-lite'), help:__("Different price for different variation for Variation1 ?","ctc-lite"), checked:attributes.varDiffPrice, onChange:val=>setAttributes({varDiffPrice: val})  }),
+                    el(ToggleControl,{ label:__("Different price for variation",'ctc-lite'), help:__("Different price for different variation for Variation 1?","ctc-lite"), checked:attributes.varDiffPrice, onChange:val=>{
+                         if(0 < attributes.variation1.length){
+
+                            if( false == attributes.varDiffPrice){
+                                
+                                let var1 = attributes.variation1.map(x=>{
+                                    return {value:x.label+'~'+attributes.productPrice, label:x.label}
+                                })
+                               setAttributes({variation1: var1})
+                        
+                    }
+                       
+                         
+                }                   
+                     setAttributes({varDiffPrice: val})  
+                    }}),
                     
-                    attributes.varDiffPrice &&  attributes.variation1.map( (x,i)=>el(TextControl,{label:x.label, className:'ctcl-varition1-input', type: 'number' ,value:parseFloat(x.value.split('~')[1]),  key:i, onChange:val=> {
+                    attributes.varDiffPrice &&  attributes.variation1.map( (x,i)=>el(TextControl,{className:"ctcl-different-price", label:x.label, className:'ctcl-varition1-input', type: 'number' ,value:parseFloat(x.value.split('~')[1]),  key:i, onChange:val=> {
                        attributes.variation1[i] = {value: x.label+'~'+ parseFloat(val) ,label:x.label }
                        setAttributes({variation1:[...attributes.variation1]})
 
@@ -91,7 +106,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     el(PanelBody,{},
                     el(TextControl, { name: 'variations2', className: "ctcl-setting-variation2", label: `${__("Variations 2", 'ctc-lite')} : `, value: variationTwoItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation2: val.split(',').map(x => { return { value: x+'~'+attributes.profilePic, label: x } }) }) }),
                     el(TextControl, { name: 'variations2label', className: "ctcl-setting-variation2-label", label: `${__("Variations 2 Label", 'ctc-lite')} : `, value: attributes.variation2Lable, onChange: val => setAttributes({ variation2Lable: val }) }),
-                    el(ToggleControl,{ label:__("Different images for variation",'ctc-lite'), help:__("Different images for different variation for Variation1 ?","ctc-lite"), checked:attributes. varDiffImage, onChange:val=>setAttributes({ varDiffImage: val})  }),
+                    el(ToggleControl,{ label:__("Different images for variation",'ctc-lite'), help:__("Different images for different variation for Variation 2?","ctc-lite"), checked:attributes. varDiffImage, onChange:val=>setAttributes({ varDiffImage: val})  }),
                     attributes.varDiffImage && attributes.variation2.map((x,i)=>el(MediaUpload, {
                         title: __('Select Product Image for '+x.label, 'ctc-lite'),
                         allowedTypes : 'image',
@@ -199,7 +214,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                              },
                             style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button' },
                           
-                            __("Next", 'ctc-lite')),
+                            __("Proceed To Checkout", 'ctc-lite')),
                         )
                         ),
                  el("div", {style:{display:attributes.contFormDis? '' :'none'} ,},
@@ -271,7 +286,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el(Button, { onClick:()=>{
                             setAttributes({prodListDis:true})
                                 setAttributes({contFormDis:false})
-                        },style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
+                        },style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
                         el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
                         )
                  ),
@@ -300,7 +315,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el("button",{
                             style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-next' },
                           
-                            __("Next", 'ctc-lite')),
+                            __("Proceed to Checkout", 'ctc-lite')),
                         
                         ),
                         ),
@@ -373,8 +388,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { id: 'ctcl-checkout-payment-option', className: 'ctcl-payment-options-container' }, '[ctcl_payment_options]'
                         )),
                      
-                    el('button', {  style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
-                    el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
+                    el('button', {  style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
+                    el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"right" }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
                     ),
                 ),
             ),

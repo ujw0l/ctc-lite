@@ -178,6 +178,9 @@ vertical-align: middle;
 .ctcl-shipping-option-row label{
     display:inline-block;
 }
+
+.ctcl-checkout-next,
+.ctcl-checkout-back,
 input[name="ctcl-checkout-button"]{
     margin-top:20px!important;
     color:rgba(255,255,255,1)!important;
