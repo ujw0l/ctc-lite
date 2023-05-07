@@ -84,7 +84,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                          if(0 < attributes.variation1.length){
 
                             if( false == attributes.varDiffPrice){
-                                
+
                                 let var1 = attributes.variation1.map(x=>{
                                     return {value:x.label+'~'+attributes.productPrice, label:x.label}
                                 })
@@ -212,7 +212,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                                 setAttributes({prodListDis:false})
                                 setAttributes({contFormDis:true})
                              },
-                            style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-button' },
+                            style: { backgroundColor: attributes.buttonColor,  }, className: 'ctcl-checkout-button' },
                           
                             __("Proceed To Checkout", 'ctc-lite')),
                         )
@@ -313,7 +313,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         ),
                         el("div",{},
                         el("button",{
-                            style: { backgroundColor: attributes.buttonColor }, className: 'ctcl-checkout-next' },
+                            style: { backgroundColor: attributes.buttonColor, display:"none" }, className: 'ctcl-checkout-next' },
                           
                             __("Proceed to Checkout", 'ctc-lite')),
                         

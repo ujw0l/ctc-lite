@@ -1,6 +1,9 @@
 /**
 product page styling
 */
+input.ctcl-checkout-button,
+button.ctcl-checkout-back,
+button.ctcl-checkout-next,
 button.ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
@@ -16,10 +19,10 @@ justify-content:center;
 }
 
 .ctcl-add-cart:active{
-    color:rgba(255,255,255,0.9);
+    color:rgba(255,255,255,0.3);
 }
 .ctcl-add-cart:hover{
-    color:rgba(255,255,255,0.9);
+    color:rgba(255,255,255,1);
 }
 .ctcl-add-cart:before{
     display:flex;
@@ -182,7 +185,7 @@ vertical-align: middle;
 .ctcl-checkout-next,
 .ctcl-checkout-back,
 input[name="ctcl-checkout-button"]{
-    margin-top:20px!important;
+
     color:rgba(255,255,255,1)!important;
 
 }

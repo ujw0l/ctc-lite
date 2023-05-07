@@ -203,6 +203,7 @@ class ctclMain {
         })
 
         if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').legnth) {
+            prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display =''; 
             prodListCont.querySelector('p').style.display = 'none';
 
 
@@ -357,6 +358,8 @@ class ctclMain {
 
 
         } else {
+
+            prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display ='none'; 
             prodListCont.querySelector('.ctcl-product-list-content').style.display = '';
         }
 
