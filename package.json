@@ -24,6 +24,5 @@
     "ctc-gallery-viewer": "^1.6.0"
   },
   "homepage": "https://github.com/ujw0l/ctc-lite#readme",
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
