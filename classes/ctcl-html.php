@@ -674,6 +674,19 @@ private function infoTab(){
 <h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header"><?=__("How to operate plugin ?",'ctc-lite')?></h3>
 <div class="ctcl-info-tab">
 
+
+
+<fieldset class="ctcl-setup-check-out-page">
+<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
+    <ol>
+        <li><?=__('Create a page','ctc-lite')?></li>
+        <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
+        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
+        <li><?=__('Get the Url of processing page and paste it to url field (Important).','ctc-lite')?></li>
+        <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
+    </ol>
+</fieldset>
+
 <fieldset class="ctcl-setup-product">
     <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"><?=__('Set up product page','ctc-lite')?></legend>
     <ol>
@@ -704,16 +717,7 @@ private function infoTab(){
     </ol>
 </fieldset>
 
-<fieldset class="ctcl-setup-check-out-page">
-<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__('Set up checkout page','ctc-lite')?></legend>
-    <ol>
-        <li><?=__('Create a page','ctc-lite')?></li>
-        <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
-        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the Left side','ctc-lite')?></li>
-        <li><?=__('Get the Url of processing page and paste it to url field (Important).','ctc-lite')?></li>
-        <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
-    </ol>
-</fieldset>
+
 
 
 

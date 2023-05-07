@@ -75,9 +75,9 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       echo "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$postArr['order_id']} </div>";
+       return "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$postArr['order_id']} </div>";
       else:
-        echo "<p>{$processPayment['failure_message']}</p>";
+        return "<p>{$processPayment['failure_message']}</p>";
       endif;
     endif;
 }

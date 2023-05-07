@@ -1,6 +1,9 @@
 /**
 product page styling
 */
+input.ctcl-checkout-button,
+button.ctcl-checkout-back,
+button.ctcl-checkout-next,
 button.ctcl-add-cart{
     color:rgba(255,255,255,1);
     background-color:rgba(61,148,218,1);
@@ -16,10 +19,10 @@ justify-content:center;
 }
 
 .ctcl-add-cart:active{
-    color:rgba(255,255,255,0.9);
+    color:rgba(255,255,255,0.3);
 }
 .ctcl-add-cart:hover{
-    color:rgba(255,255,255,0.9);
+    color:rgba(255,255,255,1);
 }
 .ctcl-add-cart:before{
     display:flex;
@@ -178,8 +181,11 @@ vertical-align: middle;
 .ctcl-shipping-option-row label{
     display:inline-block;
 }
+
+.ctcl-checkout-next,
+.ctcl-checkout-back,
 input[name="ctcl-checkout-button"]{
-    margin-top:20px!important;
+
     color:rgba(255,255,255,1)!important;
 
 }
@@ -231,4 +237,46 @@ float:right;
     margin-right:auto;
     display:block;
     max-width: 100%;
+}
+
+
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.ctclig-image-list::-webkit-scrollbar {
+  
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.ctclig-image-list {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.ctcl-image-gallery{
+    cursor: pointer;
+}
+
+
+.ctclig-main-image{
+
+  max-height: 90%; 
+  max-width: 100%;
+  background: url('') center center / contain no-repeat rgb(255, 255, 255,0.5);
+  margin-left:auto;
+  margin-right:auto;
+  display: block;
+ border:1px solid rgba(0,0,0,1);
+ margin-bottom:2px;
+}
+
+.ctclig-image-list{
+  margin-bottom:2px;
+  max-height: 100%; 
+  max-width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+
+
 }

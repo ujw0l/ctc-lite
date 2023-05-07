@@ -3,7 +3,7 @@
  Plugin Name:CTC Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 1.1.3
+ Version: 2.0.0
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -144,10 +144,7 @@ dbDelta($sql);
     add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
     add_filter( 'wp_mail_from', function(){return get_option('ctcl_smtp_from_email');} );
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_filter( 'block_categories', array($this,'ctcLiteBlocks'), 10, 2);
-
-
-    
+    add_filter( 'block_categories_all', array($this,'ctcLiteBlocks'), 10, 2);
   }
 
   /**
@@ -176,7 +173,8 @@ dbDelta($sql);
    */
 
    public function enequeFrontendJs(){
-    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js');
+      wp_enqueue_script('ctcOvrlayJs', CTCL_DIR_PATH.'js/ctc_overlay.js'); 
+    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js',array('ctcOvrlayJs'));
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
@@ -201,6 +199,7 @@ dbDelta($sql);
    */
 
   public function enequeFrontendCss(){
+   
     wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-frontend.css'); 
 }
 
@@ -238,7 +237,7 @@ dbDelta($sql);
 public function requiredShortCode(){
    add_shortcode('ctcl_payment_options', array($this->ctclHtml,'paymentOptionsShortCode'));
    add_shortcode('ctcl_shipping_options', array($this->ctclHtml,'shippingOptionsShortCode'));
-   add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
+  // add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
 }
 
 /**
@@ -312,8 +311,17 @@ wp_register_script(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
-    )
+      
+    ),
  );
+
+ register_block_type(
+   'ctc-lite/ctc-lite-order-processing',
+   array(
+      'render_callback'=>array($this->ctclProcessing,'orderProcessingShortCode'),
+   ),
+
+);
 
   }
 

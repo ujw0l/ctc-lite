@@ -1,8 +1,9 @@
 === CTC Lite ===
 Contributors: UjW0L
-Tags: block,blocks,ecommerce, responsive, store, sell, shop, cart
+Donate link: https://www.patreon.com/ujw0l/membership
+Tags: block,blocks,ecommerce, responsive, store, sell, shop, cart,gallery
 Requires at least: 5.5.2
-Tested up to: 5.7.2
+Tested up to: 6.2.0
 Requires PHP: 7.4.9
 Stable tag: 1.1.3
 License: GPLv2 or later
@@ -11,7 +12,8 @@ Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor t
 
 == Description ==
 
-Plugins that lets you create a ecommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (is just 160kb )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
+Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
+You can set different price and different images for different variation.
 
 == Installation ==
 
@@ -23,6 +25,17 @@ e.g.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings-&gt;Plugin Name screen to configure the plugin
 4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
+
+
+== Frequently Asked Questions ==
+
+= How do i set up checkout page? =
+
+Create orderproessing page using order processing block and copy link of the page and paster it to url input of the checkout block setting section.  
+
+= My variation images are not showing? =
+
+For Variation images do diplay based on user selection you need to add CTC Lite image gallery block to the page.
 
 == Screenshots ==
 1. Product Page
@@ -54,3 +67,12 @@ e.g.
 
 =1.1.2=
 * Missing translations
+
+=2.0.0=
+*Different price for different variation added
+*Different Image for different variation added
+*CTC Lite Image gallery block integrated to the plugin
+*CTC Overlay added to view images in userfacing Side
+*Checkout page is now Multipart
+*Minor bug fixes 
+
