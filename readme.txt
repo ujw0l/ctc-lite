@@ -4,8 +4,8 @@ Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block,blocks,ecommerce, responsive, store, sell, shop, cart,gallery
 Requires at least: 5.5.2
 Tested up to: 6.2.0
+Stable tag: 2.0.0
 Requires PHP: 7.4.9
-Stable tag: 1.1.3
 License: GPLv2 or later
 
 Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
@@ -29,13 +29,13 @@ e.g.
 
 == Frequently Asked Questions ==
 
-= How do i set up checkout page? =
+= How do I set up checkout page? =
 
-Create orderproessing page using order processing block and copy link of the page and paster it to url input of the checkout block setting section.  
+Create order proessing page using order processing block and copy link of the page and paste it to url input of the checkout block setting section.  
 
 = My variation images are not showing? =
 
-For Variation images do diplay based on user selection you need to add CTC Lite image gallery block to the page.
+For Variation images to display based on user selection you need to add CTC Lite image gallery block to the page.
 
 == Screenshots ==
 1. Product Page
@@ -48,7 +48,7 @@ For Variation images do diplay based on user selection you need to add CTC Lite 
 8. Add product gutenberg blocks
 9. Checkout page gutenberg blocks
 10. Processing page gutenberg block
-
+11. Image gallery in overlay
 
 == Changelog ==
 
