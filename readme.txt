@@ -48,7 +48,7 @@ For Variation images to display based on user selection you need to add CTC Lite
 8. Add product gutenberg blocks
 9. Checkout page gutenberg blocks
 10. Processing page gutenberg block
-
+11. Image gallery in overlay
 
 == Changelog ==
 
