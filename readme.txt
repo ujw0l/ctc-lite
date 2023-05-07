@@ -29,13 +29,13 @@ e.g.
 
 == Frequently Asked Questions ==
 
-= How do i set up checkout page? =
+= How do I set up checkout page? =
 
-Create orderproessing page using order processing block and copy link of the page and paster it to url input of the checkout block setting section.  
+Create order proessing page using order processing block and copy link of the page and paste it to url input of the checkout block setting section.  
 
 = My variation images are not showing? =
 
-For Variation images do diplay based on user selection you need to add CTC Lite image gallery block to the page.
+For Variation images to display based on user selection you need to add CTC Lite image gallery block to the page.
 
 == Screenshots ==
 1. Product Page
