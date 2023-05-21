@@ -428,7 +428,7 @@ class ctclMain {
         if (1 == paymentOption.length) {
 
             document.querySelector('#ctcl-payment-type').value = document.querySelector('.ctcl-payment-option').getAttribute('data-name');
-            document.querySelector('.ctcl_payment_container').style.display = 'block';
+          
         } else {
 
             paymentOption.map(x => {
