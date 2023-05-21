@@ -1,6 +1,6 @@
 <?php
 /*
- Plugin Name:CTC Lite
+ Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
  Version: 2.0.1
