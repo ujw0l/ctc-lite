@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.0.1
+ Version: 2.0.2
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -200,7 +200,7 @@ dbDelta($sql);
 
   public function enequeFrontendCss(){
    
-    wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-frontend.css'); 
+    wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-frontend.css', array('dashicons')); 
 }
 
    /**
@@ -237,7 +237,7 @@ dbDelta($sql);
 public function requiredShortCode(){
    add_shortcode('ctcl_payment_options', array($this->ctclHtml,'paymentOptionsShortCode'));
    add_shortcode('ctcl_shipping_options', array($this->ctclHtml,'shippingOptionsShortCode'));
-  // add_shortcode('ctcl_order_page',array($this->ctclProcessing,'orderProcessingShortCode'));
+
 }
 
 /**
@@ -295,6 +295,7 @@ wp_register_script(
   wp_register_style(
      'ctcl-block-frontend-styles',
      plugins_url( 'css/ctcl-frontend.css',__FILE__ ),
+     array('dashicons')
  
   );
  

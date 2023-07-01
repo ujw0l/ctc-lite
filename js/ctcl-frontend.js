@@ -182,7 +182,14 @@ class ctclMain {
                     }
                 }
                 localStorage.setItem('ctclHiddenCart', JSON.stringify(setCartItems));
+
+                
             }
+
+            /**
+                 * Set custom event on add remove product
+                 */
+            document.dispatchEvent(new CustomEvent("addRemoveProduct", { detail:JSON.parse(localStorage.getItem('ctclHiddenCart')).length }));
 
         }))
 
@@ -409,11 +416,21 @@ class ctclMain {
         setItems.splice(i, 1);
         if (1 <= setItems.length) {
             localStorage.setItem(hiddenCart, JSON.stringify(setItems));
+                /**
+         * Set custom event on add remove product
+        */
+        document.dispatchEvent(new CustomEvent("addRemoveProduct", { detail: setItems.length}));
         } else {
 
+        /**
+        * Set custom event on add remove product
+        */
+        document.dispatchEvent(new CustomEvent("addRemoveProduct", { detail: 0}));
             localStorage.removeItem('ctclHiddenCart');
         }
         conts.map(x => x.parentElement.removeChild(x));
+
+    
         this.loadCartItems();
     }
 
