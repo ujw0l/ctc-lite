@@ -59,7 +59,6 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
                 let mainImg =  document.querySelector('.ctcl-image-gallery-block .ctclig-main-image');
                 if(mainImg != null){
-
                     mainImg.style.backgroundImage = `url("${val.split('~')[1]}")`;
                 }
 
@@ -236,7 +235,10 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
         paymentPage: { type: 'string', default: '' },
         prodListDis :{type:"Boolean",default:true},
-        contFormDis:{type:'Boolean',default:false}
+        contFormDis:{type:'Boolean',default:false},
+        couponAvail:{ type:'Boolean',default:false},
+        couponCode:{type:'String',default:'' },
+        amount:{type:'Number', default:0}, 
     },
 
     edit: ({ attributes, setAttributes }) => {
@@ -248,7 +250,20 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-list-content' }, __('Contains Product List', 'ctc-lite')),
                         ),
+
+                         attributes.couponAvail && el('div',{},
+                         el('span',{ style:{display:'inline-block'} },
+                         el(TextControl,{ style:{width:"150px", display:'inline-block' }, type:'text' ,label: __('Coupon Code :', 'ctc-lite') },  ),
+                         ),
+                         el('span',{style:{float:"right",marginLeft:'30px'} },
+                         el(Button,{style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor }, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                         ),
+                        
+                         
+                        ),
+
                         el("div",{},
+
                         el(Button,
                             
                             {   onClick:()=>{
@@ -334,11 +349,32 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         )
                  ),
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
-                        el(PanelBody, null,
+                    el(PanelBody, null,
+                        el(ToggleControl,{
+                                            label:__("Coupon Available", "ctc-lite"),
+			                                checked:attributes.couponAvail,
+                                            onChange: val => {
+                                                setAttributes({couponAvail:val})
+                                                if(!val){
+                                                    setAttributes({ couponCode :'' })
+                                                    setAttributes({amount:0})
+                                                }
+
+                                            }
+
+
+                        }),
+                        
+                        attributes.couponAvail && el( TextControl,{ type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
+                        ),
+                    el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
-                    )
+                    ),
+
+
 
                 )))
 
@@ -353,6 +389,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
                             el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
+                        ),
+                        attributes.couponAvail && el('div',{ style:{display:'none'} , className:'ctcl-coupon-code-container' },
+                        el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
+                        el('label',{style:{fontSize:'15px'}},__('Coupon Code :', 'ctc-lite')),
+                        el("input",{ style:{width:"150px", height:'25px', display:'inline-block' }, type:'text'  },  ),
+                        ),
+                        el('span',{style:{float:"right",marginLeft:'30px'} },
+                        el("button",{ type:"button", "data-coupon": JSON.stringify({"code":attributes.couponCode, "amount":attributes.amount}) ,  style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor,padding:'5px'}, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                        ),
                         ),
                         el("div",{},
                         el("button",{

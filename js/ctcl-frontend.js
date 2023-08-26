@@ -21,6 +21,11 @@ class ctclMain {
             this.hideShowPaymentContainer();
             this.onShippingRadioButtonCheck();
             this.showHideMultipartForm();
+
+            if(null != document.querySelector('.ctcl-apply-cuopon-code')){
+                this.applyCoupon();
+            }
+
         }
 
         if(null !== document.querySelector('.ctclig-image-list')){
@@ -359,6 +364,7 @@ class ctclMain {
 
             let subTotalInput = document.createElement('input');
             subTotalInput.type = 'hidden';
+            subTotalInpur.id = 'ctcl-subtotal-hidden-input'
             subTotalInput.name = 'sub-total';
             subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2);
             prodListCont.appendChild(subTotalInput);
@@ -426,7 +432,18 @@ class ctclMain {
         * Set custom event on add remove product
         */
         document.dispatchEvent(new CustomEvent("addRemoveProduct", { detail: 0}));
+
+       
+      
+
             localStorage.removeItem('ctclHiddenCart');
+
+         /**
+          * Hide coupon code container
+          */
+            if(null !=  document.querySelector(".ctcl-coupon-code-container")){
+                document.querySelector(".ctcl-coupon-code-container").style.display = 'none';
+            }
         }
         conts.map(x => x.parentElement.removeChild(x));
 
@@ -485,6 +502,34 @@ class ctclMain {
                 }
             })
         });
+    }
+
+    /**
+     * Since 2.5.0
+     * 
+     * Apply Coupon
+     */
+
+    applyCoupon(){
+
+
+  
+        
+        if(null != localStorage.getItem('ctclHiddenCart') ){
+            document.querySelector(".ctcl-coupon-code-container").style.display = '';
+        }
+        
+
+
+
+        document.querySelector('.ctcl-apply-cuopon-code').addEventListener('click',e=>{
+
+        let couponInfo  = JSON.parse(e.target.getAttribute('data-coupon'));
+
+    
+        });
+
+
     }
 
     /**
