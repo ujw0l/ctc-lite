@@ -204,20 +204,29 @@ text-align:center;
    to{color:rgba(0,0,0,);}
 }
 
+#ctcl-discount-cont,
+#ctcl-items-total-cont,
+#ctcl-tax-total-cont,
 #ctcl-subtotal-container,
 #ctcl-totalshipping-cost{
     width:100%;
     margin-top:10px;
     margin-bottom:10px;
 }
+
+#ctcl-discount-cont span:first-child,
+#ctcl-items-total-cont span:first-child,
+#ctcl-tax-total-cont span:first-child,
 #ctcl-subtotal-container span:first-child,
 #ctcl-totalshipping-cost span:first-child{
-
     width:300px;;
     text-align:right;
     max-width:75%;
     font-weight:bold;
 }
+#ctcl-discount-cont span:last-child,
+#ctcl-items-total-cont span:last-child,
+#ctcl-tax-total-cont span:last-child,
 #ctcl-subtotal-container span:last-child,
 #ctcl-totalshipping-cost span:last-child{
 float:right;
@@ -225,6 +234,9 @@ float:right;
     text-align:right;
     max-width:25%;
     font-weight:bold;
+}
+#ctcl-subtotal-container{
+    border-top: 1px solid rgba(0,0,0,1);
 }
 .ctcl-co-instruction{
     line-height: 1;

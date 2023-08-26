@@ -178,7 +178,10 @@ dbDelta($sql);
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
-       'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
+       'totalShipping'=> __('Total Shipping Cost', 'ctc-lite'),
+       'itemsTotal'=>__('Total','ctc-lite'),
+       'taxTotal'=>__('Tax','ctc-lite'),
+       'discountTotal'=>__("Discount",'ctc-lite' ),
        'subTotal'=>__("Sub Total","ctc-lite"),
        'removeItem'=>__('Remove Item','ctc-lite'),
        'itemHead'=>__('Product','ctc-lite'),
