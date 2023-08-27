@@ -548,6 +548,11 @@ return $html;
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
+
+        echo "<div class='pending-order-modal-action'>";
+        submit_button( __( 'Refund', 'ctc-lite' ), 'primary ctcl-detail-refund-order','submit',false);
+        echo '</div>';
+
        echo "<div class='ctcl-complete-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
        $this ->createOrderListSection($detail);

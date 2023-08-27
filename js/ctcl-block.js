@@ -365,8 +365,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                         }),
                         
-                        attributes.couponAvail && el( TextControl,{ type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code','ctc-lite') }),
-                        attributes.couponAvail && el( TextControl,{ type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ value:attributes.couponCode, type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ value:attributes.amount, type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
                         ),
                     el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),

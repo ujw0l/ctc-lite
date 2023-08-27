@@ -418,7 +418,6 @@ class ctclMain {
             subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2);
             prodListCont.appendChild(subTotalInput);
 
-
         } else {
 
             prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display ='none'; 

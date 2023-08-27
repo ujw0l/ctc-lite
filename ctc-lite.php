@@ -221,6 +221,7 @@ dbDelta($sql);
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
                                                                'emptyTestEmail'=>__('Please provide email for testing.','ctc-lite'),
                                                                'confirmCancelOrder'=>__("This will remove order. Are you sure?",'ctc-lite'),
+                                                               'confirmRefund'=>__("This will refund order. Are you sure?",'ctc-lite'),
                                                             ));
    }
 
@@ -257,6 +258,7 @@ public function requiredAjax(){
    add_action('wp_ajax_orderMarkComplete',array($this->ctclProcessing,'orderMarkComplete'));
    add_action('wp_ajax_completeOrderDetail',array($this->ctclHtml,'completeOrderDetail'));
    add_action('wp_ajax_cancelOrder',array($this->ctclProcessing,'cancelOrder'));
+   add_action('wp_ajax_refundOrder',array($this->ctclProcessing,'refundOrder'));
 }
 
    /**

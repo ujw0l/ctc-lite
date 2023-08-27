@@ -294,6 +294,7 @@ class ctclAdminJs {
                         new jsMasonry('.ctcl-complete-order-detail', { elWidth: 500, heightSort: 'desc', elMargin: 10 });
 
                         this.addCompleteOrderModalEvent();
+                        this.refundOrder(orderId);
                     } else {
                         console.log(event.target.statusText);
                     }
@@ -302,6 +303,41 @@ class ctclAdminJs {
 
             }));
         }
+    }
+
+    /**
+     * @since 2.5.0
+     * 
+     * Refund order on click
+     */
+    refundOrder(orderId){
+
+        document.querySelector('.ctcl-detail-refund-order').addEventListener('click',e=>{
+
+            if(confirm(ctclAdminObject.confirmRefund)){
+
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('POST', ctclAdminObject.ajaxUrl, true);
+                xhttp.responseType = "text";
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
+                xhttp.addEventListener('load', event => {
+                    if (event.target.status >= 200 && event.target.status < 400) {
+                       document.querySelector(`#ctcl-complete-order-${orderId}`).remove();
+                        alert(event.target.response);
+                        document.querySelector("#overlay-close-btn").click();
+
+                    } else {
+                        console.log(event.target.statusText);
+                    }
+                });
+                xhttp.send(`action=refundOrder&orderId=${orderId}`);
+            }
+
+
+        })
+
+
     }
 
     /**
