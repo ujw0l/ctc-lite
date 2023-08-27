@@ -3,8 +3,8 @@ Contributors: UjW0L,sanzeeb3
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell, shop
 Requires at least: 5.5.2
-Tested up to: 6.2.2
-Stable tag: 2.0.2
+Tested up to: 6.3.0
+Stable tag: 2.5.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -84,3 +84,10 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.0.1=
 *Minor bug fixes 
 *Minor enhancements
+
+=2.0.1=
+*Floating card addon
+*Outstock option on product block
+*Coupon code option in cart block
+*Process refund from admin section done
+
