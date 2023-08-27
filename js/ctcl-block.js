@@ -393,7 +393,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         attributes.couponAvail && el('div',{ style:{display:'none'} , className:'ctcl-coupon-code-container' },
                         el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
                         el('label',{style:{fontSize:'15px'}},__('Coupon Code :', 'ctc-lite')),
-                        el("input",{ style:{width:"150px", height:'25px', display:'inline-block' }, type:'text'  },  ),
+                        el("input",{ style:{width:"150px", height:'25px', display:'inline-block' },id:'ctcl-coupon-code', type:'text'  },  ),
                         ),
                         el('span',{style:{float:"right",marginLeft:'30px'} },
                         el("button",{ type:"button", "data-coupon": JSON.stringify({"code":attributes.couponCode, "amount":attributes.amount}) ,  style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor,padding:'5px'}, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   

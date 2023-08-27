@@ -182,6 +182,7 @@ dbDelta($sql);
        'itemsTotal'=>__('Total','ctc-lite'),
        'taxTotal'=>__('Tax','ctc-lite'),
        'discountTotal'=>__("Discount",'ctc-lite' ),
+       'invalidCoupon'=>__("Invalid coupon code",'ctc-lite'),
        'subTotal'=>__("Sub Total","ctc-lite"),
        'removeItem'=>__('Remove Item','ctc-lite'),
        'itemHead'=>__('Product','ctc-lite'),

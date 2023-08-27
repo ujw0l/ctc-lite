@@ -214,7 +214,7 @@ class ctclMain {
             x.parentElement.removeChild(x)
         })
 
-        if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').legnth) {
+        if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').length) {
             prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display =''; 
             prodListCont.querySelector('p').style.display = 'none';
 
@@ -395,6 +395,7 @@ class ctclMain {
             let shippingTotalInput = document.createElement('input');
             shippingTotalInput.type = 'hidden';
             shippingTotalInput.name = 'shipping-total';
+            shippingTotalInput.id = "ctcl-shipping-total"
             shippingTotalInput.value = (finalShippingCost).toFixed(2);
             prodListCont.appendChild(shippingTotalInput);
 
@@ -566,6 +567,55 @@ class ctclMain {
         
         document.querySelector('.ctcl-apply-cuopon-code').addEventListener('click',e=>{
         let couponInfo  = JSON.parse(e.target.getAttribute('data-coupon'));
+
+        let couponCode =  document.querySelector('#ctcl-coupon-code').value;
+
+       if(couponCode === couponInfo.code ){
+        
+        let discountContainer = document.querySelector('#ctcl-discount-cont');
+        if(null != discountContainer){
+            discountContainer.remove();
+        }
+
+        let itemsTotal = parseFloat(document.querySelector('#ctcl-items-total').value);
+        let totalDiscount =  itemsTotal* parseFloat(couponInfo.amount)/100;
+        
+        let discountCont =  document.createElement('div');
+        discountCont.id = 'ctcl-discount-cont';
+
+          let discountInfo = document.createElement('span');
+              discountInfo.innerHTML = `${ctclParams.discountTotal} (${ctclParams.currency}) : `;  
+              discountCont.appendChild(discountInfo);
+
+              let discountInput = document.createElement('input');
+              discountInput.type = 'hidden';
+             discountInput.name = 'total-discount'
+             discountInput.value =  totalDiscount ;
+             discountCont.appendChild(discountInput);
+              
+          let discountTotal = document.createElement('span');    
+              discountTotal.innerHTML = `${totalDiscount.toFixed(2)}`;
+              discountCont.appendChild(discountTotal);
+              
+        
+             document.querySelector('#ctcl-subtotal-hidden-input');
+           let taxTotal = parseFloat(document.querySelector("#ctcl-tax-total").value);
+           let shippingTotal =  parseFloat(document.querySelector("#ctcl-shipping-total").value); 
+           
+           
+           let finalTotal = itemsTotal + taxTotal + shippingTotal - totalDiscount; 
+           
+           document.querySelector('#ctcl-subtotal-hidden-input').value = finalTotal.toFixed(2);
+           document.querySelector('#ctcl-subtotal-container .ctcl-subtotal-cost').innerHTML = finalTotal.toFixed(2);
+
+             let subTotalCont =   document.querySelector('#ctcl-subtotal-container');
+             subTotalCont.parentNode.insertBefore(discountCont,subTotalCont);
+
+        
+       }else{
+           alert(ctclParams.invalidCoupon);
+       }
+
 
     
         });
