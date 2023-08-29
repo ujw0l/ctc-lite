@@ -343,9 +343,6 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
                     ),
-
-
-
                 )))
 
     },
