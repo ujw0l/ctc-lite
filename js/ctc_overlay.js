@@ -145,7 +145,7 @@
 		let ovHeight = overlayDivEl.offsetHeight;
 		let nxtImg = gal.length - 1 >= imgNum + 1 ? imgNum + 1 : 0;
 		let prevImg = 0 <= imgNum - 1 ? imgNum - 1 : gal.length - 1;
-		let btnStyle = `font-family:serif;height:${0.02 * ovWidth}px;width:${0.02 * ovWidth}px;text-align:center;font-size:${0.016 * ovWidth}px;cursor:pointer;color:rgba(255,255,255,1);border-radius:${0.02 * ovWidth}px;margin-top:${0.002 * ovWidth}px;background-color:rgba(0,0,0,0.8);`;
+		let btnStyle = `font-family:serif;height:${0.02 * ovWidth}px;width:${0.02 * ovWidth}px;text-align:center;font-size:${0.016 * ovWidth}px;cursor:pointer;color:rgba(255,255,255,1);margin-top:${0.002 * ovWidth}px;`;
 
 		if (undefined == toolbarDiv) {
 			let toolbarDiv = document.createElement('div');
