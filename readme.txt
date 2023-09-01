@@ -89,4 +89,5 @@ For Variation images to display based on user selection you need to add CTC Lite
 *Floating cart addon
 *Outstock option on product block
 *Process refund from admin section done
+*Minor bug fixes
 
