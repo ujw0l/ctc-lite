@@ -235,7 +235,7 @@ float:right;
     max-width:25%;
     font-weight:bold;
 }
-#ctcl-subtotal-container{
+.ctcl-subtotal-container{
     border-top: 1px solid rgba(0,0,0,1);
 }
 .ctcl-co-instruction{

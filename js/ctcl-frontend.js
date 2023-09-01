@@ -234,6 +234,7 @@ class ctclMain {
 
             let subTotalCont = document.createElement('div');
             subTotalCont.id = "ctcl-subtotal-container";
+            subTotalCont.classList.add('ctcl-subtotal-container');
 
             let listContainer = document.createElement('div');
             listContainer.id = "ctcl-checkout-list-container";
