@@ -3,8 +3,8 @@ Contributors: UjW0L,sanzeeb3
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell, shop
 Requires at least: 5.5.2
-Tested up to: 6.2.2
-Stable tag: 2.0.2
+Tested up to: 6.3.0
+Stable tag: 2.1.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -12,8 +12,8 @@ Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor t
 
 == Description ==
 
-Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
-You can set different price and different images for different variation.
+Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing (for user facing side it loads about 40 kb JS) )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
+You can set different price and different images for different variation. Have option label product out of stock and pre order.
 
 While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
 
@@ -81,6 +81,13 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.0.1=
 *Minor bug fixes 
 
-=2.0.1=
+=2.0.2=
 *Minor bug fixes 
 *Minor enhancements
+
+=2.1.0=
+*Floating cart addon
+*Outstock option on product block
+*Process refund from admin section done
+*Minor bug fixes
+

@@ -221,6 +221,34 @@ public function orderProcessingShortCode(){
     }
 
     /**
+     * @since 2.5.0
+     * 
+     * Refund Order
+     */
+    public function refundOrder(){
+
+        global $wpdb;
+
+
+        // Filter call.
+        $value = apply_filters( 'ctcl_refund_order', true, $_POST['orderId'], );
+
+        if(true == $value):
+          $complete = $wpdb->update($wpdb->prefix.'ctclOrders',array('orderStatus'=>'refund'),array('orderId'=>absint($_POST['orderId'])));
+          if(1==$complete): 
+                _e("Order sucessfully refunded","ctc-lite");
+          else:
+            _e("Order couldn't be refuned","ctc-lite");
+          endif;
+        else:
+            _e("Order couldn't be refuned","ctc-lite");
+        endif;  
+
+      
+        wp_die();
+    }
+
+    /**
      * @since 1.0.0
      *
      * Get vendor note for order

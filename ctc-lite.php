@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.0.2
+ Version: 2.1.0
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -178,7 +178,9 @@ dbDelta($sql);
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
-       'totalShipping'=> __('Total shipping Cost', 'ctc-lite'),
+       'totalShipping'=> __('Total Shipping Cost', 'ctc-lite'),
+       'itemsTotal'=>__('Total','ctc-lite'),
+       'taxTotal'=>__('Tax','ctc-lite'),
        'subTotal'=>__("Sub Total","ctc-lite"),
        'removeItem'=>__('Remove Item','ctc-lite'),
        'itemHead'=>__('Product','ctc-lite'),
@@ -217,6 +219,7 @@ dbDelta($sql);
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
                                                                'emptyTestEmail'=>__('Please provide email for testing.','ctc-lite'),
                                                                'confirmCancelOrder'=>__("This will remove order. Are you sure?",'ctc-lite'),
+                                                               'confirmRefund'=>__("This will refund order. Are you sure?",'ctc-lite'),
                                                             ));
    }
 
@@ -253,6 +256,7 @@ public function requiredAjax(){
    add_action('wp_ajax_orderMarkComplete',array($this->ctclProcessing,'orderMarkComplete'));
    add_action('wp_ajax_completeOrderDetail',array($this->ctclHtml,'completeOrderDetail'));
    add_action('wp_ajax_cancelOrder',array($this->ctclProcessing,'cancelOrder'));
+   add_action('wp_ajax_refundOrder',array($this->ctclProcessing,'refundOrder'));
 }
 
    /**
@@ -315,6 +319,7 @@ wp_register_script(
       
     ),
  );
+
 
  register_block_type(
    'ctc-lite/ctc-lite-order-processing',

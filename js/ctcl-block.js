@@ -29,12 +29,16 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         profilePic: { type: 'string', default: ctcLiteParams.defaultPic },
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
         dummyQty: { type: 'string', default: '1' },
-        variation1Lable: { type: 'string', default: 'Variation 1' },
-        variation2Lable: { type: 'string', default: 'Variation 2' },
+        variation1Lable: { type: 'string', default: __('Variation 1', 'ctc-lite') },
+        variation2Lable: { type: 'string', default: __('Variation 2','ctc-lite') },
         variation1: { type: 'Array', default: [] },
         variation2: { type: 'Array', default: [] },
         varDiffPrice:{type:'Boolean', default:false},
         varDiffImage:{type:"Boolean",default:false},
+        outOfStock:{ type:"Boolean",default:false },
+        disableAddToCartBtn:{type:"Boolean",default:false},
+        addToCartMsg:{type:"String",default:__('Add To Cart','ctc-lite')},
+        preOrderAvailable:{type:"Boolean",default:false}
        
 
     },
@@ -48,22 +52,59 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         return el('div', { className: 'ctcl-product-container' },
             el('div', { className: 'ctcl-gb-ac-container' },
 
+            attributes.preOrderAvailable && el('i',{style:{color:'rgb(255, 0, 0)',fontSize:'10px'}}, __('Out of Stock, Pre order available ','ctc-lite')),
                 el('div', { className: 'product-price-container' }, el('span', { className: 'price-label' }, `${__('Price', 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}): `), el('span', { className: 'product-price' }, attributes.productPrice))),
             1 < attributes.variation1.length && el(SelectControl, { 'id': 'ctcl-variation-1', label: `${attributes.variation1Lable} : `, options: attributes.variation1, onChange:val=> document.querySelector('.product-price').innerHTML = parseFloat(val.split('~')[1]).toFixed(2)  }) ,
             1 < attributes.variation2.length && el(SelectControl, { 'id': 'ctcl-variation-2', label: `${attributes.variation2Lable} : `, options: attributes.variation2, onChange:val => {
 
                 let mainImg =  document.querySelector('.ctcl-image-gallery-block .ctclig-main-image');
                 if(mainImg != null){
-
                     mainImg.style.backgroundImage = `url("${val.split('~')[1]}")`;
                 }
 
             }  }) ,
             el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
-            el(Button, { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, __("Add To Cart", 'ctc-lite')),
+            el(Button, { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, attributes.addToCartMsg),
 
             el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
-                el(PanelBody, null,
+            el(PanelBody,null, 
+                el(ToggleControl, {
+
+                    label:__("Out of Stock", "ctc-lite"),
+			        checked:attributes.outOfStock,
+                    onChange: val =>{
+                        setAttributes({outOfStock:val})
+                        
+                        if(val){  
+                            setAttributes({addToCartMsg:__('Out of Stock','ctc-lite')}) 
+                            setAttributes({disableAddToCartBtn:val})
+                            setAttributes({preOrderAvailable:!val})
+                        }
+                        else{
+                            setAttributes({addToCartMsg:__('Add To Cart','ctc-lite')})
+                            setAttributes({disableAddToCartBtn:val})
+                            setAttributes({preOrderAvailable:val})
+
+                         }
+                    }
+                },),
+                attributes.outOfStock && el(ToggleControl,{
+                    label:__( "Pre Order Available",'ctc-lite'),
+                    checked:attributes.preOrderAvailable,
+                    onChange:val =>{
+                        setAttributes({preOrderAvailable:val})
+                        if(val){ 
+                             setAttributes({addToCartMsg:__('Pre order','ctc-lite')})
+                             setAttributes({disableAddToCartBtn:!val})  
+                             } else{
+                                setAttributes({addToCartMsg:__('Out of Stock','ctc-lite')})
+                                setAttributes({disableAddToCartBtn:!val})
+                             }
+                    }
+                })
+                ),    
+            
+            el(PanelBody, null,
                     el(TextControl, { name: 'name', className: 'inspect-product-name', type: "text", value: attributes.productName, label: `${__("Name", 'ctc-lite')} : `, onChange: value => setAttributes({ productName: value }), help: __('Enter product name.', 'ctc-lite') }),
                     el(TextControl, { name: 'price', className: 'inspect-product-price', type: 'number', value: attributes.productPrice, label: `${__("Price", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => {
                         
@@ -157,12 +198,13 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         };
 
         return el('div', { className: 'ctcl-product-container' },
+        attributes.preOrderAvailable && el('i',{style:{color:'rgb(255, 0, 0)',fontSize:'10px'}}, __('Out of Stock, Pre order available ','ctc-lite')),
             el('div', { className: 'product-price-container' }, el('span', { className: 'price-label' }, `${__('Price', 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}): `), el('span', { className: 'product-price' }, attributes.productPrice)),
             el(SelectVariation, { selectOptions: attributes.variation1, variationName: 'Variation 1', label: attributes.variation1Lable }),
             el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2', label: attributes.variation2Lable }),
             el('label', { className: 'ctcl-product-qty' }, `${__('Qty ')} : `),
             el('div', { className: 'ctcl-quantity' }, el('span', { className: 'ctcl-minus-qty' }, '-'), el('input', { className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { className: 'ctcl-plus-qty' }, '+')),
-            el('button', { style: { backgroundColor: attributes.buttonColor }, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, __("Add To Cart", 'ctc-lite')),
+            el('button', { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, attributes.addToCartMsg),
         )
     }
 
@@ -193,7 +235,10 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
         buttonColor: { type: 'string', default: 'rgba(61,148,218,1)' },
         paymentPage: { type: 'string', default: '' },
         prodListDis :{type:"Boolean",default:true},
-        contFormDis:{type:'Boolean',default:false}
+        contFormDis:{type:'Boolean',default:false},
+        couponAvail:{ type:'Boolean',default:false},
+        couponCode:{type:'String',default:'' },
+        amount:{type:'Number', default:0}, 
     },
 
     edit: ({ attributes, setAttributes }) => {
@@ -205,7 +250,9 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-list-content' }, __('Contains Product List', 'ctc-lite')),
                         ),
+
                         el("div",{},
+
                         el(Button,
                             
                             {   onClick:()=>{
@@ -291,12 +338,11 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         )
                  ),
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
-                        el(PanelBody, null,
+                    el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
-                    )
-
+                    ),
                 )))
 
     },

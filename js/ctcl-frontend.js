@@ -21,6 +21,7 @@ class ctclMain {
             this.hideShowPaymentContainer();
             this.onShippingRadioButtonCheck();
             this.showHideMultipartForm();
+
         }
 
         if(null !== document.querySelector('.ctclig-image-list')){
@@ -205,11 +206,11 @@ class ctclMain {
     loadCartItems(storePickUp) {
         let prodListCont = document.querySelector('#ctcl-checkout-product-list');
         let loadingP = document.querySelector('.ctcl-product-loading');
-        Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header')).map(x => {
+        Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
             x.parentElement.removeChild(x)
         })
 
-        if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').legnth) {
+        if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').length) {
             prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display =''; 
             prodListCont.querySelector('p').style.display = 'none';
 
@@ -220,11 +221,20 @@ class ctclMain {
             let subTotal = 0;
 
 
+            let totalCont = document.createElement('div');
+                    totalCont.id = 'ctcl-items-total-cont';
+
+            let taxCont = document.createElement('div');
+                taxCont.id = 'ctcl-tax-total-cont'; 
+
             let totalShippingCont = document.createElement('div');
             totalShippingCont.id = "ctcl-totalshipping-cost";
 
+
+
             let subTotalCont = document.createElement('div');
             subTotalCont.id = "ctcl-subtotal-container";
+            subTotalCont.classList.add('ctcl-subtotal-container');
 
             let listContainer = document.createElement('div');
             listContainer.id = "ctcl-checkout-list-container";
@@ -326,6 +336,46 @@ class ctclMain {
                 listContainer.appendChild(itemDisplay);
             }
 
+
+            let itemTotalSpan = document.createElement('span');
+            itemTotalSpan.classList.add('ctcl-total-label');
+            itemTotalSpan.appendChild(document.createTextNode(ctclParams.itemsTotal + ' (' + ctclParams.currency + ') : '));
+            totalCont.appendChild(itemTotalSpan);
+
+            let itemTotal = document.createElement('span');
+            itemTotal .classList.add('ctcl-items-total-cost');
+            itemTotal .appendChild(document.createTextNode(subTotal.toFixed(2)))
+            totalCont .appendChild(itemTotal);
+            prodListCont.appendChild(totalCont);
+
+            let itemTotalInput = document.createElement('input');
+            itemTotalInput.type = 'hidden';
+            itemTotalInput.name = 'items-total';
+            itemTotalInput.id   = 'ctcl-items-total';
+            itemTotalInput.value = subTotal.toFixed(2);
+            prodListCont.appendChild(itemTotalInput);
+
+
+            let taxTotalVal = (ctclParams.taxRate / 100) * subTotal;
+            let taxTotalSpan = document.createElement('span');
+            taxTotalSpan.classList.add('ctcl-tax-total-label');
+            taxTotalSpan.appendChild(document.createTextNode(ctclParams.taxTotal+ ' (' + ctclParams.taxRate + '%) : '));
+            taxCont.appendChild(taxTotalSpan);
+
+            let taxTotal = document.createElement('span');
+            taxTotal .classList.add('ctcl-tax-total');
+            taxTotal .appendChild(document.createTextNode((taxTotalVal.toFixed(2))))
+            taxCont .appendChild( taxTotal);
+            prodListCont.appendChild(taxCont);
+
+            let taxTotalInput = document.createElement('input');
+            taxTotalInput.type = 'hidden';
+            taxTotalInput.name = 'tax-total';
+            taxTotalInput.id   = 'ctcl-tax-total';
+            taxTotalInput.value = taxTotalVal.toFixed(2);
+            prodListCont.appendChild(taxTotalInput);
+
+
             let finalShippingCost = undefined != storePickUp ? storePickUp : shippingCost;
 
             let totalShippingCostLabel = document.createElement('span');
@@ -342,6 +392,7 @@ class ctclMain {
             let shippingTotalInput = document.createElement('input');
             shippingTotalInput.type = 'hidden';
             shippingTotalInput.name = 'shipping-total';
+            shippingTotalInput.id = "ctcl-shipping-total"
             shippingTotalInput.value = (finalShippingCost).toFixed(2);
             prodListCont.appendChild(shippingTotalInput);
 
@@ -352,17 +403,17 @@ class ctclMain {
             subTotalCont.appendChild(subTotalLabel);
 
             let subTotalVal = document.createElement('span');
-            subTotalVal.classList.add('ctcl-total-shipping-cost');
+            subTotalVal.classList.add('ctcl-subtotal-cost');
             subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2)));
             subTotalCont.appendChild(subTotalVal);
             prodListCont.appendChild(subTotalCont);
 
             let subTotalInput = document.createElement('input');
             subTotalInput.type = 'hidden';
+            subTotalInput.id = 'ctcl-subtotal-hidden-input'
             subTotalInput.name = 'sub-total';
             subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2);
             prodListCont.appendChild(subTotalInput);
-
 
         } else {
 
@@ -427,6 +478,7 @@ class ctclMain {
         */
         document.dispatchEvent(new CustomEvent("addRemoveProduct", { detail: 0}));
             localStorage.removeItem('ctclHiddenCart');
+
         }
         conts.map(x => x.parentElement.removeChild(x));
 
@@ -486,6 +538,8 @@ class ctclMain {
             })
         });
     }
+
+   
 
     /**
      * since 2.0.0

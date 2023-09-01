@@ -548,6 +548,11 @@ return $html;
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
+
+        echo "<div class='pending-order-modal-action'>";
+        submit_button( __( 'Refund', 'ctc-lite' ), 'primary ctcl-detail-refund-order','submit',false);
+        echo '</div>';
+
        echo "<div class='ctcl-complete-order-detail'>";
        echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
        $this ->createOrderListSection($detail);
@@ -586,6 +591,9 @@ return $html;
         echo '</div>';
        endforeach;
        echo '<hr>';
+
+       echo "<div class='ctcl-order-detail-total'><span>".__("Total", "ctc-lite" )." : </span><span>{$detail['items-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-tax'><span>".__("Tax", "ctc-lite" )." : </span><span>{$detail['tax-total']}</span></div>";
        echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>{$detail['shipping-total']}</span></div>";
        echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
        echo "</div>";
@@ -751,7 +759,7 @@ private function infoTab(){
 <fieldset class="ctcl-complete-other-info">
 <legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
     <ol>
-    <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('Click Here','ctc-lite')?> </a></li>
+    <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Github','ctc-lite') ?></a></li>
     <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','ctc-lite')?></li>
     <li><?=__('However it works best with Astra Theme ','ctc-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>
     </ol>
