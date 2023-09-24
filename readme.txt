@@ -4,7 +4,7 @@ Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell, shop
 Requires at least: 5.5.2
 Tested up to: 6.3.1
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -90,4 +90,8 @@ For Variation images to display based on user selection you need to add CTC Lite
 *Outstock option on product block
 *Process refund from admin section done
 *Minor bug fixes
+
+=2.1.0=
+*Typo Corrections
+
 

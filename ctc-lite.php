@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.1.0
+ Version: 2.1.1
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -179,9 +179,9 @@ dbDelta($sql);
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
        'totalShipping'=> __('Total Shipping Cost', 'ctc-lite'),
-       'itemsTotal'=>__('Total','ctc-lite'),
-       'taxTotal'=>__('Tax','ctc-lite'),
-       'subTotal'=>__("Sub Total","ctc-lite"),
+       'itemsTotal'=>__('Sub Total','ctc-lite'),
+       'taxTotal'=>__('Sales Tax','ctc-lite'),
+       'subTotal'=>__("Total","ctc-lite"),
        'removeItem'=>__('Remove Item','ctc-lite'),
        'itemHead'=>__('Product','ctc-lite'),
        'qtyHead'=>__('Qty','ctc-lite'),
