@@ -592,10 +592,10 @@ return $html;
        endforeach;
        echo '<hr>';
 
-       echo "<div class='ctcl-order-detail-total'><span>".__("Total", "ctc-lite" )." : </span><span>{$detail['items-total']}</span></div>";
-       echo "<div class='ctcl-order-detail-tax'><span>".__("Tax", "ctc-lite" )." : </span><span>{$detail['tax-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-total'><span>".__("Sub Total", "ctc-lite" )." : </span><span>{$detail['items-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-tax'><span>".__("Sales Tax", "ctc-lite" )." : </span><span>{$detail['tax-total']}</span></div>";
        echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>{$detail['shipping-total']}</span></div>";
-       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print list","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-order-list'></a></div>";
        echo "</fieldset>";
