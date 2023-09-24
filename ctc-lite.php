@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.1.0
+ Version: 2.1.1
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
