@@ -91,3 +91,7 @@ For Variation images to display based on user selection you need to add CTC Lite
 *Process refund from admin section done
 *Minor bug fixes
 
+=2.1.0=
+*Typo Corrections
+
+
