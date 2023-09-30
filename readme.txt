@@ -34,7 +34,7 @@ e.g.
 
 = Do you help setting up store? =
 
-If you wish to need help setting up store with this plugin , the creator of the will help you set up store for reasonable price.
+If you wish to need help setting up store with this plugin , the creator of the will help you set up store for reasonable price. email creator on bktujwol@gmail.com
 
 = How do I set up checkout page? =
 
