@@ -99,4 +99,11 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.1.0=
 *Typo Corrections
 
+=2.1.1=
+*Minor update
+
+=2.1.2=
+*Data select issue fixed 
+
+
 
