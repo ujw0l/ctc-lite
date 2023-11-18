@@ -38,12 +38,17 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         outOfStock:{ type:"Boolean",default:false },
         disableAddToCartBtn:{type:"Boolean",default:false},
         addToCartMsg:{type:"String",default:__('Add To Cart','ctc-lite')},
-        preOrderAvailable:{type:"Boolean",default:false}
+        preOrderAvailable:{type:"Boolean",default:false},
+        postId :{type:'Number', default:0}
        
 
     },
     edit: ({ attributes, setAttributes,clientId }) => {
 
+       setAttributes({postId :wp.data.select("core/editor").getCurrentPostId() })
+
+     
+    
         setAttributes({clntId:clientId})
         let variationOneItem = attributes.variation1.map(x => x.label);
         let variationTwoItem = attributes.variation2.map(x => x.label);
@@ -182,6 +187,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
     save: ({ attributes }) => {
 
 
+
         const SelectVariation = ({ selectOptions, variationName, label }) => {
 
             if (1 < selectOptions.length) {
@@ -204,7 +210,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             el(SelectVariation, { selectOptions: attributes.variation2, variationName: 'Variation 2', label: attributes.variation2Lable }),
             el('label', { className: 'ctcl-product-qty' }, `${__('Qty ')} : `),
             el('div', { className: 'ctcl-quantity' }, el('span', { className: 'ctcl-minus-qty' }, '-'), el('input', { className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { className: 'ctcl-plus-qty' }, '+')),
-            el('button', { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': wp.data.select("core/editor").getCurrentPostId() }, attributes.addToCartMsg),
+            el('button', { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-qty': 1, 'data-name': attributes.productName, 'data-shipping-cost': attributes.shippingCost, 'data-pic': attributes.profilePic, 'data-post-id': attributes.postId}, attributes.addToCartMsg),
         )
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "ctc-lite",
-  "version": "2.0.0",
+  "version": "2.1.2",
   "description": "ecommerce plugin for wordpress",
   "main": "index.js",
   "scripts": {
