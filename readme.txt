@@ -3,7 +3,7 @@ Contributors: UjW0L,sanzeeb3
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell, shop
 Requires at least: 5.5.2
-Tested up to: 6.4.1
+Tested up to: 6.5.0
 Stable tag: 2.1.2
 Requires PHP: 7.4.9
 License: GPLv2 or later
