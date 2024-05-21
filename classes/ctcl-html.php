@@ -677,10 +677,56 @@ return $html;
  * Create basic info tab content
  */
 private function infoTab(){
+
+    
+    $infoTabHtml = array();
+
+    array_push( $infoTabHtml,
+      array(
+        'title'=> __('Setup Info','ctc-lite'),
+        'icon'=> 'dashicons-menu-alt3',
+        'html'=> $this->setupInfo(),
+    )
+      );
+
+
+    // Filter call.
+$value = apply_filters( 'ctcl-info-tab-sub-tab', $infoTabHtml );
+
+$reversed = array_reverse($value);
+
+$activeSubTab = isset( $_GET[ 'sub_tab' ] ) ? $_GET[ 'sub_tab' ] : '0';
+
+echo '<h3 class=" dashicons  dashicons-editor-insertmore">'.__('Information','ctc-lite').'</h3>';
+echo '<h3 class="nav-tab-wrapper ctcSubNavTab">';
+foreach($reversed as $key=>$val):
+
+    $icon = isset($val['icon']) ? $val['icon'] : 'dashicons-info-outline' ;
+?>
+
+ <a href="?page=ctclAdminPanel&tab=info&sub_tab="<?=$key?>" class="nav-tab <?php echo $activeSubTab == $key ? 'nav-tab-active' : ''; ?> "><span class="dashicons <?=$icon?>"></span><?=$val['title']?></a>
+ <?php  
+endforeach;
+echo '</h3>';
+
+echo $reversed[$activeSubTab]['html'];
+    
+}
+
+/**
+ * @since 2.1.3
+ * 
+ * Info tab setupinfo
+ */
+
+ public function setupInfo(){
+ob_start();
 ?>
 <div class="ctcl-info-tab-main">
 <h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header"><?=__("How to operate plugin ?",'ctc-lite')?></h3>
 <div class="ctcl-info-tab">
+
+
 
 
 
@@ -725,15 +771,6 @@ private function infoTab(){
     </ol>
 </fieldset>
 
-
-
-
-
-
-
-
-
-
 <fieldset class="ctcl-pending-order-info">
 <legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__('Pending order tab','ctc-lite')?></legend>
     <ol>
@@ -756,19 +793,24 @@ private function infoTab(){
     </ol>
 </fieldset>
 
+
 <fieldset class="ctcl-complete-other-info">
 <legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
     <ol>
+    <li><?=__('If you wish plugin developer to set up store for you for reasonable price, contact  ','ctc-lite')?><a href="mailto:bktujwol@gmail.com"><?=__('Email','ctc-lite')?> </a> </li>
     <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Github','ctc-lite') ?></a></li>
     <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','ctc-lite')?></li>
     <li><?=__('However it works best with Astra Theme ','ctc-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>
     </ol>
 </fieldset>
 
+
 </div>
 </div>
- <?php   
-}
+
+<?php
+return ob_get_clean();
+ }
 
 
 }

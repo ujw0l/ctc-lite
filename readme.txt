@@ -1,10 +1,10 @@
 === CT Commerce  Lite ===
 Contributors: UjW0L,sanzeeb3
 Donate link: https://www.patreon.com/ujw0l/membership
-Tags: block, ecommerce, store, cart ,sell, shop
+Tags: block, ecommerce, store, cart ,sell
 Requires at least: 5.5.2
-Tested up to: 6.5.0
-Stable tag: 2.1.2
+Tested up to: 6.5
+Stable tag: 2.2.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -104,6 +104,9 @@ For Variation images to display based on user selection you need to add CTC Lite
 
 =2.1.2=
 *Data select issue fixed 
+
+=2.2.0=
+*Ability to add sub tab in info tab with filter
 
 
 
