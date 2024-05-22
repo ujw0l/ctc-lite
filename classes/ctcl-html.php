@@ -700,11 +700,11 @@ $activeSubTab = isset( $_GET[ 'sub_tab' ] ) ? $_GET[ 'sub_tab' ] : '0';
 echo '<h3 class=" dashicons  dashicons-editor-insertmore">'.__('Information','ctc-lite').'</h3>';
 echo '<h3 class="nav-tab-wrapper ctcSubNavTab">';
 foreach($reversed as $key=>$val):
-
+    
     $icon = isset($val['icon']) ? $val['icon'] : 'dashicons-info-outline' ;
 ?>
 
- <a href="?page=ctclAdminPanel&tab=info&sub_tab="<?=$key?>" class="nav-tab <?php echo $activeSubTab == $key ? 'nav-tab-active' : ''; ?> "><span class="dashicons <?=$icon?>"></span><?=$val['title']?></a>
+ <a href="?page=ctclAdminPanel&tab=info&sub_tab=<?=$key?>" class="nav-tab <?php echo $activeSubTab == $key ? 'nav-tab-active' : ''; ?> "><span class="dashicons <?=$icon?>"></span><?=$val['title']?></a>
  <?php  
 endforeach;
 echo '</h3>';
