@@ -700,6 +700,7 @@ $activeSubTab = isset( $_GET[ 'sub_tab' ] ) ? $_GET[ 'sub_tab' ] : '0';
 echo '<h3 class=" dashicons  dashicons-editor-insertmore">'.__('Information','ctc-lite').'</h3>';
 echo '<h3 class="nav-tab-wrapper ctcSubNavTab">';
 foreach($reversed as $key=>$val):
+    
     $icon = isset($val['icon']) ? $val['icon'] : 'dashicons-info-outline' ;
 ?>
 
