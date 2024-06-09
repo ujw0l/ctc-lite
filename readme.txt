@@ -4,7 +4,7 @@ Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell
 Requires at least: 5.5.2
 Tested up to: 6.5
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -108,5 +108,6 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.2.0=
 *Ability to add sub tab in info tab with filter
 
-
+=2.3.0=
+*Block added where product , gallery displayed in inner block. 
 
