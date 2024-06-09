@@ -1,7 +1,7 @@
 
 const { useEffect } = React;
 const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl,ToggleControl } = wp.components;
-const { InspectorControls, MediaUpload, } = wp.blockEditor;
+const { InspectorControls, MediaUpload, InnerBlocks, useBlockProps } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
@@ -68,7 +68,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                 }
 
             }  }) ,
-            el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
+            el('div', { className: 'ctcl-quantity' },el('span',{},__('Qty: ','ctc-lite')), el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, attributes.addToCartMsg),
 
             el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
@@ -489,7 +489,7 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
 registerBlockType('ctc-lite/ctcl-image-gallery', {
 
     title: __('CTC Lite Image Gallery', 'ctc-lite'),
-    icon: 'format-gallery',
+    icon: 'cover-image',
     description: __("CTC Lite block to create image gallery", "ctc-lite"),
     category: 'ctc-lite-blocks',
     keywords: [__('image gallery', 'ctc-lite'), __('product album', 'ctc-lite')],
@@ -578,3 +578,68 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
         ) : '',
     ),
 });
+
+/**
+ *  @since 2.3.0
+ *
+ * Display Product and gallery in column
+ */
+registerBlockType('ctc-lite/display-column', {
+
+    title: __('Display in column', 'ctc-lite'),
+    icon: 'columns',
+    description: __("CTC Lite block columned display", "ctc-lite"),
+    category: 'ctc-lite-blocks',
+    keywords: [__('Product display', 'ctc-lite'), ],
+    example: {},
+    edit: () => {
+
+
+        const ALLOWED_BLOCKS = [
+            'core/columns',
+			'ctc-lite/ctcl-image-gallery',
+			'ctc-lite/ctc-lite-product-block',
+            'core/paragraph',
+            'core/heading',
+		];
+
+        const TEMPLATE = [ [ 'core/columns', {}, [
+			[ 'core/column', {
+                "width": "61%",
+            }, [
+				[ 'ctc-lite/ctcl-image-gallery' ],
+			] ],
+			[ 'core/column', {}, [
+                [ 'core/heading',{
+					placeholder: __('Name','ctc-lite')}],
+                ['core/paragraph',{
+					placeholder: __('Short Product Description','ctc-lite')
+                }],
+				[ 'ctc-lite/ctc-lite-product-block'],
+			] ],
+		] ] ];
+
+        const blockProps = useBlockProps();
+
+        return (
+            el('div', { ...blockProps },
+                el(InnerBlocks,{
+                    allowedBlocks: ALLOWED_BLOCKS ,
+					template:TEMPLATE 
+                })
+            )
+                
+            
+        );
+    },
+
+    save: () => {
+        const blockProps = useBlockProps.save();
+
+        return ( 
+            el('div', { ...blockProps }, el(InnerBlocks.Content))
+             
+        );
+    },
+
+})
