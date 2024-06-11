@@ -24,7 +24,7 @@ class ctclMain {
 
         }
 
-        if(null !== document.querySelector('.ctclig-image-list')){
+        if(null !== document.querySelector('.ctcl-image-gallery')){
 
             this.applyGallery();
 
@@ -549,25 +549,14 @@ class ctclMain {
   
 applyGallery(){
 
-    new ctcOverlayViewer('.ctclig-image-list')
-   
-
-    Array.from(document.querySelectorAll('.ctcl-image-gallery')).map(x => {
-
-        Array.from(x.querySelectorAll('.ctclig-image-list div img')).map(y => {
-            y.addEventListener('mouseover', e => {
-                x.querySelector('.ctclig-main-image').style.backgroundImage = `url("${e.target.src}")`;
-                x.querySelector('.ctclig-main-image').setAttribute('data-img-num', e.target.getAttribute('data-image-num'));
-            })
-
-
-
-        });
-
-        x.querySelector('.ctclig-main-image').addEventListener('click', e => {
-            x.querySelector(`#ctclif-gal-img-${e.target.getAttribute('data-ts')}-${e.target.getAttribute('data-img-num')}`).click();
-        });
-    })
+new ctclImgGal('.ctcl-image-gallery',{
+    imageEvent:'mouseover' ,
+    callBack :(el)=>{
+       document.querySelector('.ctclig-image-cont div').classList.add('ctcl-gal-cont')
+       setTimeout(()=>{new ctcOverlayViewer('.ctcl-gal-cont');},1000)
+        
+    },  
+});
 
 
 }

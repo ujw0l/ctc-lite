@@ -19,10 +19,10 @@
     "url": "https://github.com/ujw0l/ctc-lite/issues"
   },
   "dependencies": {
+    "ctc-gallery-viewer": "^1.6.0",
+    "ctcl-image-gallery": "^1.2.0",
     "js-masonry": "^1.1.0",
-    "js-overlay": "^1.0.9",
-    "ctc-gallery-viewer": "^1.6.0"
+    "js-overlay": "^1.0.9"
   },
-  "homepage": "https://github.com/ujw0l/ctc-lite#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/ujw0l/ctc-lite#readme"
 }
