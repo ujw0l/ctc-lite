@@ -1,0 +1,56 @@
+name: Deploy to WordPress.org Plugin Repository
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger the workflow on version tags
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for all tags and branches
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run build script
+      run: npm run build
+
+    - name: Prepare SVN repository
+      env:
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+      run: |
+        # Variables
+        PLUGIN_SLUG="ctc-lite"
+        SVN_REPO="https://plugins.svn.wordpress.org/${PLUGIN_SLUG}"
+        VERSION="${GITHUB_REF#refs/tags/}"
+
+        # Checkout SVN repository
+        svn checkout --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --trust-server-cert "$SVN_REPO" svn
+
+        # Copy plugin files to SVN trunk
+        rsync -r --delete --exclude '.svn' . svn/trunk
+
+        # Add new files to SVN
+        svn add --force svn/trunk/*
+
+        # Commit to SVN
+        svn commit -m "Deploy version ${VERSION} from GitHub" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --trust-server-cert
+
+        # Create SVN tag
+        svn copy svn/trunk svn/tags/${VERSION} --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --trust-server-cert
+        svn commit -m "Tag version ${VERSION}" svn/tags/${VERSION} --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --trust-server-cert
+
+    - name: Clean up
+      run: rm -rf svn
