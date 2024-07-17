@@ -258,4 +258,7 @@ public function orderProcessingShortCode(){
         return  $wpdb->get_var("SELECT vendorNote FROM {$wpdb->prefix}ctclOrders WHERE orderId='{$orderId}'");
     }
 
+
+    
+
 }
