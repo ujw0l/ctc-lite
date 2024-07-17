@@ -3,8 +3,8 @@ Contributors: UjW0L,sanzeeb3
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell
 Requires at least: 5.5.2
-Tested up to: 6.5
-Stable tag: 2.3.0
+Tested up to: 6.6
+Stable tag: 2.3.5
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -17,6 +17,8 @@ You can set different price and different images for different variation. Have o
 
 
 While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
+
+Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/plugins/wporg/ctc-lite/latest)
 
 == Installation ==
 
@@ -111,3 +113,5 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.3.0=
 *Block added where product , gallery displayed in inner block. 
 
+=2.3.5=
+*Better Looking gallery 

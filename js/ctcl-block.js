@@ -488,6 +488,8 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
 
 registerBlockType('ctc-lite/ctcl-image-gallery', {
 
+
+
     title: __('CTC Lite Image Gallery', 'ctc-lite'),
     icon: 'cover-image',
     description: __("CTC Lite block to create image gallery", "ctc-lite"),
@@ -498,33 +500,46 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
         galItems: { type: 'Array', default: [] },
         mainImage: { type: 'String', default: '' },
         clntId: { type: 'String', default: '' },
-        mainImgWd: { type: 'Number', default: 450 },
-        mainImgHt: { type: 'Number', default: 700 },
+        mainImgWd: { type: 'Number', default: 340 },
+        mainImgHt: { type: 'Number', default: 385 },
         mainImgFinalWd: { type: 'Number', default: 450 },
         mainImgFinalHt: { type: 'Number', default: 700 },
     },
 
     edit: ({ attributes, setAttributes, clientId }) => {
+
+
+
         setAttributes({ clntId: clientId });
         useEffect(() => {
-            let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
-            if (null != elem) {
-                setAttributes({ mainImgFinalWd: elem.offsetWidth });
-                setAttributes({ mainImgFinalHt: elem.offsetHeight })
-            }
+           
+            if(attributes.galItems.length > 1){
 
+                let imgList = document.querySelector('.ctclig-image-list');
+                if(null != imgList){
+                    imgList.remove();   
+                } 
+              
+            new ctclImgGal('.ctcl-image-gallery',{
+                
+                    mainImgHt:attributes.mainImgHt, 
+                    mainImgWd:attributes.mainImgWd,
+                    imageEvent:'mouseover' ,
+                    callBack:(el)=>{
+                        console.log(el)
+                    
+                    }
+            });
+        }
 
         }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
 
 
         return el('div', { className: 'ctcl-image-gallery-block' },
 
-
-            0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
-            0 < attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '95px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                el('div', { style: { width: `${attributes.galItems.length * 76}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                    attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
-            ) : '',
+            el('div',{className:'ctcl-image-gallery'},
+            attributes.galItems.map((x, i) =>el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, key: i, title: x.caption, src: x.url })),
+            ),
             el('div', { style: { border: '1px solid rgb(61, 148, 218)', backgroundColor: 'rgba(255,255,255,1)', } },
 
                 el(MediaUpload, {
@@ -569,14 +584,11 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
 
 
     },
-    save: ({ attributes }) => el('div', { className: 'ctcl-image-gallery' },
+    save: ({ attributes }) => el('div', { style:{height:attributes.mainImgHt+'px', width:attributes.mainImgWd+'px'}, className: 'ctcl-image-gallery' },
 
-        0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
-        0 < attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '95px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-            el('div', { style: { width: `${attributes.galItems.length * 76}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
-        ) : '',
-    ),
+        attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`,  key: i, title: x.caption, src: x.url }))),
+      
+
 });
 
 /**

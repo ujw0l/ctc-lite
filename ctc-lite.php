@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.3.0
+ Version: 2.3.5
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -173,8 +173,10 @@ dbDelta($sql);
    */
 
    public function enequeFrontendJs(){
+   
       wp_enqueue_script('ctcOvrlayJs', CTCL_DIR_PATH.'js/ctc_overlay.js'); 
-    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js',array('ctcOvrlayJs'));
+      wp_enqueue_script('ctcImgGallery', CTCL_DIR_PATH.'js/ctcl-image-gallery.js'); 
+    wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js',array('ctcOvrlayJs','ctcImgGallery'));
     wp_localize_script('ctclFrontendJs','ctclParams',array(
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
@@ -214,7 +216,8 @@ dbDelta($sql);
   public function enequeAdminJs(){
    wp_enqueue_script('ctclJsMasonry', CTCL_DIR_PATH.'js/js-masonry.js',array());
    wp_enqueue_script('ctclJsOverlay', CTCL_DIR_PATH.'js/js-overlay.js',array());
-    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay'));
+   wp_enqueue_script('ctcImgGallery', CTCL_DIR_PATH.'js/ctcl-image-gallery.js'); 
+    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay','ctcImgGallery'));
     wp_localize_script('ctclAdminJs','ctclAdminObject',array(
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
                                                                'emptyTestEmail'=>__('Please provide email for testing.','ctc-lite'),
