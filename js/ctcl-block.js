@@ -453,7 +453,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 /**
  *  @since 1.0.0
  *
- * Register order prosseing block
+ * Register order processing block
  */
 
 registerBlockType('ctc-lite/ctc-lite-order-processing', {
@@ -481,9 +481,9 @@ registerBlockType('ctc-lite/ctc-lite-order-processing', {
 
 
 /**
- *  @since 1.0.0
+ *  @since 2.0.0
  *
- * Register order prosseing block
+ * Register Gallery Block
  */
 
 registerBlockType('ctc-lite/ctcl-image-gallery', {

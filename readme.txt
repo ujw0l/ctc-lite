@@ -1,10 +1,10 @@
 === CT Commerce  Lite ===
-Contributors: UjW0L,sanzeeb3
+Contributors: UjW0L
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, ecommerce, store, cart ,sell
 Requires at least: 5.5.2
 Tested up to: 6.6
-Stable tag: 2.3.5
+Stable tag: 2.4.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
