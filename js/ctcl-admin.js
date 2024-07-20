@@ -19,7 +19,7 @@ class ctclAdminJs {
 
         if (undefined != document.querySelector('.ctcl-info-tab')) {
 
-            new jsMasonry('.ctcl-info-tab', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: el => el.style.opacity = '1' });
+            new jsMasonry('.ctcl-info-tab', { elSelector: 'fieldset', elWidth: 450, elMargin: 5, callback: el => el.style.opacity = '1' });
         }
     }
     /**
