@@ -553,6 +553,7 @@ new ctclImgGal('.ctcl-image-gallery',{
     imageEvent:'mouseover' ,
     callBack :(el)=>{
        document.querySelector('.ctclig-image-cont div').classList.add('ctcl-gal-cont')
+       el.style.opacity = '1';
        setTimeout(()=>{new ctcOverlayViewer('.ctcl-gal-cont');},1000)
         
     },  

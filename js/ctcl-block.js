@@ -341,7 +341,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                                 setAttributes({contFormDis:false})
                         },style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
                         el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
-                        )
+                        ),
+                        
                  ),
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
                     el(PanelBody, null,
@@ -442,7 +443,9 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                      
                     el('button', {  style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
                     el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"right" }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
-                    ),
+                    
+                ),
+                el('br',{}),
                 ),
             ),
         )
@@ -584,7 +587,7 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
 
 
     },
-    save: ({ attributes }) => el('div', { style:{height:attributes.mainImgHt+'px', width:attributes.mainImgWd+'px'}, className: 'ctcl-image-gallery' },
+    save: ({ attributes }) => el('div', { style:{height:attributes.mainImgHt+'px', width:attributes.mainImgWd+'px',opacity:0}, className: 'ctcl-image-gallery', },
 
         attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`,  key: i, title: x.caption, src: x.url }))),
       
