@@ -115,3 +115,6 @@ For Variation images to display based on user selection you need to add CTC Lite
 
 =2.3.5=
 *Better Looking gallery 
+
+=2.4.0=
+*Few bug fixes
