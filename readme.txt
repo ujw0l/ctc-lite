@@ -1,10 +1,10 @@
 === CT Commerce  Lite ===
 Contributors: UjW0L
 Donate link: https://www.patreon.com/ujw0l/membership
-Tags: block, ecommerce, store, cart ,sell
+Tags: block, online store, ecommerce, shopping cart, sell online
 Requires at least: 5.5.2
 Tested up to: 6.6
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -20,6 +20,8 @@ While making CSS change use plugin like [this](https://wordpress.org/plugins/cus
 
 Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/plugins/wporg/ctc-lite/latest)
 
+Plugin can extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - (Addons in Github) [https://github.com/topics/ctc-lite]
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -29,10 +31,14 @@ e.g.
 1. Upload the plugin files to the `/wp-content/plugins/ctc-Lite` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings-&gt;Plugin Name screen to configure the plugin
-4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
+4. Option of CTC Lite should display on top left on dashboard  
 
 
 == Frequently Asked Questions ==
+
+= Do you have instruction on how to set up store?=
+
+Yes, Instructions on how set up store is included with plugin and displayed as first tab inside plugin. 
 
 = Do you help setting up store? =
 
@@ -118,3 +124,6 @@ For Variation images to display based on user selection you need to add CTC Lite
 
 =2.4.0=
 *Few bug fixes
+
+=2.4.1=
+*minor fixes
