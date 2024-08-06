@@ -117,7 +117,11 @@ class ctclMain {
                     let parentContainer = e.target.parentElement.parentElement;
                     let vals = val.split('~');
                     if(null !=  document.querySelector('.ctcl-image-gallery')){
+
+                       if( !vals[1].includes('ctclite-default.png')){
                         document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image').style.backgroundImage = `url("${vals[1]}")`;
+                       } 
+                       
                     }
                     parentContainer.querySelector('.ctcl-add-cart').setAttribute('data-pic',vals[1]);  
                 }
@@ -556,6 +560,22 @@ new ctclImgGal('.ctcl-image-gallery',{
        el.style.opacity = '1';
        setTimeout(()=>{new ctcOverlayViewer('.ctcl-gal-cont');},1000)
         
+       document.querySelector('.ctclig-main-image').addEventListener('click',e=>{
+
+
+        let imgUrl = e.target.style.backgroundImage;
+
+        Array.from(document.querySelectorAll('.ctcl-gal-cont img')).map(x=>{
+
+            if(imgUrl.includes(x.src)){
+            x.click();
+            }
+
+
+        })
+        
+
+       })
     },  
 });
 
