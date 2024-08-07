@@ -352,13 +352,6 @@ wp_register_script(
 
 new ctcLite();
 
-/**
- * 
- * On deletion run this function
- * 
- */
-
-register_uninstall_hook(__FILE__,'ctcLiteUninstall');
 
  /**
   * @since 1.0.0
@@ -369,3 +362,12 @@ register_uninstall_hook(__FILE__,'ctcLiteUninstall');
    global $wpdb;
    $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
   }
+
+/**
+ * 
+ * On deletion run this function
+ * 
+ */
+
+register_uninstall_hook(__FILE__,'ctcLiteUninstall');
+
