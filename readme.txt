@@ -20,7 +20,7 @@ While making CSS change use plugin like [this](https://wordpress.org/plugins/cus
 
 Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/plugins/wporg/ctc-lite/latest)
 
-Plugin can be extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github] (https://github.com/topics/ctc-lite)
+Plugin can be extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github](https://github.com/topics/ctc-lite)
 
 == Installation ==
 
