@@ -4,7 +4,7 @@ Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, online store, ecommerce, shopping cart, sell online
 Requires at least: 5.5.2
 Tested up to: 6.6
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
@@ -20,7 +20,7 @@ While making CSS change use plugin like [this](https://wordpress.org/plugins/cus
 
 Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/plugins/wporg/ctc-lite/latest)
 
-Plugin can extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github] (https://github.com/topics/ctc-lite)
+Plugin can be extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github] (https://github.com/topics/ctc-lite)
 
 == Installation ==
 
@@ -126,4 +126,7 @@ For Variation images to display based on user selection you need to add CTC Lite
 *Few bug fixes
 
 =2.4.1=
+*minor fixes
+
+=2.4.2=
 *minor fixes
