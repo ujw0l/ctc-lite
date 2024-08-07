@@ -66,7 +66,7 @@ public function __construct(){
 public function activeDeactivUinstall(){   
     register_activation_hook(__FILE__, array($this, 'ctcLiteActivate'));
     register_deactivation_hook(__FILE__,  array($this,'ctcLiteDeactivate'));
-    register_uninstall_hook(__FILE__,array('ctcLite','ctcLiteUninstall'));
+  
 }
 
 /**
@@ -119,15 +119,7 @@ dbDelta($sql);
    delete_option('ctcl_store_pickup_note');
  }
 
- /**
-  * @since 1.0.0
-  *
-  * Uninstall plugin
-  */
-  public function ctcLiteUnistall(){
-   global $wpdb;
-   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
-  }
+
 
   /**
    * @since 1.0.0
@@ -359,3 +351,21 @@ wp_register_script(
 }
 
 new ctcLite();
+
+/**
+ * 
+ * On deletion run this function
+ * 
+ */
+
+register_uninstall_hook(__FILE__,'ctcLiteUninstall');
+
+ /**
+  * @since 1.0.0
+  *
+  * Uninstall plugin
+  */
+  function ctcLiteUnistall(){
+   global $wpdb;
+   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
+  }
