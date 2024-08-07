@@ -728,11 +728,19 @@ ob_start();
 
 
 
-
+<fieldset class="ctcl-misc-setting">
+<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__(' 1) Important settings','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Go to Billings tab and setup payment information','ctc-lite')?></li>
+    <li><?=__('Go to Shipping tab and setup shipping Setting','ctc-lite')?></li>
+    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','ctc-lite')?></li>
+    <br/>
+    </ol>
+</fieldset>
 
 
 <fieldset class="ctcl-setup-product">
-    <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"><?=__(' 1) Set up product page','ctc-lite')?></legend>
+    <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"><?=__(' 2) Set up product page','ctc-lite')?></legend>
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Product block to the Page.','ctc-lite')?></li>
@@ -743,7 +751,7 @@ ob_start();
 </fieldset>
 
 <fieldset class="ctcl-setup-processing-page">
-<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__(' 2) Set up order processing page (Important)','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"><?=__(' 3) Set up order processing page (Important)','ctc-lite')?></legend>
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Order Processing block to page.','ctc-lite')?></li>
@@ -755,28 +763,20 @@ ob_start();
 
 
 <fieldset class="ctcl-setup-check-out-page">
-<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__(' 3) Set up checkout page','ctc-lite')?></legend>
+<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"><?=__(' 4) Set up checkout page','ctc-lite')?></legend>
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
         <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the top right side','ctc-lite')?></li>
-        <li><?=__('Get the Url of order processing page from step 2) and paste it to url field (Important).','ctc-lite')?></li>
+        <li><?=__('Get the Url of order processing page from step 3) and paste it to url field (Important).','ctc-lite')?></li>
         <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
-<fieldset class="ctcl-misc-setting">
-<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"><?=__(' 4) Other important settings','ctc-lite')?></legend>
-    <ol>
-    <li><?=__('Go to Billings tab and setup payment information','ctc-lite')?></li>
-    <li><?=__('Go to Shipping tab and setup shipping Setting','ctc-lite')?></li>
-    <li><?=__('Go to Email tab and setup email Setting to send order confirmation email.','ctc-lite')?></li>
-    <br/>
-    </ol>
-</fieldset>
+
 
 <fieldset class="ctcl-pending-order-info">
-<legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__(' 6) Pending order tab','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"><?=__(' 5) Pending order tab','ctc-lite')?></legend>
     <ol>
     <li><?=__('Go to Pending order tab','ctc-lite')?></li>
     <li><?=__('Click detail link','ctc-lite')?></li>
@@ -787,7 +787,7 @@ ob_start();
 </fieldset>
 
 <fieldset class="ctcl-complete-order-info">
-<legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"><?=__(' 5) Complete order tab','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"><?=__(' 6) Complete order tab','ctc-lite')?></legend>
     <ol>
     <li><?=__('Go to Complete order tab','ctc-lite')?></li>
     <li><?=__('Click detail link','ctc-lite')?></li>

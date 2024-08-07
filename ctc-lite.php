@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.4.1
+ Version: 2.4.2
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -66,7 +66,7 @@ public function __construct(){
 public function activeDeactivUinstall(){   
     register_activation_hook(__FILE__, array($this, 'ctcLiteActivate'));
     register_deactivation_hook(__FILE__,  array($this,'ctcLiteDeactivate'));
-    register_uninstall_hook(__FILE__,array('ctcLite','ctcLiteUninstall'));
+  
 }
 
 /**
@@ -119,15 +119,7 @@ dbDelta($sql);
    delete_option('ctcl_store_pickup_note');
  }
 
- /**
-  * @since 1.0.0
-  *
-  * Uninstall plugin
-  */
-  public function ctcLiteUnistall(){
-   global $wpdb;
-   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
-  }
+
 
   /**
    * @since 1.0.0
@@ -359,3 +351,23 @@ wp_register_script(
 }
 
 new ctcLite();
+
+
+ /**
+  * @since 1.0.0
+  *
+  * Uninstall plugin
+  */
+  function ctcLiteUnistall(){
+   global $wpdb;
+   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
+  }
+
+/**
+ * 
+ * On deletion run this function
+ * 
+ */
+
+register_uninstall_hook(__FILE__,'ctcLiteUninstall');
+
