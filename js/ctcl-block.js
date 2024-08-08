@@ -248,6 +248,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     },
 
     edit: ({ attributes, setAttributes }) => {
+
+        console.log(attributes.couponAvail);
         return el('div', { className: 'ctcl-checkout-container' },
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-form', },
@@ -255,6 +257,17 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List :', 'ctc-lite')),
                         el('div', { className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-list-content' }, __('Contains Product List', 'ctc-lite')),
+                        ),
+
+                         attributes.couponAvail && el('div',{},
+                         el('span',{ style:{display:'inline-block'} },
+                         el(TextControl,{ style:{width:"150px", display:'inline-block' }, type:'text' ,label: __('Coupon Code :', 'ctc-lite') },  ),
+                         ),
+                         el('span',{style:{float:"right",marginLeft:'30px'} },
+                         el(Button,{style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor }, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                         ),
+                        
+                         
                         ),
 
                         el("div",{},
@@ -341,19 +354,42 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                                 setAttributes({contFormDis:false})
                         },style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
                         el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
-                        ),
-                        
+                        )
                  ),
                     el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
+                    el(PanelBody, null,
+                        el(ToggleControl,{
+                                            label:__("Coupon Available", "ctc-lite"),
+			                                checked:attributes.couponAvail,
+                                            onChange: val => {
+                                                setAttributes({couponAvail:val})
+                                                if(!val){
+                                                    setAttributes({ couponCode :'' })
+                                                    setAttributes({amount:0})
+                                                }
+
+                                            }
+
+
+                        }),
+                        
+                        attributes.couponAvail && el( TextControl,{ value:attributes.couponCode, type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ value:attributes.amount, type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
+                        ),
                     el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
                     ),
+
+
+
                 )))
 
     },
     save: ({ attributes }) => {
+
+        
         return el('div', null,
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-from', method: 'post', action: attributes.paymentPage },
@@ -363,6 +399,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
                             el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
+                        ),
+                        attributes.couponAvail && el('div',{ style:{} , className:'ctcl-coupon-code-container' },
+                        el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
+                        el('label',{style:{fontSize:'15px'}},__('Coupon Code :', 'ctc-lite')),
+                        el("input",{ style:{width:"150px", height:'25px', display:'inline-block' },id:'ctcl-coupon-code', type:'text'  },  ),
+                        ),
+                        el('span',{style:{float:"right",marginLeft:'30px'} },
+                        el("button",{ type:"button", "data-coupon": JSON.stringify({"code":attributes.couponCode, "amount":attributes.amount}) ,  style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor,padding:'5px'}, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                        ),
                         ),
                         el("div",{},
                         el("button",{
@@ -443,15 +488,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                      
                     el('button', {  style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
                     el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"right" }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
-                    
-                ),
-                el('br',{}),
+                    ),
+                    el('br',{}),
                 ),
             ),
         )
 
     }
 })
+
 
 /**
  *  @since 1.0.0
