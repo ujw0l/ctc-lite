@@ -210,6 +210,8 @@ class ctclMain {
     loadCartItems(storePickUp) {
         let prodListCont = document.querySelector('#ctcl-checkout-product-list');
         let loadingP = document.querySelector('.ctcl-product-loading');
+        let discountTotal =  document.querySelector('input[name="total-discount"]');
+        let totalDiscount = undefined != discountTotal ? parseFloat(discountTotal.value) : 0 ; 
         Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
             x.parentElement.removeChild(x)
         })
@@ -223,6 +225,7 @@ class ctclMain {
             let shippingCost = 0;
             let totalTax = 0;
             let subTotal = 0;
+            
 
 
             let totalCont = document.createElement('div');
@@ -400,6 +403,31 @@ class ctclMain {
             prodListCont.appendChild(shippingTotalInput);
 
 
+            if(undefined != discountTotal){
+
+            
+                let discountCont =  document.createElement('div');
+                    discountCont.id = 'ctcl-discount-cont';
+
+                    let discountInfo = document.createElement('span');
+                    discountInfo.innerHTML = `${ctclParams.discountTotal} (${ctclParams.currency}) : `;  
+                    discountCont.appendChild(discountInfo);
+      
+                    let discountInput = document.createElement('input');
+                    discountInput.type = 'hidden';
+                   discountInput.name = 'total-discount'
+                   discountInput.value =  totalDiscount ;
+                   discountCont.appendChild(discountInput);
+                    
+                let discountTotal = document.createElement('span');    
+                    discountTotal.innerHTML = `${totalDiscount.toFixed(2)}`;
+                    discountCont.appendChild(discountTotal);
+
+                    prodListCont.appendChild(discountCont);
+
+            }
+
+
             let subTotalLabel = document.createElement('span');
             subTotalLabel.classList.add('ctcl-sub-total-label');
             subTotalLabel.appendChild(document.createTextNode(ctclParams.subTotal + ' (' + ctclParams.currency + ') : '));
@@ -407,7 +435,7 @@ class ctclMain {
 
             let subTotalVal = document.createElement('span');
             subTotalVal.classList.add('ctcl-subtotal-cost');
-            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2)));
+            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)-totalDiscount).toFixed(2)));
             subTotalCont.appendChild(subTotalVal);
             prodListCont.appendChild(subTotalCont);
 
@@ -415,7 +443,7 @@ class ctclMain {
             subTotalInput.type = 'hidden';
             subTotalInput.id = 'ctcl-subtotal-hidden-input'
             subTotalInput.name = 'sub-total';
-            subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2);
+            subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)-totalDiscount).toFixed(2);
             prodListCont.appendChild(subTotalInput);
 
         } else {
@@ -565,6 +593,8 @@ class ctclMain {
        })
         
         document.querySelector('.ctcl-apply-cuopon-code').addEventListener('click',e=>{
+
+
         let couponInfo  = JSON.parse(e.target.getAttribute('data-coupon'));
 
         let couponCode =  document.querySelector('#ctcl-coupon-code').value;
@@ -572,6 +602,7 @@ class ctclMain {
        if(couponCode === couponInfo.code ){
         
         let discountContainer = document.querySelector('#ctcl-discount-cont');
+        e.target.setAttribute('data-coupon',JSON.stringify(''));
         if(null != discountContainer){
             discountContainer.remove();
         }
@@ -609,6 +640,8 @@ class ctclMain {
 
              let subTotalCont =   document.querySelector('#ctcl-subtotal-container');
              subTotalCont.parentNode.insertBefore(discountCont,subTotalCont);
+
+            
 
         
        }else{

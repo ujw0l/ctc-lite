@@ -290,6 +290,7 @@ table.ctcl-pending-orders td{
       max-width:33%;
       
    }
+   .ctcl-order-detail-discount span:first-child,
    .ctcl-order-detail-sub-total span:first-child,
    .ctcl-order-detail-shipping span:first-child{
    
@@ -302,6 +303,7 @@ table.ctcl-pending-orders td{
       
    
    }
+   .ctcl-order-detail-discount span:last-child,
    .ctcl-order-detail-sub-total span:last-child,
    .ctcl-order-detail-shipping span:last-child{
       margin-left:5px;
