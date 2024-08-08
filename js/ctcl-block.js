@@ -400,7 +400,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                             el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
                             el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
                         ),
-                        attributes.couponAvail && el('div',{ style:{} , className:'ctcl-coupon-code-container' },
+                        attributes.couponAvail && el('div',{ style:{'display':'none'} , className:'ctcl-coupon-code-container' },
                         el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
                         el('label',{style:{fontSize:'15px'}},__('Coupon Code :', 'ctc-lite')),
                         el("input",{ style:{width:"150px", height:'25px', display:'inline-block' },id:'ctcl-coupon-code', type:'text'  },  ),
