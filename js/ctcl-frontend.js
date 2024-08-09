@@ -164,6 +164,7 @@ class ctclMain {
             } else {
                 let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
                 let prodNameCart = setCartItems.map(x => x.name);
+                let variationBoth = setCartItems.map(x=>`${x.name},${x.varOne},${x.varTwo}`);
                 for (let i in setCartItems) {
                     if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
                         setCartItems[i] = {
@@ -175,7 +176,10 @@ class ctclMain {
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
-                        };
+                        }
+                    
+
+                 
                     } else if (setCartItems[i].name != newItem && -1 === prodNameCart.indexOf(newItem)) {
                         setCartItems.push({
                             name: e.target.getAttribute('data-name'),
@@ -454,6 +458,8 @@ class ctclMain {
 
         prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display ='none'; 
         prodListCont.querySelector('.ctcl-product-list-content').style.display = '';
+        document.querySelector('.ctcl-product-list-header').style.display = 'none';
+        
     }
 
     if (null != loadingP) {
@@ -498,6 +504,11 @@ class ctclMain {
      */
 
     removeItem(i, conts, hiddenCart) {
+
+        let discountCont = document.querySelector('#ctcl-discount-cont');
+        if(undefined != discountCont){
+            discountCont.remove();
+        }
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
@@ -570,6 +581,7 @@ class ctclMain {
                     this.loadCartItems(0);
                 } else {
                     this.loadCartItems();
+                    
                 }
             })
         });
@@ -606,7 +618,6 @@ applyCoupon(){
    if(couponCode === couponInfo.code ){
     
     let discountContainer = document.querySelector('#ctcl-discount-cont');
-    e.target.setAttribute('data-coupon',JSON.stringify(''));
     if(null != discountContainer){
         discountContainer.remove();
     }

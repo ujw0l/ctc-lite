@@ -80,7 +80,7 @@ cursor:pointer;
     text-align:center;
     height:50px;
     margin-bottom:2px;
-    border-bottom:1px dashed rgba(0,0,0,1);
+    border-bottom:1px dashed rgba(0,0,0,0.2);
     display:table;
 }
 .ctcl-checkout-item-header span,
@@ -235,8 +235,11 @@ float:right;
     max-width:25%;
     font-weight:bold;
 }
-.ctcl-subtotal-container{
-    border-top: 1px solid rgba(0,0,0,1);
+#ctcl-subtotal-container{
+    border-top: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,1);
+    padding-top:10px;
+    padding-bottom:10px;
 }
 .ctcl-co-instruction{
     line-height: 1;
@@ -251,8 +254,20 @@ float:right;
     max-width: 100%;
 }
 
+#ctcl-discount-cont span:first-child label{
+   
+    margin-right: 10px;
+   
+}
+.ctcl-checkout-next{
+    float:right;
+   margin-top: 200px;
+}
 
-
+.ctcl-checkout-item:hover{
+    transform: scale(1.02);
+    transition: transform 0.6s cubic-bezier(0.12, 0, 0.39, 0);
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .ctclig-image-list::-webkit-scrollbar {
