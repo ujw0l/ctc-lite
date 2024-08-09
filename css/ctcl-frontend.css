@@ -307,3 +307,10 @@ float:right;
 
 
 }
+
+#ctcl-order-sucesfully-placed{
+    margin-left:auto !important;
+    margin-right:auto !important;
+    display:block !important;
+
+}
