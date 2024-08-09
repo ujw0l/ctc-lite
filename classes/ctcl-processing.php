@@ -53,6 +53,8 @@ class ctclProcessing{
 public function orderProcessingShortCode(){
 
     if(!empty($_POST)):
+
+       
         $date = new DateTime();
 
         $postArr = $_POST;
@@ -63,6 +65,7 @@ public function orderProcessingShortCode(){
 
       $dataAfterPayment = apply_filters('ctcl_process_payment_'.$postArr['payment_option'],$postArr);
 
+      do_action('ctcl-order-placed', $dataAfterPayment); 
       if(1==$dataAfterPayment['charge_result']):
         apply_filters('ctcl_data_for_ml',$dataAfterPayment);
         $this->enterDataToTable($dataAfterPayment);
