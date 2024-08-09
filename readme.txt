@@ -13,7 +13,8 @@ Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor t
 == Description ==
 
 Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing (for user facing side it loads about 40 kb JS) )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
-You can set different price and different images for different variation. Have option label product out of stock and pre order.Sell with payment services like PayPal and Stripe.
+You can set different price and different images for different variation. Have option label product out of stock and pre order.
+Sell with payment services like PayPal and Stripe.
 
 
 While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
