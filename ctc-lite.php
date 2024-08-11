@@ -308,16 +308,12 @@ wp_register_script(
   );
  
  register_block_type(
-     'ctc-lite/ctc-lite',
+     'ctc-lite/ctc-lite-product-block',
     array(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
       
-    ),
-
-    register_block_type(
-      'ctc-lite/column-display',
     ),
 
  );

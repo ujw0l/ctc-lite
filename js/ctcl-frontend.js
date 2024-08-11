@@ -164,7 +164,7 @@ class ctclMain {
             } else {
                 let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
                 let prodNameCart = setCartItems.map(x => x.name);
-                let variationBoth = setCartItems.map(x=>`${x.name},${x.varOne},${x.varTwo}`);
+            
                 for (let i in setCartItems) {
                     if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
                         setCartItems[i] = {

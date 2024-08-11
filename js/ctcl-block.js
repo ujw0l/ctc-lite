@@ -670,8 +670,6 @@ registerBlockType('ctc-lite/display-column', {
 				[ 'ctc-lite/ctcl-image-gallery' ],
 			] ],
 			[ 'core/column', {}, [
-                [ 'core/heading',{
-					placeholder: __('Name','ctc-lite')}],
                 ['core/paragraph',{
 					placeholder: __('Short Product Description','ctc-lite')
                 }],
