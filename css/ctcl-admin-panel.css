@@ -425,3 +425,7 @@ table.ctcl-pending-orders td{
       margin-bottom:15px;
       vertical-align: middle;
    }
+
+   .ctcl-checkout-button{
+      float:right;
+   }
