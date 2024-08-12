@@ -756,9 +756,9 @@ ob_start();
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Product block to the Page.','ctc-lite')?></li>
-        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the top right side','ctc-lite')?></li>
+        <li><?=__('Click Add Product Detail Button','ctc-lite')?> </li>
         <li><?=__('Fill up the required fields like name , price etc.','ctc-lite')?></li>
-        <li><?=__('Publish the page and you are done with creating product.','ctc-lite')?></li>
+        <li><?=__('Save and Publish the page and you are done with creating product.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
@@ -779,9 +779,9 @@ ob_start();
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
-        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the top right side','ctc-lite')?></li>
+        <li><?=__('Click Add Checkout Detail button','ctc-lite')?></li>
         <li><?=__('Get the Url of order processing page from step 3) and paste it to url field (Important).','ctc-lite')?></li>
-        <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
+        <li><?=__('Save and Publish the page and you are done creating checkout page.','ctc-lite')?></li>
     </ol>
 </fieldset>
 

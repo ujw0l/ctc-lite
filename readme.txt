@@ -8,7 +8,7 @@ Stable tag: 2.5
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
-Block based light weight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
+JavaScript first block based light weight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
 
 == Description ==
 
@@ -133,4 +133,7 @@ For Variation images to display based on user selection you need to add CTC Lite
 *minor fixes
 =2.5.0=
 * Coupon code 
+* Modal used for detail instead of plugin side bar
 * Minor Fixes 
+* Paypal addon
+* Twilio SMS Addon

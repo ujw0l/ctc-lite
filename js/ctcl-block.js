@@ -1,6 +1,6 @@
 
-const { useEffect } = React;
-const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl,ToggleControl } = wp.components;
+const { useEffect,useState } = React;
+const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl,ToggleControl,Modal } = wp.components;
 const { InspectorControls, MediaUpload, InnerBlocks, useBlockProps } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
@@ -45,6 +45,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
     },
     edit: ({ attributes, setAttributes,clientId }) => {
 
+        const [ modalIsOpen, setModalOpen ] = useState( false );
+
        setAttributes({postId :wp.data.select("core/editor").getCurrentPostId() })
 
      
@@ -70,8 +72,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             }  }) ,
             el('div', { className: 'ctcl-quantity' },el('span',{},__('Qty: ','ctc-lite')), el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, attributes.addToCartMsg),
-
-            el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
+            el(Button,{style:{marginLeft:'auto',marginRight:'auto',display:'block',marginTop:'10px'},variant:'secondary', onClick:()=>setModalOpen(true)},__('Add Product Detail','ctc-lite')),
+            modalIsOpen && el(Modal,{title:__('Add/Edit Product Detail','ctc-lite'),size:'large', onRequestClose:()=> setModalOpen(false), },  
             el(PanelBody,null, 
                 el(ToggleControl, {
 
@@ -248,8 +250,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     },
 
     edit: ({ attributes, setAttributes }) => {
-
-        console.log(attributes.couponAvail);
+        const [ modalIsOpen, setModalOpen ] = useState( false );
+        
         return el('div', { className: 'ctcl-checkout-container' },
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-form', },
@@ -356,7 +358,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
                         )
                  ),
-                    el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
+                 el(Button,{style:{marginLeft:'auto',marginRight:'auto',display:'block',marginTop:'100px'},variant:'secondary', onClick:()=>setModalOpen(true)},__('Add Checkout Detail','ctc-lite')),
+                 modalIsOpen && el(Modal,{title:__('Add/Edit Checkout Detail','ctc-lite'),size:'medium', onRequestClose:()=> setModalOpen(false), },
                     el(PanelBody, null,
                         el(ToggleControl,{
                                             label:__("Coupon Available", "ctc-lite"),
