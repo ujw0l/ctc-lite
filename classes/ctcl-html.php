@@ -501,7 +501,9 @@ return $html;
         $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
         $body.='<span style="display:table-cell;" >'.$data['sub-total'].'</span></div>';
         $body .='</div>';
+        if(isset(data['shipping_note'])):
         $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}</div>";
+        endif;
         $body .='</div>';
         return $body;
     }
