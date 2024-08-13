@@ -152,6 +152,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                         if(!val){
                             setAttributes({variation1:[]})
                             setAttributes({variation2:[]})
+                            setAttributes({ varDiffPrice:false})
+                            setAttributes({varDiffImage:false})
                         }
 
 
