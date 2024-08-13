@@ -296,7 +296,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                          attributes.couponAvail && el('div',{},
                          el('span',{ style:{display:'inline-block'} },
-                         el(TextControl,{ style:{width:"150px", display:'inline-block' }, type:'text' ,label: __('Coupon Code :', 'ctc-lite') },  ),
+                         el(TextControl,{ style:{width:"150px", display:'inline-block' }, type:'text' ,label: __('Coupon Code : ', 'ctc-lite') },  ),
                          ),
                          el('span',{style:{float:"right",marginLeft:'30px'} },
                          el(Button,{style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor }, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
@@ -409,7 +409,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
 
                         }),
                         
-                        attributes.couponAvail && el( TextControl,{ value:attributes.couponCode, type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ value:attributes.couponCode, type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code : ','ctc-lite') }),
                         attributes.couponAvail && el( TextControl,{ value:attributes.amount, type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
                         ),
                     el(PanelBody, null,
@@ -438,7 +438,7 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         ),
                         attributes.couponAvail && el('div',{ style:{'display':'none'} , className:'ctcl-coupon-code-container' },
                         el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
-                        el('label',{style:{fontSize:'15px'}},__('Coupon Code :', 'ctc-lite')),
+                        el('label',{style:{fontSize:'15px'}},__('Coupon Code : ', 'ctc-lite')),
                         el("input",{ style:{width:"150px", height:'25px', display:'inline-block' },id:'ctcl-coupon-code', type:'text'  },  ),
                         ),
                         el('span',{style:{float:"right",marginLeft:'30px'} },

@@ -264,7 +264,7 @@ public function requiredAjax(){
   public function adminMenu(){
     if ( is_admin()):
       $pendingOrder = "<span '".__('Pending Orders','ctc-lite')."' class='update-plugins'><span class='plugin-count'> {$this->ctclProcessing->getTotalPendingOrders()} </span><span>";
-        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CTC Lite ', 'ctc-lite').$pendingOrder,'administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
+        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CT  Commerce ', 'ctc-lite').$pendingOrder,'administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
     endif;
 }
 
