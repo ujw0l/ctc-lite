@@ -7,10 +7,16 @@ const { __ } = wp.i18n;
 const el = wp.element.createElement;
 const { registerBlockType,getCategories, setCategories } = wp.blocks;
 
+
+/**
+ * @since 2.5.0
+ * 
+ * Set Custom block category on top
+ */
 const customBlockCategory = {
     slug: 'ctc-lite-blocks',
     title: __('CT Commerce Lite', 'ctc-lite'),
-    icon: 'store', // or an SVG icon component as Element
+    icon: 'store', 
  }
 
 
@@ -50,21 +56,25 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         disableAddToCartBtn:{type:"Boolean",default:false},
         addToCartMsg:{type:"String",default:__('Add To Cart','ctc-lite')},
         preOrderAvailable:{type:"Boolean",default:false},
-        postId :{type:'Number', default:0}
+        postId :{type:'Number', default:0},
+        displayVariation:{type:'Boolean',default:false},
        
 
     },
     edit: ({ attributes, setAttributes,clientId }) => {
 
         const [ modalIsOpen, setModalOpen ] = useState( false );
+        const [variationOneItem,setVariationOneItem] =useState([]);
+        const [variationTwoItem,setVariationTwoItem] = useState([])
+        useEffect(()=>{
+
+            setVariationOneItem(attributes.variation1.map(x => x.label));
+            setVariationTwoItem(attributes.variation2.map(x => x.label));
+        },[attributes.variation1,attributes.variation2])
 
        setAttributes({postId :wp.data.select("core/editor").getCurrentPostId() })
-
-     
-    
         setAttributes({clntId:clientId})
-        let variationOneItem = attributes.variation1.map(x => x.label);
-        let variationTwoItem = attributes.variation2.map(x => x.label);
+        
 
 
         return el('div', { className: 'ctcl-product-container' },
@@ -136,7 +146,17 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     
                     }, help: __('Enter product price.', 'ctc-lite') }),
                     el(TextControl, { name: 'shipping', className: 'inspect-shipping-cost', type: 'number', value: attributes.shippingCost, label: `${__("Shipping Cost", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ shippingCost: parseFloat(value).toFixed(2) }), help: __('Enter shipping cost', 'ctc-lite') },),
-                    el(PanelBody,{}, 
+                    el(ToggleControl,{label:__("Product Variation",'ctc-lite'),help:__("Product Variation Available?","ctc-lite"), checked:attributes.displayVariation, onChange: val =>{
+
+                        setAttributes({displayVariation:val});
+                        if(!val){
+                            setAttributes({variation1:[]})
+                            setAttributes({variation2:[]})
+                        }
+
+
+                    } }),
+                     attributes.displayVariation && el(PanelBody,{}, 
                     el(TextControl, { name: 'variations1', className: "ctcl-setting-variation1", label: `${__("Variations 1", 'ctc-lite')} : `, value: variationOneItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation1: val.split(',').map(x => { return { value: x+'~'+attributes.productPrice, label: x } }) }) }),
                     el(TextControl, { name: 'variations1label', className: "ctcl-setting-variation1-label", label: `${__("Variations 1 Label", 'ctc-lite')} : `, value: attributes.variation1Lable, onChange: val => setAttributes({ variation1Lable: val }) }),
                     el(ToggleControl,{ label:__("Different price for variation",'ctc-lite'), help:__("Different price for different variation for Variation 1?","ctc-lite"), checked:attributes.varDiffPrice, onChange:val=>{
@@ -162,7 +182,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
                     } 
                     } ) )),
-                    el(PanelBody,{},
+                    attributes.displayVariation && el(PanelBody,{},
                     el(TextControl, { name: 'variations2', className: "ctcl-setting-variation2", label: `${__("Variations 2", 'ctc-lite')} : `, value: variationTwoItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation2: val.split(',').map(x => { return { value: x+'~'+attributes.profilePic, label: x } }) }) }),
                     el(TextControl, { name: 'variations2label', className: "ctcl-setting-variation2-label", label: `${__("Variations 2 Label", 'ctc-lite')} : `, value: attributes.variation2Lable, onChange: val => setAttributes({ variation2Lable: val }) }),
                     el(ToggleControl,{ label:__("Different images for variation",'ctc-lite'), help:__("Different images for different variation for Variation 2?","ctc-lite"), checked:attributes. varDiffImage, onChange:val=>setAttributes({ varDiffImage: val})  }),

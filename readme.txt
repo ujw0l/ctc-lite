@@ -131,10 +131,13 @@ For Variation images to display based on user selection you need to add CTC Lite
 
 =2.4.2=
 *minor fixes
+
 =2.5.0=
 * Coupon code 
 * Modal used for detail instead of plugin side bar
 * Display blocks on top 
+* Conditional Variation display
 * Minor Fixes 
 * Paypal addon
 * Twilio SMS Addon
+* Custom Shipping Option Addon
