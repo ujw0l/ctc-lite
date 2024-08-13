@@ -5,9 +5,20 @@ const { InspectorControls, MediaUpload, InnerBlocks, useBlockProps } = wp.blockE
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType,getCategories, setCategories } = wp.blocks;
+
+const customBlockCategory = {
+    slug: 'ctc-lite-blocks',
+    title: __('CT Commerce Lite', 'ctc-lite'),
+    icon: 'store', // or an SVG icon component as Element
+ }
 
 
+
+ setCategories([
+    customBlockCategory,
+    ...getCategories(),
+]);
 
 /**
  *  @since 1.0.0

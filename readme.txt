@@ -134,6 +134,7 @@ For Variation images to display based on user selection you need to add CTC Lite
 =2.5.0=
 * Coupon code 
 * Modal used for detail instead of plugin side bar
+* Display blocks on top 
 * Minor Fixes 
 * Paypal addon
 * Twilio SMS Addon
