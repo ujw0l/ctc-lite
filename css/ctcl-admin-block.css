@@ -81,8 +81,8 @@ cursor:pointer;
 .ctcl-variation-1 label{
     display:block!important;
 }
-.ctcl-variation-2 select,
-.ctcl-variation-1 select{
+#ctcl-variation-2 ,
+#ctcl-variation-1 {
 width:195px!important;
 }
 

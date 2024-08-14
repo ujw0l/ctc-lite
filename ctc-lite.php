@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: CT Commerce Lite ecommerce plugin
- Version: 2.4.2
+ Version: 2.5.0
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -136,7 +136,6 @@ dbDelta($sql);
     add_action( 'phpmailer_init', array($this->ctclProcessing,'smtpEmailSetting' ));
     add_filter( 'wp_mail_from', function(){return get_option('ctcl_smtp_from_email');} );
     add_action( 'init', array($this,'registerGutenbergBlocks' ));
-    add_filter( 'block_categories_all', array($this,'ctcLiteBlocks'), 10, 2);
   }
 
   /**
@@ -176,6 +175,8 @@ dbDelta($sql);
        'itemsTotal'=>__('Sub Total','ctc-lite'),
        'taxTotal'=>__('Sales Tax','ctc-lite'),
        'subTotal'=>__("Total","ctc-lite"),
+       'discountTotal'=>__("Discount",'ctc-lite' ),
+       'invalidCoupon'=>__("Invalid coupon code",'ctc-lite'),
        'removeItem'=>__('Remove Item','ctc-lite'),
        'itemHead'=>__('Product','ctc-lite'),
        'qtyHead'=>__('Qty','ctc-lite'),
@@ -263,7 +264,7 @@ public function requiredAjax(){
   public function adminMenu(){
     if ( is_admin()):
       $pendingOrder = "<span '".__('Pending Orders','ctc-lite')."' class='update-plugins'><span class='plugin-count'> {$this->ctclProcessing->getTotalPendingOrders()} </span><span>";
-        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CTC Lite ', 'ctc-lite').$pendingOrder,'administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
+        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CT  Commerce ', 'ctc-lite').$pendingOrder,'administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
     endif;
 }
 
@@ -306,16 +307,12 @@ wp_register_script(
   );
  
  register_block_type(
-     'ctc-lite/ctc-lite',
+     'ctc-lite/ctc-lite-product-block',
     array(
        'style'         => 'ctcl-block-frontend-styles',
        'editor_style'  => 'ctcl-block-editor-styles',
        'editor_script' => 'ctcl-block-editor',
       
-    ),
-
-    register_block_type(
-      'ctc-lite/column-display',
     ),
 
  );
@@ -331,22 +328,7 @@ wp_register_script(
 
   }
 
-/**
- * @since 1.0.0
- *
- * Create block category for plugin
- */
-  public function ctcLiteBlocks( $categories, $post ) {
-	return array_merge(
-		$categories,
-		array(
-			array(
-				'slug' => 'ctc-lite-blocks',
-				'title' => __( 'CT Commerce Lite', 'ctc-lite' ),
-			),
-		)
-	);
-}
+
 
 }
 

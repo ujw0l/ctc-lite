@@ -53,6 +53,8 @@ class ctclProcessing{
 public function orderProcessingShortCode(){
 
     if(!empty($_POST)):
+
+       
         $date = new DateTime();
 
         $postArr = $_POST;
@@ -63,9 +65,11 @@ public function orderProcessingShortCode(){
 
       $dataAfterPayment = apply_filters('ctcl_process_payment_'.$postArr['payment_option'],$postArr);
 
+      
       if(1==$dataAfterPayment['charge_result']):
         apply_filters('ctcl_data_for_ml',$dataAfterPayment);
         $this->enterDataToTable($dataAfterPayment);
+        do_action('ctcl-order-placed', $dataAfterPayment);
         $dataAfterShipping =  apply_filters('ctcl_shipping_option_'.$dataAfterPayment['shipping_option']  ,$dataAfterPayment);
         $custEmailBody = apply_filters('ctcl_custom_email_body','',$dataAfterShipping);
         if(empty( $custEmailBody)):
@@ -75,7 +79,7 @@ public function orderProcessingShortCode(){
             $emailBody = $custEmailBody;
         endif;
        $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       return "<div id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. Your order id is')." : {$postArr['order_id']} </div>";
+       return "<div style='margin-left:auto;margin-right:auto;display:block;'; id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. You will get email with details . <br/>Your order id is')." : {$postArr['order_id']} </div>";
       else:
         return "<p>{$processPayment['failure_message']}</p>";
       endif;

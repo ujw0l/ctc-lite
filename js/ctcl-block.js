@@ -1,13 +1,30 @@
 
-const { useEffect } = React;
-const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl,ToggleControl } = wp.components;
+const { useEffect,useState } = React;
+const {  RangeControl,CheckboxControl, PanelBody, TextControl, Button, ColorPicker, SideBar, SelectControl,ToggleControl,Modal } = wp.components;
 const { InspectorControls, MediaUpload, InnerBlocks, useBlockProps } = wp.blockEditor;
 const { PluginSidebar } = wp.editPost;
 const { __ } = wp.i18n;
 const el = wp.element.createElement;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType,getCategories, setCategories } = wp.blocks;
 
 
+/**
+ * @since 2.5.0
+ * 
+ * Set Custom block category on top
+ */
+const customBlockCategory = {
+    slug: 'ctc-lite-blocks',
+    title: __('CT Commerce Lite', 'ctc-lite'),
+    icon: 'store', 
+ }
+
+
+
+ setCategories([
+    customBlockCategory,
+    ...getCategories(),
+]);
 
 /**
  *  @since 1.0.0
@@ -39,19 +56,25 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
         disableAddToCartBtn:{type:"Boolean",default:false},
         addToCartMsg:{type:"String",default:__('Add To Cart','ctc-lite')},
         preOrderAvailable:{type:"Boolean",default:false},
-        postId :{type:'Number', default:0}
+        postId :{type:'Number', default:0},
+        displayVariation:{type:'Boolean',default:false},
        
 
     },
     edit: ({ attributes, setAttributes,clientId }) => {
 
-       setAttributes({postId :wp.data.select("core/editor").getCurrentPostId() })
+        const [ modalIsOpen, setModalOpen ] = useState( false );
+        const [variationOneItem,setVariationOneItem] =useState([]);
+        const [variationTwoItem,setVariationTwoItem] = useState([])
+        useEffect(()=>{
 
-     
-    
+            setVariationOneItem(attributes.variation1.map(x => x.label));
+            setVariationTwoItem(attributes.variation2.map(x => x.label));
+        },[attributes.variation1,attributes.variation2])
+
+       setAttributes({postId :wp.data.select("core/editor").getCurrentPostId() })
         setAttributes({clntId:clientId})
-        let variationOneItem = attributes.variation1.map(x => x.label);
-        let variationTwoItem = attributes.variation2.map(x => x.label);
+        
 
 
         return el('div', { className: 'ctcl-product-container' },
@@ -70,8 +93,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
             }  }) ,
             el('div', { className: 'ctcl-quantity' },el('span',{},__('Qty: ','ctc-lite')), el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, attributes.addToCartMsg),
-
-            el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Product Information', 'ctc-lite') },
+            el(Button,{style:{marginLeft:'auto',marginRight:'auto',display:'block',marginTop:'10px'},variant:'secondary', onClick:()=>setModalOpen(true)},__('Add Product Detail','ctc-lite')),
+            modalIsOpen && el(Modal,{title:__('Add/Edit Product Detail','ctc-lite'),size:'large', onRequestClose:()=> setModalOpen(false), },  
             el(PanelBody,null, 
                 el(ToggleControl, {
 
@@ -123,7 +146,19 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                     
                     }, help: __('Enter product price.', 'ctc-lite') }),
                     el(TextControl, { name: 'shipping', className: 'inspect-shipping-cost', type: 'number', value: attributes.shippingCost, label: `${__("Shipping Cost", 'ctc-lite')}(${ctcLiteParams.currency.toUpperCase()}) :`, onChange: value => setAttributes({ shippingCost: parseFloat(value).toFixed(2) }), help: __('Enter shipping cost', 'ctc-lite') },),
-                    el(PanelBody,{}, 
+                    el(ToggleControl,{label:__("Product Variation",'ctc-lite'),help:__("Product Variation Available?","ctc-lite"), checked:attributes.displayVariation, onChange: val =>{
+
+                        setAttributes({displayVariation:val});
+                        if(!val){
+                            setAttributes({variation1:[]})
+                            setAttributes({variation2:[]})
+                            setAttributes({ varDiffPrice:false})
+                            setAttributes({varDiffImage:false})
+                        }
+
+
+                    } }),
+                     attributes.displayVariation && el(PanelBody,{}, 
                     el(TextControl, { name: 'variations1', className: "ctcl-setting-variation1", label: `${__("Variations 1", 'ctc-lite')} : `, value: variationOneItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation1: val.split(',').map(x => { return { value: x+'~'+attributes.productPrice, label: x } }) }) }),
                     el(TextControl, { name: 'variations1label', className: "ctcl-setting-variation1-label", label: `${__("Variations 1 Label", 'ctc-lite')} : `, value: attributes.variation1Lable, onChange: val => setAttributes({ variation1Lable: val }) }),
                     el(ToggleControl,{ label:__("Different price for variation",'ctc-lite'), help:__("Different price for different variation for Variation 1?","ctc-lite"), checked:attributes.varDiffPrice, onChange:val=>{
@@ -149,7 +184,7 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
 
                     } 
                     } ) )),
-                    el(PanelBody,{},
+                    attributes.displayVariation && el(PanelBody,{},
                     el(TextControl, { name: 'variations2', className: "ctcl-setting-variation2", label: `${__("Variations 2", 'ctc-lite')} : `, value: variationTwoItem.join(','), help: __('Comma separated.', 'ctc-lite'), onChange: val => setAttributes({ variation2: val.split(',').map(x => { return { value: x+'~'+attributes.profilePic, label: x } }) }) }),
                     el(TextControl, { name: 'variations2label', className: "ctcl-setting-variation2-label", label: `${__("Variations 2 Label", 'ctc-lite')} : `, value: attributes.variation2Lable, onChange: val => setAttributes({ variation2Lable: val }) }),
                     el(ToggleControl,{ label:__("Different images for variation",'ctc-lite'), help:__("Different images for different variation for Variation 2?","ctc-lite"), checked:attributes. varDiffImage, onChange:val=>setAttributes({ varDiffImage: val})  }),
@@ -248,6 +283,8 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
     },
 
     edit: ({ attributes, setAttributes }) => {
+        const [ modalIsOpen, setModalOpen ] = useState( false );
+        
         return el('div', { className: 'ctcl-checkout-container' },
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-form', },
@@ -255,6 +292,17 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('h5', { className: 'ctcl-product-list-header' }, __('Product List :', 'ctc-lite')),
                         el('div', { className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-list-content' }, __('Contains Product List', 'ctc-lite')),
+                        ),
+
+                         attributes.couponAvail && el('div',{},
+                         el('span',{ style:{display:'inline-block'} },
+                         el(TextControl,{ style:{width:"150px", display:'inline-block' }, type:'text' ,label: __('Coupon Code : ', 'ctc-lite') },  ),
+                         ),
+                         el('span',{style:{float:"right",marginLeft:'30px'} },
+                         el(Button,{style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor }, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                         ),
+                        
+                         
                         ),
 
                         el("div",{},
@@ -341,19 +389,43 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                                 setAttributes({contFormDis:false})
                         },style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-button' }, __("Back", 'ctc-lite')),
                         el(Button, { style: { backgroundColor: attributes.buttonColor,display:"inline-block",float:"right" }, className: 'ctcl-checkout-button' }, __("Check Out", 'ctc-lite')),
-                        ),
-                        
+                        )
                  ),
-                    el(PluginSidebar, { name: 'ctcl-checkout', icon: 'store', title: __('Checkout page setting', 'ctc-lite') },
+                 el(Button,{style:{marginLeft:'auto',marginRight:'auto',display:'block',marginTop:'100px'},variant:'secondary', onClick:()=>setModalOpen(true)},__('Add Checkout Detail','ctc-lite')),
+                 modalIsOpen && el(Modal,{title:__('Add/Edit Checkout Detail','ctc-lite'),size:'medium', onRequestClose:()=> setModalOpen(false), },
+                    el(PanelBody, null,
+                        el(ToggleControl,{
+                                            label:__("Coupon Available", "ctc-lite"),
+			                                checked:attributes.couponAvail,
+                                            onChange: val => {
+                                                setAttributes({couponAvail:val})
+                                                if(!val){
+                                                    setAttributes({ couponCode :'' })
+                                                    setAttributes({amount:0})
+                                                }
+
+                                            }
+
+
+                        }),
+                        
+                        attributes.couponAvail && el( TextControl,{ value:attributes.couponCode, type:'text', onChange:val=> setAttributes({couponCode:val}) ,  label:__('Coupon Code : ','ctc-lite') }),
+                        attributes.couponAvail && el( TextControl,{ value:attributes.amount, type:'number',min:0,max:100,  onChange:val=> setAttributes({amount:val}), label:__('Amount in percent','ctc-lite') }),
+                        ),
                     el(PanelBody, null,
                             el(TextControl, { value: attributes.paymentPage, onChange: val => setAttributes({ paymentPage: val }), className: 'ctcl-co-payment-page', type: 'text', label: __('URL of page with ctc lite payment processing block :', 'ctc-lite') }),
                             el('i', { className: "ctcl-colorpicker-label" }, __('Select button color', 'ctc-lite')),
                             el(ColorPicker, { onChangeComplete: colorVal => setAttributes({ buttonColor: colorVal.hex }) },))
                     ),
+
+
+
                 )))
 
     },
     save: ({ attributes }) => {
+
+        
         return el('div', null,
             el('div', { className: 'ctcl-checkout' },
                 el('form', { id: 'ctcl-checkout-from', method: 'post', action: attributes.paymentPage },
@@ -363,6 +435,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                         el('div', { id: 'ctcl-checkout-product-list', className: 'ctcl-product-list-container' },
                             el('p', { className: 'ctcl-product-loading dashicons-before dashicons-cart' }, __('Loading ...', 'ctc-lite')),
                             el('p', { className: 'ctcl-product-list-content  dashicons-before dashicons-cart', style: { display: 'none' } }, __('Empty Cart', 'ctc-lite')),
+                        ),
+                        attributes.couponAvail && el('div',{ style:{'display':'none'} , className:'ctcl-coupon-code-container' },
+                        el('span',{ style:{display:'inline-block',marginLeft:'200px'} },
+                        el('label',{style:{fontSize:'15px'}},__('Coupon Code : ', 'ctc-lite')),
+                        el("input",{ style:{width:"150px", height:'25px', display:'inline-block' },id:'ctcl-coupon-code', type:'text'  },  ),
+                        ),
+                        el('span',{style:{float:"right",marginLeft:'30px'} },
+                        el("button",{ type:"button", "data-coupon": JSON.stringify({"code":attributes.couponCode, "amount":attributes.amount}) ,  style: { color:'rgba(255,255,255,1)', backgroundColor: attributes.buttonColor,padding:'5px'}, className:'ctcl-apply-cuopon-code', }, __('Apply','ctc-lite') )   
+                        ),
                         ),
                         el("div",{},
                         el("button",{
@@ -443,15 +524,15 @@ registerBlockType('ctc-lite/ctc-lite-checkout-block', {
                      
                     el('button', {  style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"left" }, className: 'ctcl-checkout-back', }, __("Back", 'ctc-lite') ),   
                     el('input', { type: 'submit', name: 'ctcl-checkout-button', style: { backgroundColor: attributes.buttonColor, display:"inline-block", float:"right" }, className: 'ctcl-checkout-button', value: __("Check Out", 'ctc-lite') }),
-                    
-                ),
-                el('br',{}),
+                    ),
+                    el('br',{}),
                 ),
             ),
         )
 
     }
 })
+
 
 /**
  *  @since 1.0.0
@@ -625,8 +706,6 @@ registerBlockType('ctc-lite/display-column', {
 				[ 'ctc-lite/ctcl-image-gallery' ],
 			] ],
 			[ 'core/column', {}, [
-                [ 'core/heading',{
-					placeholder: __('Name','ctc-lite')}],
                 ['core/paragraph',{
 					placeholder: __('Short Product Description','ctc-lite')
                 }],

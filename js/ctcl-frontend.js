@@ -22,6 +22,10 @@ class ctclMain {
             this.onShippingRadioButtonCheck();
             this.showHideMultipartForm();
 
+            if(undefined != document.querySelector('.ctcl-coupon-code-container')){
+            this.applyCoupon();
+        }
+
         }
 
         if(null !== document.querySelector('.ctcl-image-gallery')){
@@ -160,6 +164,7 @@ class ctclMain {
             } else {
                 let setCartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
                 let prodNameCart = setCartItems.map(x => x.name);
+            
                 for (let i in setCartItems) {
                     if (setCartItems[i].name === newItem && 0 <= prodNameCart.indexOf(newItem)) {
                         setCartItems[i] = {
@@ -171,7 +176,10 @@ class ctclMain {
                             shippingCost: e.target.getAttribute('data-shipping-cost'),
                             varOne: variation1,
                             varTwo: variation2,
-                        };
+                        }
+                    
+
+                 
                     } else if (setCartItems[i].name != newItem && -1 === prodNameCart.indexOf(newItem)) {
                         setCartItems.push({
                             name: e.target.getAttribute('data-name'),
@@ -200,236 +208,266 @@ class ctclMain {
 
     }
 
-    /**
+   /**
      * @since 1.0.0
      *
      * Load cart item to main checkout cart
      * 
      */
 
-    loadCartItems(storePickUp) {
-        let prodListCont = document.querySelector('#ctcl-checkout-product-list');
-        let loadingP = document.querySelector('.ctcl-product-loading');
-        Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
-            x.parentElement.removeChild(x)
-        })
+   loadCartItems(storePickUp) {
+    let prodListCont = document.querySelector('#ctcl-checkout-product-list');
+    let loadingP = document.querySelector('.ctcl-product-loading');
+    let discountTotal =  document.querySelector('input[name="total-discount"]');
+    let totalDiscount = undefined != discountTotal ? parseFloat(discountTotal.value) : 0 ; 
+    Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
+        x.parentElement.removeChild(x)
+    })
 
-        if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').length) {
-            prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display =''; 
-            prodListCont.querySelector('p').style.display = 'none';
-
-
-            let cartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
-            let shippingCost = 0;
-            let totalTax = 0;
-            let subTotal = 0;
+    if (null !== localStorage.getItem('ctclHiddenCart') && 0 !== localStorage.getItem('ctclHiddenCart').length) {
+        prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display =''; 
+        prodListCont.querySelector('p').style.display = 'none';
 
 
-            let totalCont = document.createElement('div');
-                    totalCont.id = 'ctcl-items-total-cont';
-
-            let taxCont = document.createElement('div');
-                taxCont.id = 'ctcl-tax-total-cont'; 
-
-            let totalShippingCont = document.createElement('div');
-            totalShippingCont.id = "ctcl-totalshipping-cost";
+        let cartItems = JSON.parse(localStorage.getItem('ctclHiddenCart'));
+        let shippingCost = 0;
+        let totalTax = 0;
+        let subTotal = 0;
+        
 
 
+        let totalCont = document.createElement('div');
+                totalCont.id = 'ctcl-items-total-cont';
 
-            let subTotalCont = document.createElement('div');
-            subTotalCont.id = "ctcl-subtotal-container";
-            subTotalCont.classList.add('ctcl-subtotal-container');
+        let taxCont = document.createElement('div');
+            taxCont.id = 'ctcl-tax-total-cont'; 
 
-            let listContainer = document.createElement('div');
-            listContainer.id = "ctcl-checkout-list-container";
-            listContainer.classList.add('ctcl-checkout-list-container');
-            prodListCont.appendChild(listContainer);
+        let totalShippingCont = document.createElement('div');
+        totalShippingCont.id = "ctcl-totalshipping-cost";
 
-            let headerDisplay = document.createElement('div');
-            headerDisplay.classList.add('ctcl-checkout-item-header');
 
-            let imageHead = document.createElement('span');
-            imageHead.className = 'ctcl-co-image-head';
-            headerDisplay.appendChild(imageHead);
 
-            let nameHead = document.createElement('span');
-            nameHead.className = 'ctcl-co-name-head';
-            nameHead.appendChild(document.createTextNode(ctclParams.itemHead));
-            headerDisplay.appendChild(nameHead)
+        let subTotalCont = document.createElement('div');
+        subTotalCont.id = "ctcl-subtotal-container";
 
-            let varHead = document.createElement('span');
-            varHead.className = 'ctcl-co-var-head';
-            varHead.appendChild(document.createTextNode(ctclParams.varHead));
-            headerDisplay.appendChild(varHead)
+        let listContainer = document.createElement('div');
+        listContainer.id = "ctcl-checkout-list-container";
+        listContainer.classList.add('ctcl-checkout-list-container');
+        prodListCont.appendChild(listContainer);
 
-            let priceHead = document.createElement('span');
-            priceHead.className = 'ctcl-co-price-head';
-            priceHead.appendChild(document.createTextNode(ctclParams.priceHead));
-            headerDisplay.appendChild(priceHead)
+        let headerDisplay = document.createElement('div');
+        headerDisplay.classList.add('ctcl-checkout-item-header');
 
-            let qunHead = document.createElement('span');
-            qunHead.className = 'ctcl-co-qty-head';
-            qunHead.appendChild(document.createTextNode(ctclParams.qtyHead));
-            headerDisplay.appendChild(qunHead)
+        let imageHead = document.createElement('span');
+        imageHead.className = 'ctcl-co-image-head';
+        headerDisplay.appendChild(imageHead);
 
-            let itemTotHead = document.createElement('span');
-            itemTotHead.className = 'ctcl-co-item-total-head';
-            itemTotHead.appendChild(document.createTextNode(ctclParams.itemTotalHead));
-            headerDisplay.appendChild(itemTotHead)
+        let nameHead = document.createElement('span');
+        nameHead.className = 'ctcl-co-name-head';
+        nameHead.appendChild(document.createTextNode(ctclParams.itemHead));
+        headerDisplay.appendChild(nameHead)
 
-            let removeHead = document.createElement('span');
-            removeHead.className = 'ctcl-co-item-remove-head';
-            headerDisplay.appendChild(removeHead);
+        let varHead = document.createElement('span');
+        varHead.className = 'ctcl-co-var-head';
+        varHead.appendChild(document.createTextNode(ctclParams.varHead));
+        headerDisplay.appendChild(varHead)
 
-            listContainer.appendChild(headerDisplay);
-            for (let i in cartItems) {
+        let priceHead = document.createElement('span');
+        priceHead.className = 'ctcl-co-price-head';
+        priceHead.appendChild(document.createTextNode(ctclParams.priceHead));
+        headerDisplay.appendChild(priceHead)
 
-                let itemTotal = parseInt(cartItems[i].qty) * parseFloat(cartItems[i].price);
-                shippingCost += (parseInt(cartItems[i].qty) * parseFloat(cartItems[i].shippingCost));
-                totalTax += (parseFloat(ctclParams.taxRate) * itemTotal);
-                subTotal += itemTotal;
+        let qunHead = document.createElement('span');
+        qunHead.className = 'ctcl-co-qty-head';
+        qunHead.appendChild(document.createTextNode(ctclParams.qtyHead));
+        headerDisplay.appendChild(qunHead)
 
-                let itemInput = document.createElement('input');
-                itemInput.type = 'hidden';
-                itemInput.name = `products[]`;
-                itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}`, postId: cartItems[i].postId });
-                prodListCont.appendChild(itemInput);
+        let itemTotHead = document.createElement('span');
+        itemTotHead.className = 'ctcl-co-item-total-head';
+        itemTotHead.appendChild(document.createTextNode(ctclParams.itemTotalHead));
+        headerDisplay.appendChild(itemTotHead)
 
-                let itemDisplay = document.createElement('div');
-                itemDisplay.id = `ctcl-checkout-item-${i}`;
-                itemDisplay.classList.add('ctcl-checkout-item');
+        let removeHead = document.createElement('span');
+        removeHead.className = 'ctcl-co-item-remove-head';
+        headerDisplay.appendChild(removeHead);
 
-                let imgSpan = document.createElement('span');
-                imgSpan.classList.add('ctcl-checkout-item-img-span');
-                let itemImg = new Image();
-                itemImg.src = cartItems[i].pic;
-                imgSpan.appendChild(itemImg);
-                itemDisplay.appendChild(imgSpan);
+        listContainer.appendChild(headerDisplay);
+        for (let i in cartItems) {
 
-                let itemName = document.createElement('span');
-                itemName.classList.add('ctcl-checkout-item-name');
-                itemName.appendChild(document.createTextNode(cartItems[i].name));
-                itemDisplay.append(itemName);
+            let itemTotal = parseInt(cartItems[i].qty) * parseFloat(cartItems[i].price);
+            shippingCost += (parseInt(cartItems[i].qty) * parseFloat(cartItems[i].shippingCost));
+            totalTax += (parseFloat(ctclParams.taxRate) * itemTotal);
+            subTotal += itemTotal;
 
-                let itemVar = document.createElement('span');
-                itemVar.classList.add('ctcl-checkout-item-var');
-                itemVar.appendChild(document.createTextNode(cartItems[i].varOne + ',' + cartItems[i].varTwo));
-                itemDisplay.append(itemVar);
+            let itemInput = document.createElement('input');
+            itemInput.type = 'hidden';
+            itemInput.name = `products[]`;
+            itemInput.value = JSON.stringify({ itemName: cartItems[i].name, quantity: cartItems[i].qty, itemTotal: itemTotal.toFixed(2), vari: `${cartItems[i].varOne},${cartItems[i].varTwo}`, postId: cartItems[i].postId });
+            prodListCont.appendChild(itemInput);
 
-                let itemPrice = document.createElement('span');
-                itemPrice.classList.add('ctcl-checkout-item-price');
-                itemPrice.appendChild(document.createTextNode(cartItems[i].price));
-                itemDisplay.append(itemPrice);
+            let itemDisplay = document.createElement('div');
+            itemDisplay.id = `ctcl-checkout-item-${i}`;
+            itemDisplay.classList.add('ctcl-checkout-item');
 
-                let itemQty = document.createElement('span');
-                itemQty.classList.add('ctcl-checkout-item-qty');
-                itemQty.appendChild(document.createTextNode(cartItems[i].qty));
-                itemDisplay.append(itemQty);
+            let imgSpan = document.createElement('span');
+            imgSpan.classList.add('ctcl-checkout-item-img-span');
+            let itemImg = new Image();
+            itemImg.src = cartItems[i].pic;
+            imgSpan.appendChild(itemImg);
+            itemDisplay.appendChild(imgSpan);
 
-                let itemTotalSpan = document.createElement('span');
-                itemTotalSpan.classList.add('ctcl-checkout-item-total');
-                itemTotalSpan.appendChild(document.createTextNode(itemTotal.toFixed(2)));
-                itemDisplay.append(itemTotalSpan);
+            let itemName = document.createElement('span');
+            itemName.classList.add('ctcl-checkout-item-name');
+            itemName.appendChild(document.createTextNode(cartItems[i].name));
+            itemDisplay.append(itemName);
 
-                let itemRemove = document.createElement('span');
-                itemRemove.className = 'dashicons-before dashicons-trash ctcl-checkout-item-remove ';
-                itemRemove.title = ctclParams.removeItem
-                itemRemove.addEventListener('click', () => this.removeItem(i, [listContainer, totalShippingCont, subTotalCont], 'ctclHiddenCart'));
-                itemDisplay.append(itemRemove);
+            let itemVar = document.createElement('span');
+            itemVar.classList.add('ctcl-checkout-item-var');
+            itemVar.appendChild(document.createTextNode(cartItems[i].varOne + ',' + cartItems[i].varTwo));
+            itemDisplay.append(itemVar);
 
-                listContainer.appendChild(itemDisplay);
-            }
+            let itemPrice = document.createElement('span');
+            itemPrice.classList.add('ctcl-checkout-item-price');
+            itemPrice.appendChild(document.createTextNode(cartItems[i].price));
+            itemDisplay.append(itemPrice);
 
+            let itemQty = document.createElement('span');
+            itemQty.classList.add('ctcl-checkout-item-qty');
+            itemQty.appendChild(document.createTextNode(cartItems[i].qty));
+            itemDisplay.append(itemQty);
 
             let itemTotalSpan = document.createElement('span');
-            itemTotalSpan.classList.add('ctcl-total-label');
-            itemTotalSpan.appendChild(document.createTextNode(ctclParams.itemsTotal + ' (' + ctclParams.currency + ') : '));
-            totalCont.appendChild(itemTotalSpan);
+            itemTotalSpan.classList.add('ctcl-checkout-item-total');
+            itemTotalSpan.appendChild(document.createTextNode(itemTotal.toFixed(2)));
+            itemDisplay.append(itemTotalSpan);
 
-            let itemTotal = document.createElement('span');
-            itemTotal .classList.add('ctcl-items-total-cost');
-            itemTotal .appendChild(document.createTextNode(subTotal.toFixed(2)))
-            totalCont .appendChild(itemTotal);
-            prodListCont.appendChild(totalCont);
+            let itemRemove = document.createElement('span');
+            itemRemove.className = 'dashicons-before dashicons-trash ctcl-checkout-item-remove ';
+            itemRemove.title = ctclParams.removeItem
+            itemRemove.addEventListener('click', () => this.removeItem(i, [listContainer, totalShippingCont, subTotalCont], 'ctclHiddenCart'));
+            itemDisplay.append(itemRemove);
 
-            let itemTotalInput = document.createElement('input');
-            itemTotalInput.type = 'hidden';
-            itemTotalInput.name = 'items-total';
-            itemTotalInput.id   = 'ctcl-items-total';
-            itemTotalInput.value = subTotal.toFixed(2);
-            prodListCont.appendChild(itemTotalInput);
-
-
-            let taxTotalVal = (ctclParams.taxRate / 100) * subTotal;
-            let taxTotalSpan = document.createElement('span');
-            taxTotalSpan.classList.add('ctcl-tax-total-label');
-            taxTotalSpan.appendChild(document.createTextNode(ctclParams.taxTotal+ ' (' + ctclParams.taxRate + '%) : '));
-            taxCont.appendChild(taxTotalSpan);
-
-            let taxTotal = document.createElement('span');
-            taxTotal .classList.add('ctcl-tax-total');
-            taxTotal .appendChild(document.createTextNode((taxTotalVal.toFixed(2))))
-            taxCont .appendChild( taxTotal);
-            prodListCont.appendChild(taxCont);
-
-            let taxTotalInput = document.createElement('input');
-            taxTotalInput.type = 'hidden';
-            taxTotalInput.name = 'tax-total';
-            taxTotalInput.id   = 'ctcl-tax-total';
-            taxTotalInput.value = taxTotalVal.toFixed(2);
-            prodListCont.appendChild(taxTotalInput);
-
-
-            let finalShippingCost = undefined != storePickUp ? storePickUp : shippingCost;
-
-            let totalShippingCostLabel = document.createElement('span');
-            totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
-            totalShippingCostLabel.appendChild(document.createTextNode(ctclParams.totalShipping + ' (' + ctclParams.currency + ') : '));
-            totalShippingCont.appendChild(totalShippingCostLabel);
-
-            let totalShippingCost = document.createElement('span');
-            totalShippingCost.classList.add('ctcl-total-shipping-cost');
-            totalShippingCost.appendChild(document.createTextNode(finalShippingCost.toFixed(2)))
-            totalShippingCont.appendChild(totalShippingCost);
-            prodListCont.appendChild(totalShippingCont);
-
-            let shippingTotalInput = document.createElement('input');
-            shippingTotalInput.type = 'hidden';
-            shippingTotalInput.name = 'shipping-total';
-            shippingTotalInput.id = "ctcl-shipping-total"
-            shippingTotalInput.value = (finalShippingCost).toFixed(2);
-            prodListCont.appendChild(shippingTotalInput);
-
-
-            let subTotalLabel = document.createElement('span');
-            subTotalLabel.classList.add('ctcl-sub-total-label');
-            subTotalLabel.appendChild(document.createTextNode(ctclParams.subTotal + ' (' + ctclParams.currency + ') : '));
-            subTotalCont.appendChild(subTotalLabel);
-
-            let subTotalVal = document.createElement('span');
-            subTotalVal.classList.add('ctcl-subtotal-cost');
-            subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2)));
-            subTotalCont.appendChild(subTotalVal);
-            prodListCont.appendChild(subTotalCont);
-
-            let subTotalInput = document.createElement('input');
-            subTotalInput.type = 'hidden';
-            subTotalInput.id = 'ctcl-subtotal-hidden-input'
-            subTotalInput.name = 'sub-total';
-            subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)).toFixed(2);
-            prodListCont.appendChild(subTotalInput);
-
-        } else {
-
-            prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display ='none'; 
-            prodListCont.querySelector('.ctcl-product-list-content').style.display = '';
+            listContainer.appendChild(itemDisplay);
         }
 
-        if (null != loadingP) {
-            loadingP.parentElement.removeChild(loadingP);
+
+        let itemTotalSpan = document.createElement('span');
+        itemTotalSpan.classList.add('ctcl-total-label');
+        itemTotalSpan.appendChild(document.createTextNode(ctclParams.itemsTotal + ' (' + ctclParams.currency + ') : '));
+        totalCont.appendChild(itemTotalSpan);
+
+        let itemTotal = document.createElement('span');
+        itemTotal .classList.add('ctcl-items-total-cost');
+        itemTotal .appendChild(document.createTextNode(subTotal.toFixed(2)))
+        totalCont .appendChild(itemTotal);
+        prodListCont.appendChild(totalCont);
+
+        let itemTotalInput = document.createElement('input');
+        itemTotalInput.type = 'hidden';
+        itemTotalInput.name = 'items-total';
+        itemTotalInput.id   = 'ctcl-items-total';
+        itemTotalInput.value = subTotal.toFixed(2);
+        prodListCont.appendChild(itemTotalInput);
+
+
+        let taxTotalVal = (ctclParams.taxRate / 100) * subTotal;
+        let taxTotalSpan = document.createElement('span');
+        taxTotalSpan.classList.add('ctcl-tax-total-label');
+        taxTotalSpan.appendChild(document.createTextNode(ctclParams.taxTotal+ ' (' + ctclParams.taxRate + '%) : '));
+        taxCont.appendChild(taxTotalSpan);
+
+        let taxTotal = document.createElement('span');
+        taxTotal .classList.add('ctcl-tax-total');
+        taxTotal .appendChild(document.createTextNode((taxTotalVal.toFixed(2))))
+        taxCont .appendChild( taxTotal);
+        prodListCont.appendChild(taxCont);
+
+        let taxTotalInput = document.createElement('input');
+        taxTotalInput.type = 'hidden';
+        taxTotalInput.name = 'tax-total';
+        taxTotalInput.id   = 'ctcl-tax-total';
+        taxTotalInput.value = taxTotalVal.toFixed(2);
+        prodListCont.appendChild(taxTotalInput);
+
+
+        let finalShippingCost = undefined != storePickUp ? storePickUp : shippingCost;
+
+        let totalShippingCostLabel = document.createElement('span');
+        totalShippingCostLabel.classList.add('ctcl-total-shipping-label');
+        totalShippingCostLabel.appendChild(document.createTextNode(ctclParams.totalShipping + ' (' + ctclParams.currency + ') : '));
+        totalShippingCont.appendChild(totalShippingCostLabel);
+
+        let totalShippingCost = document.createElement('span');
+        totalShippingCost.classList.add('ctcl-total-shipping-cost');
+        totalShippingCost.appendChild(document.createTextNode(finalShippingCost.toFixed(2)))
+        totalShippingCont.appendChild(totalShippingCost);
+        prodListCont.appendChild(totalShippingCont);
+
+        let shippingTotalInput = document.createElement('input');
+        shippingTotalInput.type = 'hidden';
+        shippingTotalInput.name = 'shipping-total';
+        shippingTotalInput.id = "ctcl-shipping-total"
+        shippingTotalInput.value = (finalShippingCost).toFixed(2);
+        prodListCont.appendChild(shippingTotalInput);
+
+
+        if(undefined != discountTotal){
+
+        
+            let discountCont =  document.createElement('div');
+                discountCont.id = 'ctcl-discount-cont';
+
+                let discountInfo = document.createElement('span');
+                discountInfo.innerHTML = `${ctclParams.discountTotal} (${ctclParams.currency}) : `;  
+                discountCont.appendChild(discountInfo);
+  
+                let discountInput = document.createElement('input');
+                discountInput.type = 'hidden';
+               discountInput.name = 'total-discount'
+               discountInput.value =  totalDiscount ;
+               discountCont.appendChild(discountInput);
+                
+            let discountTotal = document.createElement('span');    
+                discountTotal.innerHTML = `${totalDiscount.toFixed(2)}`;
+                discountCont.appendChild(discountTotal);
+
+                prodListCont.appendChild(discountCont);
+
         }
 
+
+        let subTotalLabel = document.createElement('span');
+        subTotalLabel.classList.add('ctcl-sub-total-label');
+        subTotalLabel.appendChild(document.createTextNode(ctclParams.subTotal + ' (' + ctclParams.currency + ') : '));
+        subTotalCont.appendChild(subTotalLabel);
+
+        let subTotalVal = document.createElement('span');
+        subTotalVal.classList.add('ctcl-subtotal-cost');
+        subTotalVal.appendChild(document.createTextNode(parseFloat(subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)-totalDiscount).toFixed(2)));
+        subTotalCont.appendChild(subTotalVal);
+        prodListCont.appendChild(subTotalCont);
+
+        let subTotalInput = document.createElement('input');
+        subTotalInput.type = 'hidden';
+        subTotalInput.id = 'ctcl-subtotal-hidden-input'
+        subTotalInput.name = 'sub-total';
+        subTotalInput.value = (subTotal + finalShippingCost + ((ctclParams.taxRate / 100) * subTotal)-totalDiscount).toFixed(2);
+        prodListCont.appendChild(subTotalInput);
+
+    } else {
+
+        prodListCont.parentElement.querySelector('.ctcl-checkout-next').style.display ='none'; 
+        prodListCont.querySelector('.ctcl-product-list-content').style.display = '';
+        document.querySelector('.ctcl-product-list-header').style.display = 'none';
+        
     }
+
+    if (null != loadingP) {
+        loadingP.parentElement.removeChild(loadingP);
+    }
+
+}
+
 
     /**
      * Since 2.0.0
@@ -466,6 +504,11 @@ class ctclMain {
      */
 
     removeItem(i, conts, hiddenCart) {
+
+        let discountCont = document.querySelector('#ctcl-discount-cont');
+        if(undefined != discountCont){
+            discountCont.remove();
+        }
 
         let setItems = JSON.parse(localStorage.getItem(hiddenCart));
         setItems.splice(i, 1);
@@ -538,12 +581,94 @@ class ctclMain {
                     this.loadCartItems(0);
                 } else {
                     this.loadCartItems();
+                    
                 }
             })
         });
     }
+/**
+     * Since 2.5.0
+     * 
+     * Apply Coupon
+     */
 
-   
+applyCoupon(){
+
+    if(null != localStorage.getItem('ctclHiddenCart') ){
+        document.querySelector(".ctcl-coupon-code-container").style.display = '';
+    }
+    
+    document.addEventListener('addRemoveProduct', e=>{
+
+    /**
+      * Hide coupon code container
+      */
+      if(0 === e.detail){
+        document.querySelector(".ctcl-coupon-code-container").style.display = 'none';
+    }
+   })
+    
+    document.querySelector('.ctcl-apply-cuopon-code').addEventListener('click',e=>{
+
+
+    let couponInfo  = JSON.parse(e.target.getAttribute('data-coupon'));
+
+    let couponCode =  document.querySelector('#ctcl-coupon-code').value;
+
+   if(couponCode === couponInfo.code ){
+    
+    let discountContainer = document.querySelector('#ctcl-discount-cont');
+    if(null != discountContainer){
+        discountContainer.remove();
+    }
+
+    let itemsTotal = parseFloat(document.querySelector('#ctcl-items-total').value);
+    let totalDiscount =  itemsTotal* parseFloat(couponInfo.amount)/100;
+    
+    let discountCont =  document.createElement('div');
+    discountCont.id = 'ctcl-discount-cont';
+
+      let discountInfo = document.createElement('span');
+          discountInfo.innerHTML = `${ctclParams.discountTotal} (${ctclParams.currency}) : `;  
+          discountCont.appendChild(discountInfo);
+
+          let discountInput = document.createElement('input');
+          discountInput.type = 'hidden';
+         discountInput.name = 'total-discount'
+         discountInput.value =  totalDiscount ;
+         discountCont.appendChild(discountInput);
+          
+      let discountTotal = document.createElement('span');    
+          discountTotal.innerHTML = `${totalDiscount.toFixed(2)}`;
+          discountCont.appendChild(discountTotal);
+          
+    
+         document.querySelector('#ctcl-subtotal-hidden-input');
+       let taxTotal = parseFloat(document.querySelector("#ctcl-tax-total").value);
+       let shippingTotal =  parseFloat(document.querySelector("#ctcl-shipping-total").value); 
+       
+       
+       let finalTotal = itemsTotal + taxTotal + shippingTotal - totalDiscount; 
+       
+       document.querySelector('#ctcl-subtotal-hidden-input').value = finalTotal.toFixed(2);
+       document.querySelector('#ctcl-subtotal-container .ctcl-subtotal-cost').innerHTML = finalTotal.toFixed(2);
+
+         let subTotalCont =   document.querySelector('#ctcl-subtotal-container');
+         subTotalCont.parentNode.insertBefore(discountCont,subTotalCont);
+
+        
+
+    
+   }else{
+       alert(ctclParams.invalidCoupon);
+   }
+
+
+
+    });
+
+
+}
 
     /**
      * since 2.0.0

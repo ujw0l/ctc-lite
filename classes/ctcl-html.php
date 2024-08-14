@@ -488,11 +488,22 @@ return $html;
         $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
         $body .='<span style="display:table-cell;width:500px;text-align:right;">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
         $body .= '<span style="display:table-cell;" >'.$data['shipping-total'].'</span></div>';
+       
+
+       if(isset( $data['total-discount'])) :
         $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Sub Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
+        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Discount Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
+        $body.='<span style="display:table-cell;" >'.$data['total-discount'].'</span></div>';
+        $body .='</div>';
+       endif;
+       
+        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
+        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
         $body.='<span style="display:table-cell;" >'.$data['sub-total'].'</span></div>';
         $body .='</div>';
+        if(isset($data['shipping_note'])):
         $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}</div>";
+        endif;
         $body .='</div>';
         return $body;
     }
@@ -595,7 +606,10 @@ return $html;
        echo "<div class='ctcl-order-detail-total'><span>".__("Sub Total", "ctc-lite" )." : </span><span>{$detail['items-total']}</span></div>";
        echo "<div class='ctcl-order-detail-tax'><span>".__("Sales Tax", "ctc-lite" )." : </span><span>{$detail['tax-total']}</span></div>";
        echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>{$detail['shipping-total']}</span></div>";
-       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
+       if(isset($detail['total-discount'])):
+        echo "<div class='ctcl-order-detail-discount'><span>".__("Discount", "ctc-lite" )." : </span><span>".number_format($detail['total-discount'],2)."</span></div>";
+       endif;
+       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print list","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-order-list'></a></div>";
        echo "</fieldset>";
@@ -744,9 +758,9 @@ ob_start();
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Product block to the Page.','ctc-lite')?></li>
-        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the top right side','ctc-lite')?></li>
+        <li><?=__('Click Add Product Detail Button','ctc-lite')?> </li>
         <li><?=__('Fill up the required fields like name , price etc.','ctc-lite')?></li>
-        <li><?=__('Publish the page and you are done with creating product.','ctc-lite')?></li>
+        <li><?=__('Save and Publish the page and you are done with creating product.','ctc-lite')?></li>
     </ol>
 </fieldset>
 
@@ -767,9 +781,9 @@ ob_start();
     <ol>
         <li><?=__('Create a page','ctc-lite')?></li>
         <li><?=__('Add CTC Lite Cart block to page.','ctc-lite')?></li>
-        <li><?=__('Click','ctc-lite')?> <span class="dashicons-before dashicons-store"></span> <?=__(' On the top right side','ctc-lite')?></li>
+        <li><?=__('Click Add Checkout Detail button','ctc-lite')?></li>
         <li><?=__('Get the Url of order processing page from step 3) and paste it to url field (Important).','ctc-lite')?></li>
-        <li><?=__('Publish the page and you are done creating checkout page.','ctc-lite')?></li>
+        <li><?=__('Save and Publish the page and you are done creating checkout page.','ctc-lite')?></li>
     </ol>
 </fieldset>
 

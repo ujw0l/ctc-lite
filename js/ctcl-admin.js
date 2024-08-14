@@ -37,7 +37,7 @@ class ctclAdminJs {
 
         //lay bricks on shipping tab
         if (0 < document.querySelectorAll('.ctcl-shipping-tab-fieldset').length) {
-            let masonry = new jsMasonry('.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 550, elMargin: 5, callback: (el) => el.style.opacity = 1, });
+            let masonry = new jsMasonry('.ctcl-shipping-tab-fieldset', { elSelector: 'fieldset', elWidth: 525, elMargin: 5, callback: (el) => el.style.opacity = 1, });
         }
     }
 

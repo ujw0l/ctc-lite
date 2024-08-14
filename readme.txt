@@ -4,16 +4,17 @@ Donate link: https://www.patreon.com/ujw0l/membership
 Tags: block, online store, ecommerce, shopping cart, sell online
 Requires at least: 5.5.2
 Tested up to: 6.6
-Stable tag: 2.4.2
+Stable tag: 2.5
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
-Lightweight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
+JavaScript first block based light weight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
 
 == Description ==
 
 Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing (for user facing side it loads about 40 kb JS) )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
 You can set different price and different images for different variation. Have option label product out of stock and pre order.
+You can ccept payment from  services like PayPal and Stripe.
 
 
 While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
@@ -130,3 +131,13 @@ For Variation images to display based on user selection you need to add CTC Lite
 
 =2.4.2=
 *minor fixes
+
+=2.5.0=
+* Coupon code 
+* Modal used for detail instead of plugin side bar
+* Display blocks on top 
+* Conditional Variation display
+* Minor Fixes 
+* Paypal addon
+* Twilio SMS Addon
+* Custom Shipping Option Addon
