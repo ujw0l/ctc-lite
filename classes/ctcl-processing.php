@@ -23,6 +23,7 @@ class ctclProcessing{
     public function smtpEmailSetting($mail){
 
         $mail->isSMTP();
+        $mail->SMTPDebug = 0;
     	$mail->smtpConnect([
     			'ssl' => [
     					'verify_peer' => false,
