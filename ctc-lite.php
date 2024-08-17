@@ -335,21 +335,4 @@ wp_register_script(
 new ctcLite();
 
 
- /**
-  * @since 1.0.0
-  *
-  * Uninstall plugin
-  */
-  function ctcLiteUnistall(){
-   global $wpdb;
-   $wpdb->query("DROP TABLE {$wpdb->prefix}ctclOrders;");
-  }
-
-/**
- * 
- * On deletion run this function
- * 
- */
-
-register_uninstall_hook(__FILE__,'ctcLiteUninstall');
 
