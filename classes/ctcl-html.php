@@ -815,6 +815,12 @@ ob_start();
 <fieldset class="ctcl-complete-other-info">
 <legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__(' 7) Other info','ctc-lite')?></legend>
     <ol>
+    <li><?=__(' If this plugin has helped you consider supporting buy buying following paid addons:','ctc-lite')?>
+           <ol>
+            <li > <a    href="https://5973410813512.gumroad.com/l/psofvl" target="_blank" > <?=__('CTCL SMS',"ctl-lite")?></a></li>
+            <li > <a  href="https://5973410813512.gumroad.com/l/ijats" target="_blank" > <?=__('CTCL Paypal',"ctl-lite")?></a></li>
+           </ol>
+</li>    
     <li><?=__('If you wish plugin developer to set up store for you for reasonable price, contact  ','ctc-lite')?><a href="mailto:bktujwol@gmail.com"><?=__('Email','ctc-lite')?> </a> </li>
     <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Github','ctc-lite') ?></a></li>
     <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','ctc-lite')?></li>

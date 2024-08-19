@@ -24,6 +24,7 @@ Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/p
 
 Plugin can be extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github](https://github.com/topics/ctc-lite)
 
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
