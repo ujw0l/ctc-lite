@@ -17,7 +17,7 @@ You can set different price and different images for different variation. Have o
 
 You can accept payments with services like PayPal and Stripe.(Which are developed as addons)
 
-Plugin has custom dashboard for plugin setting, ver pending orders and complete orders.
+Plugin has custom dashboard for plugin setting, view pending orders and complete orders.
 
 
 While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
