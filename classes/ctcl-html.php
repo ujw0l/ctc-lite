@@ -760,7 +760,7 @@ ob_start();
         <li><?=__('Add CTC Lite Product block to the Page.','ctc-lite')?></li>
         <li><?=__('Click Add Product Detail Button','ctc-lite')?> </li>
         <li><?=__('Fill up the required fields like name , price etc.','ctc-lite')?></li>
-        <li><?=__('Save and Publish the page and you are done with creating product.','ctc-lite')?></li>
+        <li><?=__('Save and Publish the page and you are done with creating product. Repeat for as many products','ctc-lite')?></li>
     </ol>
 </fieldset>
 
@@ -812,12 +812,31 @@ ob_start();
 </fieldset>
 
 
+
 <fieldset class="ctcl-complete-other-info">
-<legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__(' 7) Other info','ctc-lite')?></legend>
+<legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Addons','ctc-lite')?></legend>
     <ol>
+    <li><b><?=__(' If this plugin has helped you consider buying following paid addons which will support its future development:','ctc-lite')?></b></li>
+           <ol>
+            <li > <a    href="https://ujw0l.gumroad.com/l/psofvl" target="_blank" > <?=__('CTCL SMS',"ctl-lite")?></a><i><?=__( ' (Get of order notification with in your cell phone)','ctc-lite' );?></i></li>
+            <li > <a  href="https://ujw0l.gumroad.com/l/ijats" target="_blank" > <?=__('CTCL Paypal',"ctl-lite")?></a><i><?=__( ' (Accept payment with Paypal)','ctc-lite' );?></i></li>
+            <li > <a  href="https://ujw0l.gumroad.com/l/crjre" target="_blank" > <?=__('CTCL Custom Shipping',"ctl-lite")?></a><i><?=__( ' (Display Custom Shipping option to Customer)','ctc-lite' );?></i></li>
+            <li > <a  href="https://ujw0l.gumroad.com/l/eixhs" target="_blank" > <?=__('CTCL Variation Swatches',"ctl-lite")?></a><i><?=__( ' (Display swatches instead of dropdown select for product variations)','ctc-lite' );?></i></li>   
+        </ol>
+</li>   
+<li><?=__('Plugin functionalities can be extended with following free Addons ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('Addon on WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Addons on Github','ctc-lite') ?></a></li> 
+ 
+    </ol>
+</fieldset>
+
+
+
+<fieldset class="ctcl-complete-other-info">
+<legend class="dashicons-before dashicons-info ctcl-complete-order-info-legend"><?=__('Other info','ctc-lite')?></legend>
+    <ol>
+    <li><?=__('Follow CT Commerce Lite\'s Facebook page for future updates.','ctc-lite')?><a target="_blank" href="https://www.facebook.com/profile.php?id=61564422399518"> <br/><?=__('Click Here','ctc-lite')?> </a></li>
     <li><?=__('If you wish plugin developer to set up store for you for reasonable price, contact  ','ctc-lite')?><a href="mailto:bktujwol@gmail.com"><?=__('Email','ctc-lite')?> </a> </li>
-    <li><?=__('Plugin functionalities can be extended with following extensions ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Github','ctc-lite') ?></a></li>
-    <li><?=__('Plugin works with most of the free/paid themes with  least or no CSS modification','ctc-lite')?></li>
+    <li><?=__('Plugin works with most of the free/paid themes with  some  CSS modification','ctc-lite')?></li>
     <li><?=__('However it works best with Astra Theme ','ctc-lite')?><a target="_blank" href="https://wpastra.com/?bsf=6459"> <?=__('Click Here','ctc-lite')?> </a></li>
     </ol>
 </fieldset>

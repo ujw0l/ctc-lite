@@ -368,6 +368,8 @@ class ctclAdminJs {
 
     }
 
+   
+
 }
 
 window.addEventListener('DOMContentLoaded', () => new ctclAdminJs());
