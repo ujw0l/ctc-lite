@@ -40,8 +40,8 @@ CT Commerce Lite is a Block based lightweight, modular eCommerce plugin designed
 CT Commerce Lite is designed to be extended. Explore our free and premium add-ons to enhance your store's functionality:
 
 #### **Free Add-ons (WordPress.org)**:
-Discover additional free add-ons in [WordPress repo ](https://wordpress.org/plugins/tags/ctc-lite/):
-- **🛒 CTCL Floating Cart **: Keep your cart visible as customers browse, reducing cart abandonment. [Learn More](https://wordpress.org/plugins/ctc-lite/)
+Discover additional free add-ons in [WordPress site ](https://wordpress.org/plugins/tags/ctc-lite/):
+- **🛒 CTCL Floating Cart**: Keep your cart visible as customers browse, reducing cart abandonment. 
 - **🔗 CTCL Sharing**: Increase your reach by allowing customers to share products on social media platforms like Facebook, Twitter, Pinterest, and more.
 - **💳 CTCL Stripe**: Accept credit card payments via Stripe with this seamless integration.
 - **📱 CTCL Phone Pay**: Add a phone-based payment option, ideal for regions with lower online payment adoption.
