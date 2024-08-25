@@ -8,11 +8,11 @@ Stable tag: 2.5.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
-CT Commerce Lite is a lightweight, modular eCommerce plugin designed to make your WordPress site fast, flexible, and feature-rich. 
+CT Commerce Lite is a Block based lightweight, modular eCommerce plugin designed to make your WordPress site fast, flexible, and feature-rich. 
 
 == Description ==
 
-**CT Commerce Lite** is more than just another WordPress eCommerce plugin—it's a tool designed to help you build and grow your online store without sacrificing speed or simplicity. Whether you're running a small business, selling handmade goods, or managing a blog with an integrated shop, CT Commerce Lite has the flexibility to meet your needs.
+**CT Commerce Lite** is more than just another WordPress eCommerce plugin—it's a Gutenberg Block based tool designed to help you build and grow your online store without sacrificing speed or simplicity. Whether you're running a small business, selling handmade goods, or managing a blog with an integrated shop, CT Commerce Lite has the flexibility to meet your needs.
 
 ### 🌟 **Key Features**:
 
@@ -32,19 +32,19 @@ CT Commerce Lite is a lightweight, modular eCommerce plugin designed to make you
 
 - **📧 Built-in Features**:
   - **Gallery Block**: Integrated Image Gallery and Lightbox features, with the option to add other gallery, social sharing, and rating blocks to enhance the look and feel of your pages.
-  - **SMTP Settings**: Send order information directly to your email with built-in SMTP configuration.
+  - **SMTP Settings**: Send order information directly to your and customer email with built-in SMTP configuration.
   - **Shipping and Billing Settings**: Built-in tabs for managing shipping and billing, expandable via add-ons to suit your business needs.
-  - **Discount and Coupon Codes**: Provide your customers with discount codes and coupon options to boost sales.
+  - **Discount and Coupon Codes**: Provide your customers with discount code and coupon option to boost sales.
 
 ### 🌐 **Extend Your Store with Add-ons**:
 CT Commerce Lite is designed to be extended. Explore our free and premium add-ons to enhance your store's functionality:
 
 #### **Free Add-ons (WordPress.org)**:
-Discover additional free add-ons in  [WordPress.org](https://wordpress.org/plugins/tags/ctc-lite/):
-- **🛒 Floating Cart**: Keep your cart visible as customers browse, reducing cart abandonment. [Learn More](https://wordpress.org/plugins/ctc-lite/)
-- **🔗 Social Sharing Buttons**: Increase your reach by allowing customers to share products on social media platforms like Facebook, Twitter, Pinterest, and more.
+Discover additional free add-ons in [WordPress repo ](https://wordpress.org/plugins/tags/ctc-lite/):
+- **🛒 CTCL Floating Cart **: Keep your cart visible as customers browse, reducing cart abandonment. [Learn More](https://wordpress.org/plugins/ctc-lite/)
+- **🔗 CTCL Sharing**: Increase your reach by allowing customers to share products on social media platforms like Facebook, Twitter, Pinterest, and more.
 - **💳 CTCL Stripe**: Accept credit card payments via Stripe with this seamless integration.
-- **📱 Phone Payment Gateway**: Add a phone-based payment option, ideal for regions with lower online payment adoption.
+- **📱 CTCL Phone Pay**: Add a phone-based payment option, ideal for regions with lower online payment adoption.
 
 #### **Free Add-ons (GitHub)**:
 Discover additional free add-ons in our [GitHub repository](https://github.com/topics/ctc-lite):
