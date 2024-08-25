@@ -22,7 +22,7 @@
 
 
 <div class="ctcl-info-tab-main">
-<h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header">How Set up store</h3>
+<h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header">How to Set up store</h3>
 <div class="ctcl-info-tab" style="height: 1491.5px; opacity: 1;">
 
 
