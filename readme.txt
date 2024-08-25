@@ -8,23 +8,73 @@ Stable tag: 2.5.0
 Requires PHP: 7.4.9
 License: GPLv2 or later
 
-JavaScript first block based light weight WordPress e-commerce plugin.Works with almost any Theme with minor to no CSS customization.
+CT Commerce Lite is a lightweight, modular eCommerce plugin designed to make your WordPress site fast, flexible, and feature-rich. 
 
 == Description ==
 
-Plugins that lets you create a eCommerce site on WordPress CMS using Gutenberg blocks. Plugin is very light weight (less than 200kb including all PHP , JS and CSS file , both admin and user facing (for user facing side it loads about 40 kb JS) )uses Vanilla JS on frontend so it is blazing fast. It is one stop solution for ecommerce site. And also works with any Theme with minor to no CSS tweaks. 
-You can set different price and different images for different variation. Have option label product out of stock and pre order.
+**CT Commerce Lite** is more than just another WordPress eCommerce plugin—it's a tool designed to help you build and grow your online store without sacrificing speed or simplicity. Whether you're running a small business, selling handmade goods, or managing a blog with an integrated shop, CT Commerce Lite has the flexibility to meet your needs.
 
-You can accept payments with services like PayPal and Stripe.(Which are developed as addons)
+### 🌟 **Key Features**:
 
-Plugin has custom dashboard for plugin setting, view pending orders and complete orders.
+- **🚀 Lightweight and Fast**: Weighing in at less than 200KB, CT Commerce Lite ensures your site remains lightning-fast. The frontend loads just 40KB of JavaScript, making it one of the leanest eCommerce plugins available. This speed boost is crucial, especially since studies show that a 100-millisecond delay in load time can reduce conversion rates by 7% ([source](https://www.akamai.com/)).
+
+- **🔧 Gutenberg Block Integration**: Customize your store with ease using WordPress’s Gutenberg block editor. The plugin includes a built-in gallery block, complete with Image Gallery and Lightbox features, creating a visually stunning product display that engages customers.
+
+- **💸 Dynamic Pricing and Variation Images**: Offer different prices and images based on product variations. Whether it's size, color, or style, you can set unique pricing and visuals for each option, giving your customers a tailored shopping experience.
+
+- **🔗 Modular Design**: CT Commerce Lite is built with a modular approach, ensuring that your site only loads the features you need. This keeps server processing to a minimum and performance at its peak. Install additional functionality as needed through our growing library of add-ons—no unnecessary bloatware here!
+
+- **🎨 Flexible Product Management**: Easily manage pricing, stock status, pre-orders, and more. Your products can be labeled as “out of stock” or “pre-order,” helping you manage inventory and set clear customer expectations.
+
+- **💻 Theme Compatibility**: Whether you're using a custom theme or a popular template, CT Commerce Lite integrates seamlessly with minimal or no CSS adjustments required.
+
+- **📊 Custom Dashboard**: Manage all your store's settings, view orders, and streamline administration from a centralized, intuitive dashboard.
+
+- **📧 Built-in Features**:
+  - **Gallery Block**: Integrated Image Gallery and Lightbox features, with the option to add other gallery, social sharing, and rating blocks to enhance the look and feel of your pages.
+  - **SMTP Settings**: Send order information directly to your email with built-in SMTP configuration.
+  - **Shipping and Billing Settings**: Built-in tabs for managing shipping and billing, expandable via add-ons to suit your business needs.
+  - **Discount and Coupon Codes**: Provide your customers with discount codes and coupon options to boost sales.
+
+### 🌐 **Extend Your Store with Add-ons**:
+CT Commerce Lite is designed to be extended. Explore our free and premium add-ons to enhance your store's functionality:
+
+#### **Free Add-ons (WordPress.org)**:
+Discover additional free add-ons in  [WordPress.org](https://wordpress.org/plugins/tags/ctc-lite/):
+- **🛒 Floating Cart**: Keep your cart visible as customers browse, reducing cart abandonment. [Learn More](https://wordpress.org/plugins/ctc-lite/)
+- **🔗 Social Sharing Buttons**: Increase your reach by allowing customers to share products on social media platforms like Facebook, Twitter, Pinterest, and more.
+- **💳 CTCL Stripe**: Accept credit card payments via Stripe with this seamless integration.
+- **📱 Phone Payment Gateway**: Add a phone-based payment option, ideal for regions with lower online payment adoption.
+
+#### **Free Add-ons (GitHub)**:
+Discover additional free add-ons in our [GitHub repository](https://github.com/topics/ctc-lite):
+- **📦 CTCL Product Display**: Easily add product displays to pages or posts with a Gutenberg block.
+- **📄 CTCL Order Status**: Enable customers to check their order status directly from the product detail page.
+- **📈 CTCL Analytics**: Track your store's performance with sales reports presented in clear, easy-to-understand charts.
+
+#### **Premium Add-ons (Gumroad)**:
+Take your store to the next level with our premium add-ons available on [Gumroad](https://ujw0l.gumroad.com/):
+- **📲 CTCL SMS**: Receive SMS notifications for every sale made on your site.
+- **💰 CTCL PayPal**: Add PayPal as a payment option for your customers.
+- **🚚 CTCL Custom Shipping**: Offer custom shipping options and print shipping labels directly from your dashboard.
+- **🎨 CTCL Variation Swatches**: Convert product variations into clickable swatches, enhancing the shopping experience.
+
+### 🎯 **Why CT Commerce Lite?**
+CT Commerce Lite is perfect for:
+- **Shared Servers**: Optimized for environments with limited resources, ensuring your store runs smoothly.
+- **Hobbyists**: A simple, intuitive solution for selling handmade goods, art, or other unique items online.
+- **Small Businesses**: Start with core functionality and scale up as your business grows using our extensive range of add-ons.
 
 
-While making CSS change use plugin like [this](https://wordpress.org/plugins/custom-css-js/) .Don't directly make to plugin's CSS file otherwise it will be overwritten during update.
+### 🚀 Performance at a Glance
 
-Check Plugin Test for Plugin performance [Plugin Test](https://plugintests.com/plugins/wporg/ctc-lite/latest)
+Curious about how CT Commerce Lite performs? We've got you covered! Dive into the detailed [Plugin Test Report](https://plugintests.com/plugins/wporg/ctc-lite/latest) to see how it stacks up. Whether you're concerned about load times, server impact, or overall efficiency, our performance metrics will give you peace of mind.
 
-Plugin can be extended with following Addons [Addons in wordpress.org](https://wordpress.org/plugins/tags/ctc-lite/) - [Addons in Github](https://github.com/topics/ctc-lite)
+💻 **Want to see it in action?** Check out our [Basic Demo](https://ctcl.ujwolb.com.np/8-2/) to experience the speed and simplicity of CT Commerce Lite firsthand. You'll see just how seamless and responsive your future store can be!
+
+### Customization Tips
+
+When making CSS changes, it's recommended to use a plugin like [Custom CSS & JS](https://wordpress.org/plugins/custom-css-js/) instead of directly modifying the plugin’s CSS files to avoid losing your changes during updates.
 
 
 == Installation ==
