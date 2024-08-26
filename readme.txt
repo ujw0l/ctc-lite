@@ -16,7 +16,7 @@ CT Commerce Lite is a Block based lightweight, modular eCommerce plugin designed
 
 ### 🌟 **Key Features**:
 
-- **🚀 Lightweight and Fast**: Weighing in at less than 200KB, CT Commerce Lite ensures your site remains lightning-fast. The frontend loads just 40KB of JavaScript, making it one of the leanest eCommerce plugins available. This speed boost is crucial, especially since studies show that a 100-millisecond delay in load time can reduce conversion rates by 7% ([source](https://www.akamai.com/)).
+- **🚀 Lightweight and Fast**: Weighing in at less than 200KB, CT Commerce Lite ensures your site remains lightning-fast. The frontend loads just 40KB of JavaScript, making it one of the leanest eCommerce plugins available. This speed boost is crucial, especially since studies show that a 100-millisecond delay in load time can reduce conversion rates by 7% ([source](https://www.akamai.com/newsroom/press-release/akamai-releases-spring-2017-state-of-online-retail-performance-report)).
 
 - **🔧 Gutenberg Block Integration**: Customize your store with ease using WordPress’s Gutenberg block editor. The plugin includes a built-in gallery block, complete with Image Gallery and Lightbox features, creating a visually stunning product display that engages customers.
 
