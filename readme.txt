@@ -1,197 +1,172 @@
-=== CT Commerce  Lite ===
-Contributors: UjW0L
-Donate link: https://www.patreon.com/ujw0l/membership
-Tags: block, online store, ecommerce, shopping cart, sell online
-Requires at least: 5.5.2
-Tested up to: 6.6
-Stable tag: 2.5.0
-Requires PHP: 7.4.9
-License: GPLv2 or later
+# CT Commerce Lite 🛒 | Fast & Flexible WordPress eCommerce Plugin
 
-CT Commerce Lite is a Block based lightweight, modular eCommerce plugin designed to make your WordPress site fast, flexible, and feature-rich. 
+**Contributors:** UjW0L  
+**Donate link:** https://www.patreon.com/ujw0l/membership  
+**Tags:** ecommerce, online store, block-based, shopping cart, sell online, WooCommerce alternative  
+**Requires at least:** 5.5.2  
+**Tested up to:** 6.6  
+**Stable tag:** 2.5.0  
+**Requires PHP:** 7.4.9  
+**License:** GPLv2 or later
 
-== Description ==
+## Description
 
-**CT Commerce Lite** is more than just another WordPress eCommerce plugin—it's a Gutenberg Block based tool designed to help you build and grow your online store without sacrificing speed or simplicity. Whether you're running a small business, selling handmade goods, or managing a blog with an integrated shop, CT Commerce Lite has the flexibility to meet your needs.
+**CT Commerce Lite** is an ultra-lightweight, block-based eCommerce plugin for WordPress, designed to make your online store faster, more flexible, and highly customizable. Perfect for small businesses, handmade goods, and blogs, CT Commerce Lite delivers a feature-rich shopping experience with minimal impact on site speed.
 
-### 🌟 **Key Features**:
+### 🌟 **Key Features:**
 
-- **🚀 Lightweight and Fast**: Weighing in at less than 200KB, CT Commerce Lite ensures your site remains lightning-fast. The frontend loads just 40KB of JavaScript, making it one of the leanest eCommerce plugins available. This speed boost is crucial, especially since studies show that a 100-millisecond delay in load time can reduce conversion rates by 7% ([source](https://www.akamai.com/newsroom/press-release/akamai-releases-spring-2017-state-of-online-retail-performance-report)).
+- **🚀 Ultra-Lightweight & Fast:** With a total size of under 200KB and a frontend JavaScript load of just 40KB, CT Commerce Lite ensures rapid page load times, improving user experience and boosting conversion rates. [Learn more about the importance of site speed](https://www.akamai.com/newsroom/press-release/akamai-releases-spring-2017-state-of-online-retail-performance-report).
 
-- **🔧 Gutenberg Block Integration**: Customize your store with ease using WordPress’s Gutenberg block editor. The plugin includes a built-in gallery block, complete with Image Gallery and Lightbox features, creating a visually stunning product display that engages customers.
+- **🔧 Gutenberg Block Integration:** Seamlessly integrates with the WordPress Gutenberg block editor, including a built-in gallery block with advanced Image Gallery and Lightbox features for a stunning product display.
 
-- **💸 Dynamic Pricing and Variation Images**: Offer different prices and images based on product variations. Whether it's size, color, or style, you can set unique pricing and visuals for each option, giving your customers a tailored shopping experience.
+- **💸 Flexible Pricing & Variation Images:** Easily configure different prices and images for product variations such as size, color, and style, enhancing the shopping experience with personalized options.
 
-- **🔗 Modular Design**: CT Commerce Lite is built with a modular approach, ensuring that your site only loads the features you need. This keeps server processing to a minimum and performance at its peak. Install additional functionality as needed through our growing library of add-ons—no unnecessary bloatware here!
+- **🔗 Modular Design:** Keep your site lean with our modular design. Expand functionality through a variety of add-ons, ensuring that you only include the features you need.
 
-- **🎨 Flexible Product Management**: Easily manage pricing, stock status, pre-orders, and more. Your products can be labeled as “out of stock” or “pre-order,” helping you manage inventory and set clear customer expectations.
+- **🎨 Comprehensive Product Management:** Manage product pricing, stock status, and pre-orders efficiently. Utilize "out of stock" and "pre-order" labels to optimize inventory management.
 
-- **💻 Theme Compatibility**: Whether you're using a custom theme or a popular template, CT Commerce Lite integrates seamlessly with minimal or no CSS adjustments required.
+- **💻 Theme Compatibility:** Works seamlessly with any WordPress theme, requiring minimal CSS adjustments for a consistent look and feel.
 
-- **📊 Custom Dashboard**: Manage all your store's settings, view orders, and streamline administration from a centralized, intuitive dashboard.
+- **📊 Custom Dashboard:** Access an intuitive dashboard for easy management of settings, orders, and overall store administration.
 
-- **📧 Built-in Features**:
-  - **Gallery Block**: Integrated Image Gallery and Lightbox features, with the option to add other gallery, social sharing, and rating blocks to enhance the look and feel of your pages.
-  - **SMTP Settings**: Send order information directly to your and customer email with built-in SMTP configuration.
-  - **Shipping and Billing Settings**: Built-in tabs for managing shipping and billing, expandable via add-ons to suit your business needs.
-  - **Discount and Coupon Codes**: Provide your customers with discount code and coupon option to boost sales.
+- **📧 Essential Built-in Features:**
+  - **Gallery Block:** Integrates Image Gallery and Lightbox functionality, along with options for social sharing and product ratings.
+  - **SMTP Settings:** Configure email settings to handle order notifications efficiently.
+  - **Shipping & Billing Settings:** Manage shipping and billing with built-in options, extendable through add-ons.
+  - **Discount & Coupon Codes:** Create discount codes and coupons to attract and retain customers.
 
-### 🌐 **Extend Your Store with Add-ons**:
-CT Commerce Lite is designed to be extended. Explore our free and premium add-ons to enhance your store's functionality:
+### 🌐 **Enhance Your Store with Add-ons:**
 
-#### **Free Add-ons (WordPress.org)**:
-Discover additional free add-ons in [WordPress site ](https://wordpress.org/plugins/tags/ctc-lite/):
-- **🛒 CTCL Floating Cart**: Keep your cart visible as customers browse, reducing cart abandonment. 
-- **🔗 CTCL Sharing**: Increase your reach by allowing customers to share products on social media platforms like Facebook, Twitter, Pinterest, and more.
-- **💳 CTCL Stripe**: Accept credit card payments via Stripe with this seamless integration.
-- **📱 CTCL Phone Pay**: Add a phone-based payment option, ideal for regions with lower online payment adoption.
+CT Commerce Lite supports a range of add-ons to expand your store's capabilities:
 
-#### **Free Add-ons (GitHub)**:
-Discover additional free add-ons in our [GitHub repository](https://github.com/topics/ctc-lite):
-- **📦 CTCL Product Display**: Easily add product displays to pages or posts with a Gutenberg block.
-- **📄 CTCL Order Status**: Enable customers to check their order status directly from the product detail page.
-- **📈 CTCL Analytics**: Track your store's performance with sales reports presented in clear, easy-to-understand charts.
+#### **Free Add-ons (WordPress.org):**
+- **🛒 [CTCL Floating Cart](https://wordpress.org/plugins/ctcl-floating-cart/):** Prevent cart abandonment with a floating cart that remains visible as customers shop.
+- **🔗 [CTCL Sharing](https://wordpress.org/plugins/ctcl-sharing/):** Boost product visibility with integrated social media sharing options.
+- **💳 [CTCL Stripe](https://wordpress.org/plugins/ctcl-stripe/):** Add Stripe payment gateway for seamless credit card transactions.
+- **📱 [CTCL Phone Pay](https://wordpress.org/plugins/ctcl-phone-pay/):** Support phone-based payment methods, ideal for regions with limited online payment options.
 
-#### **Premium Add-ons (Gumroad)**:
-Take your store to the next level with our premium add-ons available on [Gumroad](https://ujw0l.gumroad.com/):
-- **📲 CTCL SMS**: Receive SMS notifications for every sale made on your site.
-- **💰 CTCL PayPal**: Add PayPal as a payment option for your customers.
-- **🚚 CTCL Custom Shipping**: Offer custom shipping options and print shipping labels directly from your dashboard.
-- **🎨 CTCL Variation Swatches**: Convert product variations into clickable swatches, enhancing the shopping experience.
+#### **Free Add-ons (GitHub):**
+- **📦 [CTCL Product Display](https://github.com/ujw0l/ctcl-product-display):** Add stylish product displays to pages or posts using Gutenberg blocks.
+- **📄 [CTCL Order Status](https://github.com/ujw0l/ctcl-order-status):** Allow customers to track their order status directly from the frontend.
+- **📈 [CTCL Analytics](https://github.com/ujw0l/ctcl-analytics):** Gain insights into store performance with comprehensive sales reports.
 
-### 🎯 **Why CT Commerce Lite?**
-CT Commerce Lite is perfect for:
-- **Shared Servers**: Optimized for environments with limited resources, ensuring your store runs smoothly.
-- **Hobbyists**: A simple, intuitive solution for selling handmade goods, art, or other unique items online.
-- **Small Businesses**: Start with core functionality and scale up as your business grows using our extensive range of add-ons.
+#### **Premium Add-ons (Gumroad):**
+- **📲 [CTCL SMS Notifications](https://ujw0l.gumroad.com/l/psofvl):** Receive instant SMS notifications for every sale.
+- **💰 [CTCL PayPal Integration](https://ujw0l.gumroad.com/l/ijats):** Add PayPal as a payment option for greater flexibility.
+- **🚚 [CTCL Custom Shipping Options](https://ujw0l.gumroad.com/l/crjre):** Offer customized shipping options and print labels from your dashboard.
+- **🎨 [CTCL Variation Swatches](https://ujw0l.gumroad.com/l/eixhs):** Enhance user experience with clickable swatches for product variations.
 
+### 🎯 **Why Choose CT Commerce Lite?**
 
-### 🚀 Performance at a Glance
+- **Optimized for Shared Servers:** Designed to perform efficiently in environments with limited resources.
+- **Ideal for Hobbyists & Small Businesses:** Perfect for selling unique items, handmade products, or starting a small online shop.
+- **Scalable & Modular:** Begin with core features and grow with additional add-ons as your business needs evolve.
 
-Curious about how CT Commerce Lite performs? We've got you covered! Dive into the detailed [Plugin Test Report](https://plugintests.com/plugins/wporg/ctc-lite/latest) to see how it stacks up. Whether you're concerned about load times, server impact, or overall efficiency, our performance metrics will give you peace of mind.
+### 🚀 **Performance Insights**
 
-💻 **Want to see it in action?** Check out our [Basic Demo](https://ctcl.ujwolb.com.np/8-2/) to experience the speed and simplicity of CT Commerce Lite firsthand. You'll see just how seamless and responsive your future store can be!
+For performance metrics and insights, visit our [Plugin Test Report](https://plugintests.com/plugins/wporg/ctc-lite/latest) to see how CT Commerce Lite performs in terms of speed and server impact.
 
-### Customization Tips
+💻 **Try It Out:** Check out our [Basic Demo](https://ctcl.ujwolb.com.np/8-2/) to experience the speed and functionality of CT Commerce Lite.
 
-When making CSS changes, it's recommended to use a plugin like [Custom CSS & JS](https://wordpress.org/plugins/custom-css-js/) instead of directly modifying the plugin’s CSS files to avoid losing your changes during updates.
+### **Customization Tips**
 
+For custom CSS changes, use the [Custom CSS & JS](https://wordpress.org/plugins/custom-css-js/) plugin to ensure your modifications persist through updates.
 
-== Installation ==
+## Installation
 
-This section describes how to install the plugin and get it working.
+1. Upload the plugin files to the `/wp-content/plugins/ctc-lite` directory, or install directly from the WordPress plugins screen.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Configure the plugin via the Settings → CT Commerce Lite screen.
+4. Access the plugin settings from the top-left dashboard menu.
 
-e.g.
+## Frequently Asked Questions
 
-1. Upload the plugin files to the `/wp-content/plugins/ctc-Lite` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Use the Settings-&gt;Plugin Name screen to configure the plugin
-4. Option of CTC Lite should display on top left on dashboard  
+**Q: Where can I find setup instructions?**  
+A: Setup instructions are provided with the plugin and accessible via the first tab inside the plugin settings.
 
+**Q: Can I get help setting up my store?**  
+A: For assistance, contact the creator at bktujwol@gmail.com.
 
-== Frequently Asked Questions ==
+**Q: How do I configure the checkout page?**  
+A: Use the order processing block to create a processing page, and enter the page link into the URL input of the checkout block settings.
 
-= Do you have instruction on how to set up store?=
+**Q: What if my variation images aren’t showing?**  
+A: Ensure you add the CTC Lite Image Gallery block to the page for proper display of variation images.
 
-Yes, Instructions on how set up store is included with plugin and displayed as first tab inside plugin. 
+## Screenshots
 
-= Do you help setting up store? =
-
-If you wish to need help setting up store with this plugin , the creator of the will help you set up store for reasonable price. email creator on bktujwol@gmail.com
-
-= How do I set up checkout page? =
-
-Create order proessing page using order processing block and copy link of the page and paste it to url input of the checkout block setting section.  
-
-= My variation images are not showing? =
-
-For Variation images to display based on user selection you need to add CTC Lite image gallery block to the page.
-
-== Screenshots ==
 1. Product Page
-2. Checkout page
+2. Checkout Page
 3. Billing Tab
 4. Shipping Tab
 5. Email Tab
-6. Peding Order Tab
-7. Order detail modal
-8. Add product gutenberg blocks
-9. Checkout page gutenberg blocks
-10. Processing page gutenberg block
-11. Image gallery in overlay
+6. Pending Orders Tab
+7. Order Detail Modal
+8. Add Product Gutenberg Blocks
+9. Checkout Page Gutenberg Blocks
+10. Processing Page Gutenberg Block
+11. Image Gallery in Overlay
 
-== Changelog ==
+## Changelog
 
-=1.0.0 Alpha=
-*First Stable Alpha version
+### 2.5.0
+- Added coupon code functionality
+- Replaced sidebar with modal for order details
+- Display blocks on top of the page
+- Conditional variation display
+- Added PayPal, SMS, and Custom Shipping Option add-ons
+- Minor bug fixes
 
-=1.0.0 Beta=
-*Minor bug fixes and Tweaks
+### 2.4.2
+- Minor fixes
 
+### 2.4.1
+- Minor fixes
 
-=1.1.0=
-*Minor bug fix
+### 2.4.0
+- Various bug fixes
 
-=1.1.0=
-*Minor fixes on block 
+### 2.3.5
+- Improved gallery appearance
 
-=1.1.2=
-* Missing translations
+### 2.3.0
+- Added block for displaying products and galleries in inner blocks
 
-=2.0.0=
-*Different price for different variation added
-*Different Image for different variation added
-*CTC Lite Image gallery block integrated to the plugin
-*CTC Overlay added to view images in userfacing Side
-*Checkout page is now Multipart
-*Minor bug fixes 
+### 2.2.0
+- Added sub-tabs with filters in the info tab
 
-=2.0.1=
-*Minor bug fixes 
+### 2.1.2
+- Fixed data select issues
 
-=2.0.2=
-*Minor bug fixes 
-*Minor enhancements
+### 2.1.1
+- Minor updates
 
-=2.1.0=
-*Floating cart addon
-*Outstock option on product block
-*Process refund from admin section done
-*Minor bug fixes
+### 2.1.0
+- Added floating cart add-on
+- Added out-of-stock option for product blocks
+- Enabled refund processing from the admin section
+- Minor bug fixes
 
-=2.1.0=
-*Typo Corrections
+### 2.0.2
+- Minor bug fixes and enhancements
 
-=2.1.1=
-*Minor update
+### 2.0.1
+- Minor bug fixes
 
-=2.1.2=
-*Data select issue fixed 
+### 2.0.0
+- Added different prices and images for variations
+- Integrated CTC Lite Image Gallery block
+- Added CTC Overlay for image viewing
+- Made checkout page multipart
+- Minor bug fixes
 
-=2.2.0=
-*Ability to add sub tab in info tab with filter
+### 1.1.2
+- Added missing translations
 
-=2.3.0=
-*Block added where product , gallery displayed in inner block. 
+### 1.1.0
+- Minor bug fixes
 
-=2.3.5=
-*Better Looking gallery 
+### 1.0.0 Beta
+- Minor bug fixes and tweaks
 
-=2.4.0=
-*Few bug fixes
-
-=2.4.1=
-*minor fixes
-
-=2.4.2=
-*minor fixes
-
-=2.5.0=
-* Coupon code 
-* Modal used for detail instead of plugin side bar
-* Display blocks on top 
-* Conditional Variation display
-* Minor Fixes 
-* Paypal addon
-* Twilio SMS Addon
-* Custom Shipping Option Addon
+### 1.0.0 Alpha
