@@ -386,7 +386,7 @@ float:right;
 }
 
 
-.ctcl-coupon-code-container,
+
 .ctcl_payment_container{
     margin-top: 20px;
     padding: 15px;
@@ -396,6 +396,14 @@ float:right;
 
 }
 
+.ctcl-coupon-code-container{
+    margin-top: 20px;
+ 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding:15px;  
+}
 
 #ctcl-subtotal-container{
 
