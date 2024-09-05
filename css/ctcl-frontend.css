@@ -390,7 +390,7 @@ float:right;
 .ctcl_payment_container{
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #ccc;
+    border: 1px dotted rgba(0,0,0,0.5);
     border-radius: 5px;
     background-color: #f9f9f9;
 
@@ -427,6 +427,13 @@ float:right;
     
 }
 
+.ctcl-product-list-content{
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
 
+}
 
 

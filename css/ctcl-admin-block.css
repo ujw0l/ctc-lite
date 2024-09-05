@@ -460,9 +460,9 @@ float:right;
  color: rgba(255,255,255,1);
   }
 
-  .ctcl-checkout > button{
+  .ctcl-checkout  button{
 
-    border:1px solid rgb(3, 67, 87);
+    margin-bottom:10px;
   }
 .ctcl-contact-form-legend{
     margin-left:15px;
