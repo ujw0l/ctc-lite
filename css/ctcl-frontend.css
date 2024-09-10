@@ -446,3 +446,45 @@ float:right;
 }
 
 
+.ctcl-coupon-code-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input label {
+    font-size: 15px !important;
+    margin-right: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input input {
+    width: 150px !important;
+    height: 25px !important;
+  }
+  
+  .ctcl-coupon-code-button {
+    margin-left: 30px !important;
+  }
+  
+  .ctcl-apply-cuopon-code {
+    padding: 5px !important;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .ctcl-coupon-code-container {
+      flex-direction: column !important;
+    }
+  
+    .ctcl-coupon-code-button {
+      margin-left: 0 !important;
+    }
+  }
