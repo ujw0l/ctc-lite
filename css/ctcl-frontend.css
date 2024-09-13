@@ -74,7 +74,6 @@ font-size:23px;
 cursor:pointer;
 }
 
-.ctcl-checkout-item-header,
 .ctcl-checkout-item{
     width:100%!important;
     text-align:center;
@@ -83,11 +82,20 @@ cursor:pointer;
     border-bottom:1px dashed rgba(0,0,0,0.2);
     display:table;
 }
+.ctcl-checkout-item-header{
+
+    width:100%!important;
+    text-align:center;
+    height:20px;
+    margin-bottom:2px;
+    border-bottom:1px dashed rgba(0,0,0,0.2);
+    display:table;
+
+}
 .ctcl-checkout-item-header span,
 .ctcl-checkout-item span{
 vertical-align: middle;
     display: table-cell;
-    text-align: center;
     height:50px;
     height: 100%;
 }
@@ -314,3 +322,178 @@ float:right;
     display:block !important;
 
 }
+
+
+
+.ctcl-payment-options,
+.ctcl-shipping-options {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.ctcl-payment-options-header,
+.ctcl-shipping-options-header {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+.ctcl-payment-options-container,
+.ctcl-shipping-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ctcl_payment_option_row ,
+.ctcl-shipping-option-row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.ctcl-payment-option ,
+.ctcl-shipping-option {
+    margin-right: 10px;
+}
+.ctcl_payment_option_row:hover,
+.ctcl-shipping-option-row:hover {
+    background-color: #f0f0f0;
+}
+.ctcl_payment_option_row input[type="radio"]:checked + label ,
+.ctcl-shipping-option-row input[type="radio"]:checked + label {
+    font-weight: bold;
+   
+}
+
+.ctcl_payment_option_label,
+.ctcl-shipping-option label {
+    margin: 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.ctcl_payment_option_row input[type="radio"]
+.ctcl-shipping-option-row input[type="radio"] {
+    accent-color: rgba(0,0,0,1);
+}
+
+
+
+.ctcl_payment_container{
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px dotted rgba(0,0,0,0.5);
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+}
+
+.ctcl-coupon-code-container{
+    margin-top: 20px;
+ 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding:15px;  
+}
+
+#ctcl-subtotal-container{
+
+
+}
+
+.ctcl-multip-contact{
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding:5px;  
+}
+/* Checkout List Container */
+.ctcl-checkout-list-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding:5px; 
+    
+}
+
+.ctcl-checkout-item-header span{
+    font-weight: bold;
+    padding-bottom:10px;
+}
+
+.ctcl-checkout-item-img-span{
+    
+}
+
+.ctcl-product-list-content{
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+
+}
+
+.ctcl-coupon-code-container {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* Prevent wrapping */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input label {
+    font-size: 15px !important;
+    margin-right: 10px !important;
+  }
+  
+  .ctcl-coupon-code-input input {
+    width: 150px !important;
+    height: 25px !important;
+  }
+  
+  .ctcl-coupon-code-button {
+    margin-left: 30px !important;
+  }
+  
+  .ctcl-apply-cuopon-code {
+
+    padding: 5px !important;
+    white-space: nowrap !important; /* Prevent line breaks in button */
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .ctcl-coupon-code-container {
+      flex-wrap: nowrap !important; /* Ensure elements stay on the same line */
+    }
+  
+    .ctcl-coupon-code-container span:first-child {
+      margin-left: 0 !important; /* Reset margin for first child */
+    }
+  
+    .ctcl-coupon-code-container span:nth-child(2) {
+      margin-left: 10px !important; /* Adjust margin for second child */
+    }
+  
+    .ctcl-coupon-code-input input {
+      width: 100px !important; /* Reduce input width on small screens */
+    }
+  }

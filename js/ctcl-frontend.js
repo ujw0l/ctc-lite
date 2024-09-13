@@ -2,6 +2,8 @@
 class ctclMain {
 
     constructor() {
+
+        
         if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
             this.removeLocalstorageItem();
         }
@@ -220,7 +222,7 @@ class ctclMain {
     let loadingP = document.querySelector('.ctcl-product-loading');
     let discountTotal =  document.querySelector('input[name="total-discount"]');
     let totalDiscount = undefined != discountTotal ? parseFloat(discountTotal.value) : 0 ; 
-    Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
+    Array.from(prodListCont.querySelectorAll('.ctcl-checkout-item,input,#ctcl-checkout-list-container,#ctcl-totalshipping-cost,#ctcl-subtotal-container,.ctcl-checkout-item-header,#ctcl-discount-cont,#ctcl-items-total-cont,#ctcl-tax-total-cont')).map(x => {
         x.parentElement.removeChild(x)
     })
 

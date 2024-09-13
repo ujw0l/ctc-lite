@@ -818,10 +818,11 @@ ob_start();
     <ol>
     <li><b><?=__(' If this plugin has helped you consider buying following paid addons which will support its future development:','ctc-lite')?></b></li>
            <ol>
-            <li > <a    href="https://ujw0l.gumroad.com/l/psofvl" target="_blank" > <?=__('CTCL SMS',"ctl-lite")?></a><i><?=__( ' (Get of order notification with in your cell phone)','ctc-lite' );?></i></li>
-            <li > <a  href="https://ujw0l.gumroad.com/l/ijats" target="_blank" > <?=__('CTCL Paypal',"ctl-lite")?></a><i><?=__( ' (Accept payment with Paypal)','ctc-lite' );?></i></li>
-            <li > <a  href="https://ujw0l.gumroad.com/l/crjre" target="_blank" > <?=__('CTCL Custom Shipping',"ctl-lite")?></a><i><?=__( ' (Display Custom Shipping option to Customer)','ctc-lite' );?></i></li>
-            <li > <a  href="https://ujw0l.gumroad.com/l/eixhs" target="_blank" > <?=__('CTCL Variation Swatches',"ctl-lite")?></a><i><?=__( ' (Display swatches instead of dropdown select for product variations)','ctc-lite' );?></i></li>   
+            <li > <a    href="https://payhip.com/b/bdiOx" target="_blank" >📲  <?=__('CTCL SMS',"ctl-lite")?></a><i><?=__( ' (Get of order notification with in your cell phone)','ctc-lite' );?></i></li>
+            <li > <a  href="https://payhip.com/b/8mFPg" target="_blank" >💰 <?=__('CTCL Paypal',"ctl-lite")?></a><i><?=__( ' (Accept payment with Paypal)','ctc-lite' );?></i></li>
+            <li > <a  href="https://payhip.com/b/uZ4KU" target="_blank" > 🚚 <?=__('CTCL Custom Shipping',"ctl-lite")?></a><i><?=__( ' (Display Custom Shipping option to Customer)','ctc-lite' );?></i></li>
+            <li > <a  href="https://payhip.com/b/qr8fb" target="_blank" > 🎨  <?=__('CTCL Variation Swatches',"ctl-lite")?></a><i><?=__( ' (Display swatches instead of dropdown select for product variations)','ctc-lite' );?></i></li>   
+            <li > <a  href="https://payhip.com/b/3PKa7" target="_blank" >👍 <?=__('CTCL Rting and Review','ctc-lite' );?></i></li>   
         </ol>
 </li>   
 <li><?=__('Plugin functionalities can be extended with following free Addons ','ctc-lite')?><a target="_blank" href="https://wordpress.org/plugins/tags/ctc-lite/"> <?=__('Addon on WordPress','ctc-lite')?> </a> - <a target="_blank" href="https://github.com/topics/ctc-lite"> <?=__('Addons on Github','ctc-lite') ?></a></li> 
