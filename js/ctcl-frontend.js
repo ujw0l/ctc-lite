@@ -2,6 +2,8 @@
 class ctclMain {
 
     constructor() {
+
+        
         if (undefined != document.querySelector('#ctcl-order-sucesfully-placed')) {
             this.removeLocalstorageItem();
         }
