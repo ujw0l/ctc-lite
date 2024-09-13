@@ -5,7 +5,7 @@
 **Tags:** ecommerce, online store, block-based, shopping cart, sell online, WooCommerce alternative  
 **Requires at least:** 5.5.2  
 **Tested up to:** 6.6  
-**Stable tag:** 2.5.0  
+**Stable tag:** 2.5.5 
 **Requires PHP:** 7.4.9  
 **License:** GPLv2 or later
 
