@@ -446,7 +446,7 @@ float:right;
 }
 
 .ctcl-coupon-code-container {
-    display: flex !important;
+    display: flex;
     flex-wrap: nowrap !important; /* Prevent wrapping */
     justify-content: space-between !important;
     align-items: center !important;
