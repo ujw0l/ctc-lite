@@ -51,11 +51,14 @@ CT Commerce Lite supports a range of add-ons to expand your store's capabilities
 - **📄 [CTCL Order Status](https://github.com/ujw0l/ctcl-order-status):** Allow customers to track their order status directly from the frontend.
 - **📈 [CTCL Analytics](https://github.com/ujw0l/ctcl-analytics):** Gain insights into store performance with comprehensive sales reports.
 
+
 #### **Premium Add-ons (Gumroad):**
 - **📲 [CTCL SMS Notifications](https://ujw0l.gumroad.com/l/psofv):** Receive instant SMS notifications for every sale.
 - **💰 [CTCL PayPal Integration](https://ujw0l.gumroad.com/l/ijats):** Add PayPal as a payment option for greater flexibility.
 - **🚚 [CTCL Custom Shipping Options](https://ujw0l.gumroad.com/l/crjre):** Offer customized shipping options and print labels from your dashboard.
 - **🎨 [CTCL Variation Swatches](https://ujw0l.gumroad.com/l/eixhs):** Enhance user experience with clickable swatches for product variations.
+=======
+
 
 ### 🎯 **Why Choose CT Commerce Lite?**
 
