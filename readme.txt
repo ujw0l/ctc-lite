@@ -51,14 +51,12 @@ CT Commerce Lite supports a range of add-ons to expand your store's capabilities
 - **📄 [CTCL Order Status](https://github.com/ujw0l/ctcl-order-status):** Allow customers to track their order status directly from the frontend.
 - **📈 [CTCL Analytics](https://github.com/ujw0l/ctcl-analytics):** Gain insights into store performance with comprehensive sales reports.
 
-
-#### **Premium Add-ons (Gumroad):**
-- **📲 [CTCL SMS Notifications](https://ujw0l.gumroad.com/l/psofv):** Receive instant SMS notifications for every sale.
-- **💰 [CTCL PayPal Integration](https://ujw0l.gumroad.com/l/ijats):** Add PayPal as a payment option for greater flexibility.
-- **🚚 [CTCL Custom Shipping Options](https://ujw0l.gumroad.com/l/crjre):** Offer customized shipping options and print labels from your dashboard.
-- **🎨 [CTCL Variation Swatches](https://ujw0l.gumroad.com/l/eixhs):** Enhance user experience with clickable swatches for product variations.
-=======
-
+#### **Premium Add-ons (Payhip):**
+- **📲 [CTCL SMS Notifications](https://payhip.com/b/bdiOx):** Receive instant SMS notifications for every sale.
+- **💰 [CTCL PayPal Integration](https://payhip.com/b/8mFPg):** Add PayPal as a payment option for greater flexibility.
+- **🚚 [CTCL Custom Shipping Options](https://payhip.com/b/uZ4KU):** Offer customized shipping options and print labels from your dashboard.
+- **🎨 [CTCL Variation Swatches](https://payhip.com/b/qr8fb):** Enhance user experience with clickable swatches for product variations.
+- **👍 [CTCL Rating & Review](https://payhip.com/b/3PKa7):** Enhance user experience by adding Like dislike and product Review form to product page.
 
 ### 🎯 **Why Choose CT Commerce Lite?**
 
