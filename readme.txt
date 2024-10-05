@@ -45,6 +45,7 @@ CT Commerce Lite supports a range of add-ons to expand your store's capabilities
 - **🔗 [CTCL Sharing](https://wordpress.org/plugins/ctcl-sharing/):** Boost product visibility with integrated social media sharing options.
 - **💳 [CTCL Stripe](https://wordpress.org/plugins/ctcl-stripe/):** Add Stripe payment gateway for seamless credit card transactions.
 - **📱 [CTCL Phone Pay](https://wordpress.org/plugins/ctcl-phone-pay/):** Support phone-based payment methods, ideal for regions with limited online payment options.
+- **💰 [CTCL PayPal Integration](https://wordpress.org/plugins/ctcl-paypal/):** Add PayPal as a payment option for greater flexibility.
 
 #### **Free Add-ons (GitHub):**
 - **📦 [CTCL Product Display](https://github.com/ujw0l/ctcl-product-display):** Add stylish product displays to pages or posts using Gutenberg blocks.
@@ -53,7 +54,6 @@ CT Commerce Lite supports a range of add-ons to expand your store's capabilities
 
 #### **Premium Add-ons (Payhip):**
 - **📲 [CTCL SMS Notifications](https://payhip.com/b/bdiOx):** Receive instant SMS notifications for every sale.
-- **💰 [CTCL PayPal Integration](https://payhip.com/b/8mFPg):** Add PayPal as a payment option for greater flexibility.
 - **🚚 [CTCL Custom Shipping Options](https://payhip.com/b/uZ4KU):** Offer customized shipping options and print labels from your dashboard.
 - **🎨 [CTCL Variation Swatches](https://payhip.com/b/qr8fb):** Enhance user experience with clickable swatches for product variations.
 - **👍 [CTCL Rating & Review](https://payhip.com/b/3PKa7):** Enhance user experience by adding Like dislike and product Review form to product page.
