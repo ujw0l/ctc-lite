@@ -4,8 +4,8 @@
 **Donate link:** https://www.patreon.com/ujw0l/membership  
 **Tags:** ecommerce, online store, block, shopping cart, sell online,  
 **Requires at least:** 5.5.2  
-**Tested up to:** 6.6  
-**Stable tag:** 2.5.5 
+**Tested up to:** 6.7 
+**Stable tag:** 2.6.0 
 **Requires PHP:** 7.4.9  
 **License:** GPLv2 or later
 CT Commerce Lite** is an ultra-lightweight, block-based eCommerce plugin for WordPress
@@ -46,11 +46,12 @@ CT Commerce Lite supports a range of add-ons to expand your store's capabilities
 - **💳 [CTCL Stripe](https://wordpress.org/plugins/ctcl-stripe/):** Add Stripe payment gateway for seamless credit card transactions.
 - **📱 [CTCL Phone Pay](https://wordpress.org/plugins/ctcl-phone-pay/):** Support phone-based payment methods, ideal for regions with limited online payment options.
 - **💰 [CTCL PayPal Integration](https://wordpress.org/plugins/ctcl-paypal/):** Add PayPal as a payment option for greater flexibility.
+- **📄 [CTCL Order Status](https://wordpress.org/plugins/ctcl-product-display/):** Allow customers to track their order status directly from the frontend.
+- **📈 [CTCL Analytics](https://wordpress.org/plugins/ctcl-analytics/):** Gain insights into store performance with comprehensive sales reports.
+
 
 #### **Free Add-ons (GitHub):**
 - **📦 [CTCL Product Display](https://github.com/ujw0l/ctcl-product-display):** Add stylish product displays to pages or posts using Gutenberg blocks.
-- **📄 [CTCL Order Status](https://github.com/ujw0l/ctcl-order-status):** Allow customers to track their order status directly from the frontend.
-- **📈 [CTCL Analytics](https://github.com/ujw0l/ctcl-analytics):** Gain insights into store performance with comprehensive sales reports.
 
 #### **Premium Add-ons (Payhip):**
 - **📲 [CTCL SMS Notifications](https://payhip.com/b/bdiOx):** Receive instant SMS notifications for every sale.
@@ -110,6 +111,9 @@ A: Ensure you add the CTC Lite Image Gallery block to the page for proper displa
 11. Image Gallery in Overlay
 
 ## Changelog
+
+### 2.6.0
+- Few bux fixes
 
 ### 2.5.5
 - Better looking UX for Checkout
