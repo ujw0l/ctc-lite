@@ -112,6 +112,9 @@ A: Ensure you add the CTC Lite Image Gallery block to the page for proper displa
 
 ## Changelog
 
+### 2.6.1
+- Few bug fixes
+
 ### 2.6.0
 - Few bux fixes
 
