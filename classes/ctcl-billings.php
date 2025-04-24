@@ -18,7 +18,7 @@ public $paymentName ;
 
 public function __construct(){
 
-    $this->paymentName = __('Cash On Delivery','ctc-lite');
+    $this->paymentName = __('Cash On Delivery',' ');
     self::registerOptions();
     self::displayOptionsUser();
     self:: addRequiredFilter();
