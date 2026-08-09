@@ -5,7 +5,7 @@
 **Tags:** ecommerce, online store, block, shopping cart, sell online,  
 **Requires at least:** 5.5.2  
 **Tested up to:** 6.8
-**Stable tag:** 2.6.0 
+**Stable tag:** 2.7.0 
 **Requires PHP:** 7.4.9  
 **License:** GPLv2 or later
 CT Commerce Lite** is an ultra-lightweight, block-based eCommerce plugin for WordPress
@@ -111,6 +111,9 @@ A: Ensure you add the CTC Lite Image Gallery block to the page for proper displa
 11. Image Gallery in Overlay
 
 ## Changelog
+### 2.6.1
+- Few bug fixes 
+- Better Overlay
 
 ### 2.6.1
 - Few bug fixes
