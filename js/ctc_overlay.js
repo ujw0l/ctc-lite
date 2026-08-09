@@ -1,566 +1,431 @@
 /*
- * 
- * 
- * 
  * CTC Gallery Viewer
- *  images in overlay carousel and gallery written in vanilla js
- * https://ujwolbastakoti.wordpress.com/
- * MIT license
- * 
- * 
- * 
+ * A dependency-free, responsive image gallery viewer.
+ * MIT License
  */
 
-
 "use strict";
- class ctcOverlayViewer {
 
-	constructor(sel, param2) {
-		Array.from(document.querySelectorAll(sel)).forEach((el, i) => this.prepareGal(el, i, param2));
-		window.addEventListener('resize', e => this.adjustApp(e));
-		window.addEventListener('keydown', e => this.onKeyStroke(e));
+class ctcOverlayViewer {
+	constructor(selector, options) {
+		this.options = Object.assign({
+			slideshowInterval: 3000,
+			closeOnBackdrop: true,
+			loop: true
+		}, options && typeof options === "object" ? options : {});
 		this.ssIntervalId = 0;
-	}
-	/*
-	*Prepare gallery for viewing
-	* 
-	*@param gal  All of the images of agllery
-	*@param param2 for future extension
-	*
-	*/
-	prepareGal(gal, param2) {
-		let imgs = Array.from(gal.querySelectorAll('img'));
-		imgs.forEach((img, imgNum) => img.addEventListener('click', e => this.createOverlay(event.target, imgNum, imgs, param2)));
-	}
+		this.activeIndex = 0;
+		this.gallery = [];
+		this.overlay = null;
+		this.lastFocusedElement = null;
+		this.previousBodyOverflow = "";
+		this.touchStartX = 0;
+		this.boundResize = event => this.adjustApp(event);
+		this.boundKeydown = event => this.onKeyStroke(event);
 
-	/*
-	*Create overlay for viewing
-	* 
-	*@param img Iamges clicked
-	*@param imgNum Number of image in gallery
-	*@param gal Array of images in gallery
-	*@param param2 For future extension
-	*
-	*/
-
-	createOverlay(img, imgNum, gal, param2) {
-
-		let overlayWidth = window.innerWidth + 1;
-		let overlayHeight = window.innerHeight + 1;
-		let alltImgWidth = 1 < gal.length ? 0.94 : 1;
-		let sideBarWid = 1 < gal.length ? 0.04 : 0;
-
-		let scrollCss = document.createElement('style');
-		scrollCss.id = 'ctc-scroll-css';
-		scrollCss.innerHTML = `::-webkit-scrollbar-track {background: rgba(255, 255, 255, 1);} ::-moz-scrollbar-track { background: rgba(255, 255, 255, 1);} #gal-sidebar::-webkit-scrollbar {display: none;} #gal-sidebar::-moz-scrollbar {display: none;}`;
-		document.querySelector('head').appendChild(scrollCss);
-		document.body.style.overflow = 'hidden';
-
-		let overlayDivEl = document.createElement("div");
-		overlayDivEl.id = "gallery-overlay";
-		overlayDivEl.style = `position:fixed;height:${overlayHeight}px;width:${overlayWidth}px;background-color:rgba(0,0,0,.6);z-index:100000;top:0%;left:0%;right:0%;bottom:0%;`;
-		document.body.insertBefore(overlayDivEl, document.body.firstChild);
-
-		let closeBtn = document.createElement('span');
-		closeBtn.id = "overlay-close-btn";
-		closeBtn.title = "Close";
-		closeBtn.innerHTML = "&#10539;";
-		closeBtn.style = `cursor:pointer;position:absolute;float:right;right:3px;font-size:${0.016 * overlayWidth}px;color:rgba(255,255,255,1);text-shadow:-1px -1px 1px rgba(0,0,0,1);z-index:200000;`;
-		overlayDivEl.appendChild(closeBtn);
-		closeBtn.addEventListener('click', () => this.closeOverlay(overlayDivEl));
-
-		let imgLoading = document.createElement('span');
-		imgLoading.id = 'image-loading-main';
-		imgLoading.style = `left:${0.992 * overlayWidth / 2};top:${overlayHeight / 2};font-size:${0.016 * overlayWidth}px;display:inline-block;position:fixed;color:rgba(255,255,255,1);`;
-		imgLoading.innerHTML = 'Loading';
-		overlayDivEl.appendChild(imgLoading);
-		let loadingInt = setInterval(() => {
-			switch (imgLoading.innerHTML) {
-				case 'Loading':
-					imgLoading.innerHTML = 'Loading<b>.</b>'
-					break;
-				case 'Loading<b>.</b>':
-					imgLoading.innerHTML = 'Loading.<b>.</b>'
-					break;
-				case 'Loading.<b>.</b>':
-					imgLoading.innerHTML = 'Loading..<b>.</b>'
-					break;
-				case 'Loading..<b>.</b>':
-					imgLoading.innerHTML = 'Loading...<b>.</b>'
-					break;
-				case 'Loading...<b>.</b>':
-					imgLoading.innerHTML = 'Loading<b>.</b>'
-					break;
-			}
-		}, 350);
-
-		let imgEl = document.createElement('img');
-		let loadedImg = new Image();
-		loadedImg.src = img.src;
-		imgEl.id = 'loaded-img';
-		imgEl.src = img.src;
-		imgEl.style.display = 'none';
-		let opImgDim = this.getOptimizedImageSize(overlayWidth, overlayHeight, loadedImg.width, loadedImg.height, gal.length);
-
-		loadedImg.addEventListener('load', (event) => {
-			clearInterval(loadingInt);
-			imgLoading.style.display = 'none';
-			imgEl.style = `z-index:180000;height:${opImgDim.height}px;width:${opImgDim.width}px;display:inline-block;margin:${((overlayHeight - opImgDim.height) / 2)}px ${(((alltImgWidth * overlayWidth) - opImgDim.width) / 2)}px;`;
-			imgEl.title = undefined != img.getAttribute('title') || null != img.getAttribute('title') ? img.getAttribute('title') : '';
+		Array.from(document.querySelectorAll(selector)).forEach((gallery, index) => {
+			this.prepareGal(gallery, index, this.options);
 		});
-		overlayDivEl.appendChild(imgEl);
-
-		let imgTitleDiv = document.createElement("div");
-		imgTitleDiv.id = "img-title-info";
-		imgTitleDiv.style = `z-index:195000;position:fixed;text-align:center;height:${0.02 * overlayHeight}px;width:${opImgDim.width}px;bottom:1px;color:rgba(255,255,255,1);font-size:${0.015 * overlayHeight};left:${(sideBarWid * overlayWidth) + (((alltImgWidth * overlayWidth) - opImgDim.width) / 2)}px;`;
-		imgTitleDiv.innerHTML = undefined != img.getAttribute('title') || null != img.getAttribute('title') ? img.getAttribute('title') : '';
-		overlayDivEl.appendChild(imgTitleDiv);
-
-		if (1 < gal.length) {
-			this.createToolbar(overlayDivEl, gal, imgEl, imgNum, param2);
-			this.createSidebar(overlayDivEl, gal, imgEl, imgNum, param2);
-			imgEl.addEventListener('click', e => {
-				if (e.offsetX > (e.target.offsetWidth / 2)) {
-					document.querySelector('#gal-next-img').click();
-				} else {
-					document.querySelector('#gal-prev-img').click();
-				}
-			});
-		}
+		window.addEventListener("resize", this.boundResize);
+		window.addEventListener("keydown", this.boundKeydown);
 	}
 
-	/*
-	*Create toolbar 
-	* 
-	*@param overlayDivEl Overlay div element
-	*@param gal Array of images in gallery
-	*@param imgEl Image element in overlay
-	*@param imgNum Number of image in gallery
-	*@param param2 For future extension
-	*
-	*/
-	createToolbar(overlayDivEl, gal, imgEl, imgNum, param2) {
-		let toolbarDiv = overlayDivEl.querySelector('#toolbar-div');
-		let ovWidth = overlayDivEl.offsetWidth;
-		let ovHeight = overlayDivEl.offsetHeight;
-		let nxtImg = gal.length - 1 >= imgNum + 1 ? imgNum + 1 : 0;
-		let prevImg = 0 <= imgNum - 1 ? imgNum - 1 : gal.length - 1;
-		let btnStyle = `font-family:serif;height:${0.02 * ovWidth}px;width:${0.02 * ovWidth}px;text-align:center;font-size:${0.016 * ovWidth}px;cursor:pointer;color:rgba(255,255,255,1);margin-top:${0.002 * ovWidth}px;`;
+	prepareGal(gallery, galleryIndex, options) {
+		const images = Array.from(gallery.querySelectorAll("img"));
+		images.forEach((image, imageIndex) => {
+			image.setAttribute("data-ctc-gallery-index", galleryIndex);
+			if (!image.hasAttribute("tabindex") && !image.closest("a, button")) image.tabIndex = 0;
+			if (!image.hasAttribute("role") && !image.closest("a, button")) image.setAttribute("role", "button");
+			if (!image.hasAttribute("aria-label")) {
+				image.setAttribute("aria-label", `Open image ${imageIndex + 1} of ${images.length}`);
+			}
+			const open = event => {
+				if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
+				if (event.type === "keydown") event.preventDefault();
+				this.createOverlay(image, imageIndex, images, options);
+			};
+			image.addEventListener("click", open);
+			image.addEventListener("keydown", open);
+		});
+	}
 
-		if (undefined == toolbarDiv) {
-			let toolbarDiv = document.createElement('div');
-			toolbarDiv.id = 'toolbar-div';
-			toolbarDiv.style = `top:${(ovHeight / 1.6) - (0.077 * ovWidth)}px;float:right; transform: translateY(-50%); right: 0px;display: inline-block;position: fixed;`;
+	createOverlay(image, imageIndex, gallery, options) {
+		if (!image || !gallery || !gallery.length) return;
+		if (this.overlay) this.closeOverlay(this.overlay, false);
 
-			let prevBtn = document.createElement('div');
-			prevBtn.id = 'gal-prev-img';
-			prevBtn.style = btnStyle;
-			prevBtn.innerHTML = '&#60;';
-			prevBtn.title = 'Previous image';
-			prevBtn.addEventListener('click', e => this.loadImg(parseInt(e.target.getAttribute('data-img-num')), gal, overlayDivEl, imgEl));
-			prevBtn.setAttribute('data-img-num', prevImg);
-			prevBtn.addEventListener('mouseenter', e => e.target.style.fontWeight = 'bolder');
-			prevBtn.addEventListener('mouseleave', e => e.target.style.fontWeight = '');
-			toolbarDiv.insertBefore(prevBtn, toolbarDiv.firstChild);
+		this.options = Object.assign({}, this.options, options && typeof options === "object" ? options : {});
+		this.gallery = Array.from(gallery);
+		this.activeIndex = imageIndex;
+		this.lastFocusedElement = document.activeElement;
+		this.previousBodyOverflow = document.body.style.overflow;
+		this.injectStyles();
+		document.body.style.overflow = "hidden";
 
-	
+		const overlay = document.createElement("div");
+		overlay.id = "gallery-overlay";
+		overlay.className = "ctc-gallery-overlay";
+		overlay.setAttribute("role", "dialog");
+		overlay.setAttribute("aria-modal", "true");
+		overlay.setAttribute("aria-label", "Image gallery viewer");
+		overlay.innerHTML = `
+			<div class="ctc-gallery__backdrop" data-ctc-close></div>
+			<div class="ctc-gallery__shell">
+				<div class="ctc-gallery__topbar">
+					<div class="ctc-gallery__brand" aria-hidden="true"><span></span> Gallery</div>
+					<div id="ctc-image-counter" class="ctc-gallery__counter" aria-live="polite"></div>
+					<button id="overlay-close-btn" class="ctc-gallery__button ctc-gallery__close" type="button" title="Close" aria-label="Close gallery">${this.icon("close")}</button>
+				</div>
+				<div class="ctc-gallery__stage">
+					<div id="image-loading-main" class="ctc-gallery__loading" role="status"><span class="ctc-gallery__spinner"></span><span>Loading image</span></div>
+					<div id="ctc-image-error" class="ctc-gallery__error" role="alert" hidden>We couldn’t load this image.</div>
+					<img id="loaded-img" class="ctc-gallery__image" alt="" draggable="false">
+					<div class="ctc-gallery__tap-hint" aria-hidden="true">Click either side to browse</div>
+				</div>
+				<div id="img-title-info" class="ctc-gallery__caption"></div>
+			</div>`;
 
-			let zoomInBtn = document.createElement('div');
-			zoomInBtn.id = 'img-zoom-in';
-			zoomInBtn.style = btnStyle;
-			zoomInBtn.innerHTML = '&#43;';
-			zoomInBtn.title = 'Zoom in';
-			zoomInBtn.addEventListener('click', () => imgEl.style.transform = 0 === imgEl.style.transform.length ? `scale(1.2)` : `scale(${parseFloat(imgEl.style.transform.replace('scale(', '').replace(')', '')) + 0.2})`);
-			zoomInBtn.addEventListener('mouseenter', e => e.target.style.fontWeight = 'bolder');
-			zoomInBtn.addEventListener('mouseleave', e => e.target.style.fontWeight = '');
-			toolbarDiv.appendChild(zoomInBtn);
+		document.body.appendChild(overlay);
+		this.overlay = overlay;
+		const imageElement = overlay.querySelector("#loaded-img");
 
-		
+		overlay.querySelector("#overlay-close-btn").addEventListener("click", () => this.closeOverlay(overlay));
+		if (this.options.closeOnBackdrop) {
+			overlay.querySelector("[data-ctc-close]").addEventListener("click", () => this.closeOverlay(overlay));
+		}
+		imageElement.addEventListener("click", event => {
+			if (this.gallery.length < 2) return;
+			const bounds = event.currentTarget.getBoundingClientRect();
+			this.loadImg(event.clientX > bounds.left + bounds.width / 2 ? this.nextIndex() : this.previousIndex(), this.gallery, overlay, imageElement);
+		});
+		imageElement.addEventListener("touchstart", event => {
+			this.touchStartX = event.changedTouches[0].clientX;
+		}, { passive: true });
+		imageElement.addEventListener("touchend", event => {
+			const distance = event.changedTouches[0].clientX - this.touchStartX;
+			if (Math.abs(distance) > 45 && this.gallery.length > 1) {
+				this.loadImg(distance < 0 ? this.nextIndex() : this.previousIndex(), this.gallery, overlay, imageElement);
+			}
+		}, { passive: true });
 
-			let zoomOutBtn = document.createElement('div');
-			zoomOutBtn.id = 'img-zoom-out';
-			zoomOutBtn.style = btnStyle;
-			zoomOutBtn.innerHTML = '&#8722;';
-			zoomOutBtn.title = 'Zoom out';
-			zoomOutBtn.addEventListener('click', () => {
-				let zoom = parseFloat(imgEl.style.transform.replace('scale(', '').replace(')', '')) - 0.2;
-				let scale = 0 > zoom ? 0.1 : zoom;
-				imgEl.style.transform = 0 === imgEl.style.transform.length ? `scale(0.8)` : `scale(${scale})`
-			});
-			zoomOutBtn.addEventListener('mouseenter', e => e.target.style.fontWeight = 'bolder')
-			zoomOutBtn.addEventListener('mouseleave', e => e.target.style.fontWeight = '');
-			toolbarDiv.appendChild(zoomOutBtn);
-
-			let nextBtn = document.createElement('div');
-			nextBtn.id = 'gal-next-img';
-			nextBtn.style = btnStyle;
-			nextBtn.innerHTML = '&#62;';
-			nextBtn.title = 'Next image';
-			nextBtn.addEventListener('click', e => this.loadImg(parseInt(e.target.getAttribute('data-img-num')), gal, overlayDivEl, imgEl));
-			nextBtn.setAttribute('data-img-num', nxtImg)
-			nextBtn.addEventListener('mouseenter', e => e.target.style.fontWeight = 'bolder');
-			nextBtn.addEventListener('mouseleave', e => e.target.style.fontWeight = '');
-			toolbarDiv.appendChild(nextBtn);
-			overlayDivEl.appendChild(toolbarDiv);
-
+		if (this.gallery.length > 1) {
+			this.createToolbar(overlay, this.gallery, imageElement, imageIndex, this.options);
+			this.createSidebar(overlay, this.gallery, imageElement, imageIndex, this.options);
 		} else {
-
-			let imgLoading = overlayDivEl.querySelector('#image-loading-main');
-			if (undefined != imgLoading) {
-				overlayDivEl.removeChild(imgLoading);
-			}
-			toolbarDiv.querySelector('#gal-prev-img').setAttribute('data-img-num', prevImg);
-			toolbarDiv.querySelector('#gal-next-img').setAttribute('data-img-num', nxtImg)
+			overlay.classList.add("ctc-gallery-overlay--single");
 		}
+
+		this.loadImg(imageIndex, this.gallery, overlay, imageElement);
+		requestAnimationFrame(() => overlay.classList.add("is-visible"));
+		overlay.querySelector("#overlay-close-btn").focus({ preventScroll: true });
 	}
 
+	createToolbar(overlay, gallery, imageElement, imageIndex) {
+		let toolbar = overlay.querySelector("#toolbar-div");
+		if (!toolbar) {
+			toolbar = document.createElement("div");
+			toolbar.id = "toolbar-div";
+			toolbar.className = "ctc-gallery__toolbar";
+			toolbar.setAttribute("role", "toolbar");
+			toolbar.setAttribute("aria-label", "Gallery controls");
 
-	/*
-	*Create sidebar of images
-	* 
-	*@param overlayDivEl Overlay div element
-	*@param gal Array of images in gallery
-	*@param imgEl Image element in overlay
-	*@param imgClicked Image cliecked to trigger overlay
-	*@param param2 For future extension
-	*
-	*/
-
-	createSidebar(overlayDiv, gal, imgEl, imgClicked, param2) {
-		let sidebar = document.createElement('div');
-		sidebar.id = `gal-sidebar`;
-		sidebar.style = `overflow-y:auto;tex-align:center;display:inline-block;width:${0.04 * overlayDiv.offsetWidth}px;height:${overlayDiv.offsetHeight}px;float:left;left:0;background-color:rgba(0,0,0,0.1);z-index:105000;`;
-		overlayDiv.appendChild(sidebar);
-
-		let sidebarImgStyle = `overflow-x: hidden;transition: width 0.5s, height 0.5s;cursor:pointer;background-color:rgba(255,255,255,1);width:93%;height:${0.93 * sidebar.offsetWidth}px;border:1px dotted rgba(0,0,0,0.8);background-repeat: no-repeat;background-size:contain;background-position: center;text-align:center;color:rgba(0,0,0,1);font-size:${0.6 * sidebar.offsetWidth}px;`;
-		gal.map((img, i) => {
-
-			let imgPrev = new Image();
-			imgPrev.src = img.src;
-
-			let sidebarImg = document.createElement('div');
-			sidebarImg.classList.add('img-preview');
-			sidebarImg.title = undefined != img.getAttribute('title') || null != img.getAttribute('title') ? img.getAttribute('title') : '';
-			sidebarImg.style = sidebarImgStyle;
-			sidebarImg.addEventListener('mouseenter', event => event.target.style.borderRadius = '12%');
-			sidebarImg.addEventListener('mouseleave', event => event.target.style.borderRadius = '5%');
-			sidebarImg.innerHTML = `<b>.</b>`;
-			sidebar.appendChild(sidebarImg);
-			let rotateInterval = setInterval(() => {
-				switch (sidebarImg.innerHTML) {
-					case '<b>.</b>':
-						sidebarImg.innerHTML = '<b>.</b>.'
-						break;
-					case '<b>.</b>.':
-						sidebarImg.innerHTML = '.<b>.</b>.'
-						break;
-					case '.<b>.</b>.':
-						sidebarImg.innerHTML = '...<b>.</b>'
-						break;
-					case '...<b>.</b>':
-						sidebarImg.innerHTML = '<b>.</b>'
-						break;
-					default:
-				}
-			}, 250);
-
-			imgPrev.addEventListener('load', e => {
-				clearInterval(rotateInterval);
-				sidebarImg.innerHTML = '';
-				sidebarImg.style.backgroundImage = `url('${e.target.src}')`;
+			const controls = [
+				["gal-first-img", "first", "First image"],
+				["gal-prev-img", "previous", "Previous image"],
+				["img-zoom-out", "zoomOut", "Zoom out"],
+				["gal-slide-show", "play", "Start slideshow"],
+				["img-zoom-in", "zoomIn", "Zoom in"],
+				["gal-next-img", "next", "Next image"],
+				["gal-last-img", "last", "Last image"]
+			];
+			controls.forEach(([id, icon, label]) => {
+				const button = document.createElement("button");
+				button.id = id;
+				button.type = "button";
+				button.className = "ctc-gallery__button";
+				button.title = label;
+				button.setAttribute("aria-label", label);
+				button.innerHTML = this.icon(icon);
+				toolbar.appendChild(button);
 			});
 
-			sidebarImg.addEventListener('click', () => this.loadImg(i, gal, overlayDiv, imgEl));
+			toolbar.querySelector("#gal-first-img").addEventListener("click", () => this.loadImg(0, gallery, overlay, imageElement));
+			toolbar.querySelector("#gal-prev-img").addEventListener("click", () => this.loadImg(this.previousIndex(), gallery, overlay, imageElement));
+			toolbar.querySelector("#gal-next-img").addEventListener("click", () => this.loadImg(this.nextIndex(), gallery, overlay, imageElement));
+			toolbar.querySelector("#gal-last-img").addEventListener("click", () => this.loadImg(gallery.length - 1, gallery, overlay, imageElement));
+			toolbar.querySelector("#img-zoom-in").addEventListener("click", () => this.setZoom(this.getZoom(imageElement) + 0.2));
+			toolbar.querySelector("#img-zoom-out").addEventListener("click", () => this.setZoom(this.getZoom(imageElement) - 0.2));
+			toolbar.querySelector("#gal-slide-show").setAttribute("data-interval-id", "0");
+			toolbar.querySelector("#gal-slide-show").addEventListener("click", () => this.toggleSlideshow());
+			overlay.querySelector(".ctc-gallery__shell").appendChild(toolbar);
+		}
+		this.updateToolbar(imageIndex);
+	}
+
+	createSidebar(overlay, gallery, imageElement, imageClicked) {
+		const sidebar = document.createElement("div");
+		sidebar.id = "gal-sidebar";
+		sidebar.className = "ctc-gallery__thumbnails";
+		sidebar.setAttribute("role", "list");
+		sidebar.setAttribute("aria-label", "Gallery thumbnails");
+
+		gallery.forEach((image, index) => {
+			const thumbnail = document.createElement("button");
+			thumbnail.type = "button";
+			thumbnail.className = "img-preview";
+			thumbnail.setAttribute("role", "listitem");
+			thumbnail.setAttribute("aria-label", `View image ${index + 1}: ${this.getTitle(image) || image.alt || "Untitled"}`);
+			thumbnail.innerHTML = `<span class="ctc-gallery__thumb-loader"></span><img alt="" loading="lazy">`;
+			const thumbnailImage = thumbnail.querySelector("img");
+			thumbnailImage.addEventListener("load", () => thumbnail.classList.add("is-loaded"));
+			thumbnailImage.addEventListener("error", () => thumbnail.classList.add("is-error"));
+			thumbnailImage.src = image.currentSrc || image.src;
+			thumbnail.addEventListener("click", () => this.loadImg(index, gallery, overlay, imageElement));
+			sidebar.appendChild(thumbnail);
 		});
 
-		this.scrollToPrev(imgClicked);
-		sidebar.style.paddingTop = 0 < (overlayDiv.offsetHeight - (gal.length * ((0.93 * sidebar.offsetWidth) + 2))) / 2 ? `${(overlayDiv.offsetHeight - (gal.length * ((0.93 * sidebar.offsetWidth) + 2))) / 2}px` : `0px`;
+		overlay.querySelector(".ctc-gallery__shell").appendChild(sidebar);
+		this.scrollToPrev(imageClicked);
 	}
 
-	/*
-	*Load image clicked on sidebar
-	* 
-	*@param imgNum Number of image on gallery
-	*@param gal Array of images in gallery
-	*@param overlayDiv Overlay div element
-	*@param imgEl Image element in overlay
-	*
-	*/
-	loadImg(imgNum, gal, overlayDiv, imgEl) {
+	loadImg(imageIndex, gallery, overlay, imageElement) {
+		if (!overlay || !imageElement || !gallery || !gallery.length) return;
+		const normalizedIndex = Math.max(0, Math.min(Number(imageIndex) || 0, gallery.length - 1));
+		const sourceImage = gallery[normalizedIndex];
+		const source = sourceImage.currentSrc || sourceImage.src;
+		const loader = overlay.querySelector("#image-loading-main");
+		const error = overlay.querySelector("#ctc-image-error");
 
-		var clickedImg = new Image();
-		clickedImg.src = gal[imgNum].src;
-		imgEl.src = gal[imgNum].src;
-		imgEl.style.display = 'none';
+		this.activeIndex = normalizedIndex;
+		this.setZoom(1);
+		loader.hidden = false;
+		error.hidden = true;
+		imageElement.classList.remove("is-loaded");
+		imageElement.alt = sourceImage.alt || this.getTitle(sourceImage) || `Gallery image ${normalizedIndex + 1}`;
 
-		let imgLoading = document.createElement('span');
-		imgLoading.id = 'image-loading-main';
-		imgLoading.style = `left:${0.992 * overlayDiv.offsetWidth / 2};top:${overlayDiv.offsetHeight / 2};font-size:${0.016 * overlayDiv.offsetWidth}px;display:inline-block;position:fixed;color:rgba(255,255,255,1);`;
-		imgLoading.innerHTML = 'Loading';
-		overlayDiv.appendChild(imgLoading);
-
-		let loadingInt = setInterval(() => {
-			switch (imgLoading.innerHTML) {
-				case 'Loading':
-					imgLoading.innerHTML = 'Loading<b>.</b>'
-					break;
-				case 'Loading<b>.</b>':
-					imgLoading.innerHTML = 'Loading.<b>.</b>'
-					break;
-				case 'Loading.<b>.</b>':
-					imgLoading.innerHTML = 'Loading..<b>.</b>'
-					break;
-				case 'Loading..<b>.</b>':
-					imgLoading.innerHTML = 'Loading...<b>.</b>'
-					break;
-				case 'Loading...<b>.</b>':
-					imgLoading.innerHTML = 'Loading<b>.</b>'
-					break;
-				default:
-			}
-		}, 350);
-
-		let opImgDim = this.getOptimizedImageSize(overlayDiv.offsetWidth, overlayDiv.offsetHeight, clickedImg.width, clickedImg.height, gal.length);
-		clickedImg.addEventListener('load', () => {
-			clearInterval(loadingInt);
-			imgLoading.style.display = 'none';
-			imgEl.style = `z-index:180000;height:${opImgDim.height}px;width:${opImgDim.width}px;display:inline-block;margin:${((overlayDiv.offsetHeight - opImgDim.height) / 2)}px ${(((0.94 * overlayDiv.offsetWidth) - opImgDim.width) / 2)}px;`;
-			imgEl.title = undefined != gal[imgNum].getAttribute('title') || null != gal[imgNum].getAttribute('title') ? gal[imgNum].getAttribute('title') : '';
-		});
-		let titleEl = document.querySelector('#img-title-info');
-		titleEl.style.overflow == 'hidden';
-		titleEl.innerHTML = undefined != gal[imgNum].getAttribute('title') || null != gal[imgNum].getAttribute('title') ? gal[imgNum].getAttribute('title') : '';
-		titleEl.style.width = opImgDim.width + 'px';
-		titleEl.style.left = (0.04 * overlayDiv.offsetWidth) + (((0.94 * overlayDiv.offsetWidth) - opImgDim.width) / 2) + 'px';
-		this.createToolbar(overlayDiv, gal, imgEl, imgNum);
-		this.scrollToPrev(imgNum);
-	}
-
-	/*
-	*Scroll loaded image on side bar
-	* 
-	*@param imgNum Number of image on gallery
-	*
-	*/
-	scrollToPrev(imgNum) {
-		Array.from(document.querySelectorAll('.img-preview')).forEach((prev, i) => {
-
-			if (i === imgNum) {
-				prev.scrollIntoView({ block: "center" });
-				prev.style.border = `1px solid rgba(255, 0, 0, 0.8)`;
-
-			} else {
-				prev.style.border = `1px solid rgba(0,0,0,0.8)`;
-			}
-		});
-	}
-
-	/*
-	*Adjust element dimension on resize
-	* 
-	*@param e Resize event
-	*
-	*/
-
-	adjustApp(e) {
-		let overlayWidth = window.innerWidth;
-		let overlayHeight = window.innerHeight;
-		let overlayDiv = document.querySelector('#gallery-overlay');
-
-		if (undefined != overlayDiv) {
-			let closeBtn = overlayDiv.querySelector('#overlay-close-btn');
-			overlayDiv.style.height = `${overlayHeight}px`;
-			overlayDiv.style.width = `${overlayWidth}px`;
-			closeBtn.style.fontSize = `${0.016 * overlayWidth}`;
-			let loadedImg = document.querySelector('#loaded-img');
-			let sidebarDiv = document.querySelector('#gal-sidebar');
-			let imgCount = undefined != sidebarDiv ? 2 : 1;
-			let alltImgWidth = undefined != sidebarDiv ? 0.94 : 1;
-			let sideBarWid = undefined != sidebarDiv ? 0.04 : 0;
-
-			let imgLoading = overlayDiv.querySelector('#image-loading-main');
-			imgLoading.style.left = `${0.992 * overlayWidth / 2}`;
-			imgLoading.style.top = `${overlayHeight / 2}`;
-			imgLoading.style.fontSize = `${0.016 * overlayWidth}px`
-
-			let bufferImg = new Image();
-			bufferImg.src = loadedImg.src;
-			let opImgDim = this.getOptimizedImageSize(overlayWidth, overlayHeight, bufferImg.width, bufferImg.height, imgCount);
-			let imgDisplay = loadedImg.style.display;
-			loadedImg.style = `height:${opImgDim.height}px;width:${opImgDim.width}px;display:${imgDisplay};margin:${((overlayHeight - opImgDim.height) / 2)}px ${(((alltImgWidth * overlayWidth) - opImgDim.width) / 2)}px;`;
-
-			let titleEl = document.querySelector('#img-title-info');
-			titleEl.style.overflow = 'hidden';
-			titleEl.style.width = opImgDim.width + 'px';
-			titleEl.style.height = (0.02 * overlayHeight) + 'px';
-			titleEl.style.left = (sideBarWid * overlayWidth) + (((alltImgWidth * overlayWidth) - opImgDim.width) / 2) + 'px';
-			titleEl.style.fontSize = 0.015 * overlayHeight + 'px';
-
-			if (undefined != sidebarDiv) {
-				let sidebarImgs = Array.from(sidebarDiv.querySelectorAll('div'));
-				sidebarDiv.style.height = overlayHeight + 'px';
-				sidebarDiv.style.width = (0.04 * overlayWidth) + 'px';
-				sidebarDiv.style.paddingTop = 0 < (overlayHeight - (sidebarImgs.length * ((0.93 * sidebarDiv.offsetWidth) + 2))) / 2 ? `${(overlayHeight - (sidebarImgs.length * ((0.93 * sidebarDiv.offsetWidth) + 2))) / 2}px` : '0px';
-				sidebarImgs.map(y => {
-					y.style.height = (0.93 * sidebarDiv.offsetWidth) + 'px';
-					y.style.fontSize = `${0.6 * sidebarDiv.offsetWidth}px`;
-				});
-
-				let toolbarDiv = overlayDiv.querySelector('#toolbar-div');
-				toolbarDiv.style = `top:${(overlayHeight / 1.8) - (0.077 * overlayWidth)}px;float:right;right: 0px;display: inline-block;position: fixed;`;
-				Array.from(toolbarDiv.querySelectorAll('div')).map(x => {
-					x.style.height = `${0.02 * overlayWidth}px`;
-					x.style.width = `${0.02 * overlayWidth}px`;
-					x.style.borderRadius = `${0.02 * overlayWidth}px`;
-					x.style.marginTop = `${0.002 * overlayWidth}px`;
-					x.style.fontSize = 'gal-slide-show' != x.id ? `${0.016 * overlayWidth}px` : `${0.011 * overlayWidth}px`;
-				});
-
-			}
-
-
-		}
-	}
-
-	/*
-	*Destroy overlay viewer
-	* 
-	*Static no parameter
-	*
-	*/
-
-	closeOverlay(overlayEl) {
-		let slideShowEl = overlayEl.querySelector('#gal-slide-show');
-
-		if (null != slideShowEl && 0 < parseInt(slideShowEl.getAttribute('data-interval-id'))) {
-			clearInterval(parseInt(slideShowEl.getAttribute('data-interval-id')));
-		}
-		document.body.removeChild(overlayEl);
-		document.body.style.overflow = '';
-		document.body.style.margin = ''
-		document.querySelector('head').removeChild(document.querySelector('#ctc-scroll-css'));
-	}
-
-	/*
-	*Optimize image dimension for viewing 
-	* 
-	*@param scrnWd Window's inner width
-	*@param scrnHt Window's inner height
-	*@param imgActWd Original width of image
-	*@param imgActHt Original height of image
-	*@param imgCount Toal count of images in gallery
-	*
-	*/
-
-	getOptimizedImageSize(scrnWd, scrnHt, imgActWd, imgActHt, imgCount) {
-
-		let imgScrnHtRatio = 0, imgScrnWdRatio = 0, optImgHt = 0, optImgWd = 0;
-		let imgPercent = undefined != imgCount && 1 < imgCount ? 0.93 : 0.955;
-		let marginPercent = 1 - imgPercent;
-		if ((imgActWd >= scrnWd) && (imgActHt >= scrnHt)) {
-			if (imgActWd >= imgActHt) {
-				if (imgActWd > imgActHt) {
-					imgScrnWdRatio = imgActWd / scrnWd;
-					optImgWd = (imgActWd / imgScrnWdRatio) - (marginPercent * scrnWd);
-					optImgHt = imgActHt * (optImgWd / imgActWd);
-					if (optImgHt >= (imgPercent * scrnHt)) {
-						imgScrnHtRatio = scrnHt / imgActHt;
-						optImgHt = imgActHt * imgScrnHtRatio - (marginPercent * scrnHt);
-						optImgWd = imgActWd * (optImgHt / imgActHt);
-					}
-				} else {
-					if (scrnWd > scrnHt) {
-						optImgHt = (imgPercent * scrnHt);
-						optImgWd = optImgHt;
-					} else if (scrnHt > scrnWd) {
-						optImgWd = (imgPercent * scrnWd);
-						optImgHt = optImgWd;
-					} else {
-						imgScrnHtRatio = scrnHt / imgActHt;
-						optImgHt = imgActHt * imgScrnHtRatio - (marginPercent * scrnHt);
-						optImgWd = imgActWd * (optImgHt / imgActHt);
-					}
-				}
-			} else {
-				imgScrnHtRatio = imgActHt / scrnHt;
-				optImgHt = (imgActHt / imgScrnHtRatio) - (marginPercent * scrnHt);
-				optImgWd = imgActWd * (optImgHt / imgActHt);
-			}
-
-		} else if (imgActWd >= scrnWd && imgActHt < scrnHt) {
-			imgScrnWdRatio = scrnWd / imgActWd;
-			optImgWd = imgActWd * imgScrnWdRatio - (marginPercent * scrnWd);
-			optImgHt = imgActHt * (optImgWd / imgActWd);
-		} else if (imgActHt >= scrnHt && imgActWd < scrnWd) {
-			imgScrnHtRatio = scrnHt / imgActHt;
-			optImgHt = imgActHt * imgScrnHtRatio - (marginPercent * scrnHt);
-			optImgWd = imgActWd * (optImgHt / imgActHt);
-			optImgHt = imgActHt * (optImgWd / imgActWd);
-		} else {
-			let avlImgWd = imgPercent * scrnWd;
-			let avlImgHt = imgPercent * scrnHt;
-			if (imgActWd >= avlImgWd && imgActHt >= avlImgHt) {
-				let imgAvlWdRatio = avlImgWd / imgActWd;
-				imgAvlHtRatio = avlImgHt / imgActHt;
-				optImgWd = avlImgWd * imgAvlWdRatio;
-				optImgHt = scrnHt * imgScrnHtRatio;
-			} else if (imgActWd >= avlImgWd && imgActHt < avlImgHt) {
-				let imgAvlWdRatio = avlImgWd / imgActWd;
-				optImgWd = imgActWd * imgAvlWdRatio;
-				optImgHt = imgActHt * (optImgWd / imgActWd);
-			} else if (imgActHt >= avlImgHt && imgActWd < avlImgWd) {
-				let imgAvlHtRatio = avlImgHt / imgActHt;
-				optImgHt = imgActHt * imgAvlHtRatio;
-				optImgWd = imgActWd * (optImgHt / imgActHt);
-			} else {
-				optImgWd = imgActWd;
-				optImgHt = imgActHt;
-			}
-			optImgHt = imgActHt * (optImgWd / imgActWd);
-		}
-
-
-		//at last check it optimized width is still large			
-		if (optImgWd > (imgPercent * scrnWd)) {
-			optImgWd = imgPercent * scrnWd;
-			optImgHt = imgActHt * (optImgWd / imgActWd);
-		}
-		return {
-			width: optImgWd,
-			height: optImgHt
+		const preload = new Image();
+		preload.onload = () => {
+			if (normalizedIndex !== this.activeIndex || !this.overlay) return;
+			imageElement.src = source;
+			loader.hidden = true;
+			requestAnimationFrame(() => imageElement.classList.add("is-loaded"));
 		};
+		preload.onerror = () => {
+			if (normalizedIndex !== this.activeIndex || !this.overlay) return;
+			loader.hidden = true;
+			error.hidden = false;
+		};
+		preload.src = source;
+
+		const title = this.getTitle(sourceImage);
+		const caption = overlay.querySelector("#img-title-info");
+		caption.textContent = title;
+		caption.hidden = !title;
+		overlay.querySelector("#ctc-image-counter").textContent = `${normalizedIndex + 1} / ${gallery.length}`;
+		this.updateToolbar(normalizedIndex);
+		this.scrollToPrev(normalizedIndex);
+		this.preloadNeighbors(normalizedIndex);
 	}
 
-	/*
-	*Handle keystroke event
-	* 
-	*@param e Key stroke event
-	*
-	*/
+	scrollToPrev(imageIndex) {
+		if (!this.overlay) return;
+		Array.from(this.overlay.querySelectorAll(".img-preview")).forEach((thumbnail, index) => {
+			const active = index === imageIndex;
+			thumbnail.classList.toggle("is-active", active);
+			thumbnail.setAttribute("aria-current", active ? "true" : "false");
+			if (active) thumbnail.scrollIntoView({ block: "nearest", inline: "nearest", behavior: this.prefersReducedMotion() ? "auto" : "smooth" });
+		});
+	}
+
+	adjustApp() {
+		if (!this.overlay) return;
+		this.overlay.style.setProperty("--ctc-viewport-height", `${window.innerHeight}px`);
+	}
+
+	closeOverlay(overlayElement, restoreFocus = true) {
+		const overlay = overlayElement || this.overlay;
+		if (!overlay) return;
+		this.stopSlideshow();
+		overlay.classList.remove("is-visible");
+		const remove = () => {
+			if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+			if (this.overlay === overlay) this.overlay = null;
+			document.body.style.overflow = this.previousBodyOverflow;
+			if (restoreFocus && this.lastFocusedElement && typeof this.lastFocusedElement.focus === "function") this.lastFocusedElement.focus();
+		};
+		this.prefersReducedMotion() ? remove() : window.setTimeout(remove, 180);
+	}
+
+	getOptimizedImageSize(screenWidth, screenHeight, imageWidth, imageHeight, imageCount) {
+		const rail = imageCount > 1 && screenWidth > 720 ? 116 : 0;
+		const maxWidth = Math.max(0, screenWidth - rail - 64);
+		const maxHeight = Math.max(0, screenHeight - (imageCount > 1 ? 184 : 112));
+		if (!imageWidth || !imageHeight) return { width: maxWidth, height: maxHeight };
+		const ratio = Math.min(1, maxWidth / imageWidth, maxHeight / imageHeight);
+		return { width: imageWidth * ratio, height: imageHeight * ratio };
+	}
 
 	onKeyStroke(event) {
-		let overlayDiv = document.querySelector('#gallery-overlay');
-		if (undefined != overlayDiv) {
-			switch (event.code) {
-
-				case 'ArrowUp':
-					document.querySelector('#img-zoom-in').click();
-					break;
-				case 'ArrowDown':
-					document.querySelector('#img-zoom-out').click();
-					break;
-				case 'ArrowLeft':
-					document.querySelector('#gal-prev-img').click();
-					break;
-				case 'ArrowRight':
-					document.querySelector('#gal-next-img').click()
-					break;
-				case 'Escape':
-					overlayDiv.querySelector('#overlay-close-btn').click();
-					break;
-			}
+		if (!this.overlay) return;
+		if (event.key === "Tab") {
+			this.trapFocus(event);
+			return;
+		}
+		const actions = {
+			ArrowUp: () => this.overlay.querySelector("#img-zoom-in")?.click(),
+			ArrowDown: () => this.overlay.querySelector("#img-zoom-out")?.click(),
+			ArrowLeft: () => this.overlay.querySelector("#gal-prev-img")?.click(),
+			ArrowRight: () => this.overlay.querySelector("#gal-next-img")?.click(),
+			Escape: () => this.closeOverlay(this.overlay),
+			Home: () => this.overlay.querySelector("#gal-first-img")?.click(),
+			End: () => this.overlay.querySelector("#gal-last-img")?.click(),
+			" ": () => this.overlay.querySelector("#gal-slide-show")?.click()
+		};
+		if (actions[event.key]) {
+			event.preventDefault();
+			actions[event.key]();
 		}
 	}
 
+	destroy() {
+		if (this.overlay) this.closeOverlay(this.overlay, false);
+		window.removeEventListener("resize", this.boundResize);
+		window.removeEventListener("keydown", this.boundKeydown);
+	}
 
+	getTitle(image) {
+		return image.getAttribute("title") || image.getAttribute("data-caption") || "";
+	}
+
+	nextIndex() {
+		return this.activeIndex >= this.gallery.length - 1 ? (this.options.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
+	}
+
+	previousIndex() {
+		return this.activeIndex <= 0 ? (this.options.loop ? this.gallery.length - 1 : 0) : this.activeIndex - 1;
+	}
+
+	getZoom(imageElement) {
+		return Number(imageElement?.dataset.zoom || 1);
+	}
+
+	setZoom(value) {
+		if (!this.overlay) return;
+		const imageElement = this.overlay.querySelector("#loaded-img");
+		if (!imageElement) return;
+		const zoom = Math.min(4, Math.max(0.4, Math.round(value * 10) / 10));
+		imageElement.dataset.zoom = String(zoom);
+		imageElement.style.transform = `scale(${zoom})`;
+		imageElement.classList.toggle("is-zoomed", zoom > 1);
+	}
+
+	toggleSlideshow() {
+		if (this.ssIntervalId) {
+			this.stopSlideshow();
+			return;
+		}
+		const button = this.overlay?.querySelector("#gal-slide-show");
+		if (!button) return;
+		button.innerHTML = this.icon("pause");
+		button.title = "Pause slideshow";
+		button.setAttribute("aria-label", "Pause slideshow");
+		button.setAttribute("aria-pressed", "true");
+		this.ssIntervalId = window.setInterval(() => {
+			if (this.overlay) this.loadImg(this.nextIndex(), this.gallery, this.overlay, this.overlay.querySelector("#loaded-img"));
+		}, Math.max(1000, Number(this.options.slideshowInterval) || 3000));
+		button.setAttribute("data-interval-id", String(this.ssIntervalId));
+	}
+
+	stopSlideshow() {
+		if (this.ssIntervalId) window.clearInterval(this.ssIntervalId);
+		this.ssIntervalId = 0;
+		const button = this.overlay?.querySelector("#gal-slide-show");
+		if (button) {
+			button.innerHTML = this.icon("play");
+			button.title = "Start slideshow";
+			button.setAttribute("aria-label", "Start slideshow");
+			button.setAttribute("aria-pressed", "false");
+			button.setAttribute("data-interval-id", "0");
+		}
+	}
+
+	updateToolbar(imageIndex) {
+		if (!this.overlay) return;
+		const previous = this.overlay.querySelector("#gal-prev-img");
+		const next = this.overlay.querySelector("#gal-next-img");
+		if (previous) previous.setAttribute("data-img-num", String(this.previousIndex()));
+		if (next) next.setAttribute("data-img-num", String(this.nextIndex()));
+		if (!this.options.loop) {
+			[previous, this.overlay.querySelector("#gal-first-img")].forEach(button => { if (button) button.disabled = imageIndex === 0; });
+			[next, this.overlay.querySelector("#gal-last-img")].forEach(button => { if (button) button.disabled = imageIndex === this.gallery.length - 1; });
+		}
+	}
+
+	preloadNeighbors(imageIndex) {
+		if (this.gallery.length < 2) return;
+		[this.previousIndex(), this.nextIndex()].forEach(index => {
+			const preload = new Image();
+			preload.src = this.gallery[index].currentSrc || this.gallery[index].src;
+		});
+	}
+
+	trapFocus(event) {
+		const focusable = Array.from(this.overlay.querySelectorAll("button:not([disabled]), [tabindex]:not([tabindex='-1'])"));
+		if (!focusable.length) return;
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		if (event.shiftKey && document.activeElement === first) {
+			event.preventDefault();
+			last.focus();
+		} else if (!event.shiftKey && document.activeElement === last) {
+			event.preventDefault();
+			first.focus();
+		}
+	}
+
+	prefersReducedMotion() {
+		return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	}
+
+	icon(name) {
+		const paths = {
+			close: '<path d="M6 6l12 12M18 6L6 18"/>',
+			previous: '<path d="M15 18l-6-6 6-6"/>',
+			next: '<path d="M9 18l6-6-6-6"/>',
+			first: '<path d="M18 18l-6-6 6-6M6 6v12"/>',
+			last: '<path d="M6 18l6-6-6-6M18 6v12"/>',
+			zoomIn: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>',
+			zoomOut: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M8 11h6"/>',
+			play: '<path d="M8 5l11 7-11 7V5z"/>',
+			pause: '<path d="M9 5v14M15 5v14"/>'
+		};
+		return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name] || ""}</svg>`;
+	}
+
+	injectStyles() {
+		if (document.querySelector("#ctc-scroll-css")) return;
+		const style = document.createElement("style");
+		style.id = "ctc-scroll-css";
+		style.textContent = `
+			.ctc-gallery-overlay{--ctc-accent:#ffb648;--ctc-panel:rgba(17,18,22,.82);--ctc-border:rgba(255,255,255,.14);position:fixed;inset:0;z-index:1000000;height:var(--ctc-viewport-height,100dvh);color:#fff;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;opacity:0;transition:opacity .18s ease;isolation:isolate}
+			.ctc-gallery-overlay.is-visible{opacity:1}.ctc-gallery-overlay *{box-sizing:border-box}.ctc-gallery__backdrop{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(50,53,62,.72),rgba(5,6,8,.96) 75%);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+			.ctc-gallery__shell{position:relative;display:grid;grid-template-columns:104px minmax(0,1fr);grid-template-rows:64px minmax(0,1fr) auto 76px;width:100%;height:100%;padding:0 24px 16px 12px}
+			.ctc-gallery__topbar{position:relative;z-index:2;grid-column:1/-1;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 0 8px 12px}.ctc-gallery__brand{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.74);font-size:13px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}.ctc-gallery__brand span{width:9px;height:9px;border-radius:50%;background:var(--ctc-accent);box-shadow:0 0 0 5px rgba(255,182,72,.12)}
+			.ctc-gallery__counter{font-size:13px;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.68);background:rgba(255,255,255,.07);border:1px solid var(--ctc-border);border-radius:999px;padding:6px 11px}.ctc-gallery__close{justify-self:end}
+			.ctc-gallery__stage{position:absolute;z-index:1;inset:0 112px;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;border-radius:18px}.ctc-gallery__image{display:block;max-width:100%;max-height:calc(100% - 240px);width:auto;height:auto;object-fit:contain;opacity:0;cursor:ew-resize;filter:drop-shadow(0 24px 45px rgba(0,0,0,.38));transition:opacity .24s ease,transform .22s ease;user-select:none}.ctc-gallery__image.is-loaded{opacity:1}.ctc-gallery__image.is-zoomed{cursor:zoom-out}
+			.ctc-gallery__loading,.ctc-gallery__error{position:absolute;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.72);font-size:13px}.ctc-gallery__loading[hidden],.ctc-gallery__error[hidden]{display:none}.ctc-gallery__spinner,.ctc-gallery__thumb-loader{width:18px;height:18px;border:2px solid rgba(255,255,255,.18);border-top-color:var(--ctc-accent);border-radius:50%;animation:ctc-spin .7s linear infinite}@keyframes ctc-spin{to{transform:rotate(360deg)}}
+			.ctc-gallery__tap-hint{position:absolute;bottom:12px;padding:7px 11px;border-radius:999px;background:rgba(0,0,0,.44);color:rgba(255,255,255,.62);font-size:11px;opacity:0;transition:opacity .2s}.ctc-gallery__stage:hover .ctc-gallery__tap-hint{opacity:1}
+			.ctc-gallery__caption{position:absolute;z-index:2;left:50%;bottom:90px;transform:translateX(-50%);width:max-content;max-width:min(720px,calc(100% - 32px));padding:12px 20px 4px;color:rgba(255,255,255,.78);font-size:14px;line-height:1.5;text-align:center}.ctc-gallery__caption[hidden]{display:block;visibility:hidden;padding-top:4px}
+			.ctc-gallery__toolbar{position:absolute;z-index:2;left:50%;bottom:17px;transform:translateX(-50%);display:flex;align-items:center;gap:5px;padding:7px;background:var(--ctc-panel);border:1px solid var(--ctc-border);border-radius:16px;box-shadow:0 16px 38px rgba(0,0,0,.28);backdrop-filter:blur(18px)}
+			.ctc-gallery__button{display:inline-grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid transparent;border-radius:11px;background:transparent;color:rgba(255,255,255,.86);cursor:pointer;transition:background .15s,color .15s,transform .15s,border-color .15s}.ctc-gallery__button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ctc-gallery__button:hover{background:rgba(255,255,255,.1);color:#fff}.ctc-gallery__button:active{transform:scale(.94)}.ctc-gallery__button:focus-visible{outline:2px solid var(--ctc-accent);outline-offset:2px}.ctc-gallery__button:disabled{opacity:.3;cursor:not-allowed}.ctc-gallery__toolbar #gal-slide-show{background:var(--ctc-accent);color:#1c1408}.ctc-gallery__toolbar #gal-slide-show:hover{background:#ffc46a}
+			.ctc-gallery__thumbnails{position:absolute;z-index:2;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;justify-content:safe center;gap:9px;max-height:calc(100% - 96px);min-height:0;overflow:auto;padding:4px 12px 4px 4px;scrollbar-width:none}.ctc-gallery__thumbnails::-webkit-scrollbar{display:none}.img-preview{position:relative;flex:0 0 auto;width:72px;height:58px;padding:0;overflow:hidden;border:2px solid transparent;border-radius:11px;background:rgba(255,255,255,.07);cursor:pointer;opacity:.62;transition:opacity .15s,border-color .15s,transform .15s}.img-preview:hover{opacity:1;transform:translateX(2px)}.img-preview:focus-visible{outline:2px solid var(--ctc-accent);outline-offset:2px}.img-preview.is-active{opacity:1;border-color:var(--ctc-accent);box-shadow:0 0 0 3px rgba(255,182,72,.13)}.img-preview img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .2s}.img-preview.is-loaded img{opacity:1}.img-preview .ctc-gallery__thumb-loader{position:absolute;inset:0;margin:auto;width:14px;height:14px}.img-preview.is-loaded .ctc-gallery__thumb-loader{display:none}
+			.ctc-gallery-overlay--single .ctc-gallery__shell{grid-template-columns:1fr}.ctc-gallery-overlay--single .ctc-gallery__caption{bottom:24px}.ctc-gallery-overlay--single .ctc-gallery__tap-hint{display:none}
+			@media(max-width:720px){.ctc-gallery__shell{grid-template-columns:1fr;grid-template-rows:58px minmax(0,1fr) auto 70px 84px;padding:0 12px 8px}.ctc-gallery__topbar{padding-left:4px}.ctc-gallery__brand{font-size:11px}.ctc-gallery__stage{inset:0 12px;border-radius:12px}.ctc-gallery__image{max-width:100%;max-height:calc(100% - 260px)}.ctc-gallery__caption{bottom:158px;font-size:13px;padding:8px 12px 2px}.ctc-gallery__toolbar{bottom:91px;gap:2px;padding:5px;max-width:calc(100% - 24px)}.ctc-gallery__button{width:38px;height:38px;border-radius:10px}.ctc-gallery__toolbar #gal-first-img,.ctc-gallery__toolbar #gal-last-img{display:none}.ctc-gallery__thumbnails{left:50%;top:auto;bottom:8px;transform:translateX(-50%);width:fit-content;max-width:calc(100% - 24px);max-height:none;flex-direction:row;justify-content:safe center;align-items:center;padding:8px 4px;gap:8px}.img-preview{width:64px;height:52px}.img-preview:hover{transform:translateY(-2px)}.ctc-gallery__tap-hint{display:none}}
+			@media(max-width:380px){.ctc-gallery__button{width:36px;height:36px}.ctc-gallery__toolbar{gap:0}.ctc-gallery__brand{visibility:hidden}}
+			@media(prefers-reduced-motion:reduce){.ctc-gallery-overlay,.ctc-gallery__image,.ctc-gallery__button,.img-preview{transition:none}.ctc-gallery__spinner,.ctc-gallery__thumb-loader{animation-duration:1.5s}}
+		`;
+		document.head.appendChild(style);
+	}
 }
+
+if (typeof globalThis !== "undefined") globalThis.ctcOverlayViewer = ctcOverlayViewer;
+if (typeof module !== "undefined" && module.exports) module.exports = ctcOverlayViewer;
