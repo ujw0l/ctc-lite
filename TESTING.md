@@ -1,4 +1,4 @@
-# Validation report — 2.8.0
+# Validation report — 2.8.1
 
 Validated on 19 September 2026 against the working changes based on commit `b6668c6`.
 
@@ -27,8 +27,16 @@ Used an isolated HTML fixture with the latest plugin CSS and frontend JavaScript
 
 ## Limits and follow-up
 
-These results are not a full WordPress integration, security, or accessibility certification. The existing `Tested up to: 6.8` metadata has not been advanced based on isolated checks.
+These results are not a full WordPress integration, security, or accessibility certification. The `Tested up to` metadata is 7.1 as requested. The activation regression below uses the local WordPress 7.1.1 implementation; this is not a full compatibility certification.
 
 Before a WordPress.org release, test installation/update and block editing in a staging WordPress site with the intended theme, then run an end-to-end order through the intended payment and shipping add-ons. Verify SMTP delivery and email layouts in the supported mail clients. Live payment gateways, external SMTP delivery, database order persistence, multiple themes, and all add-ons were not tested in this pass.
 
 Keep updates separate from manual deactivation: the existing deactivation handler removes saved plugin settings. Back up first. The GitHub tag deployment workflow was not run; it also references an absent `npm run build` command and needs a separate release-workflow review before use.
+
+## Activation regression — 2.8.1
+
+The local WordPress log reported an existing orders table being created again during activation. The schema's missing space before `(` caused `dbDelta()` to parse the wrong table name. The schema now uses WordPress-compatible spacing and an explicitly named existing unique key.
+
+`php tests/activation.php /path/to/wordpress` loads the installed WordPress `dbDelta()` function without bootstrapping the site. A database double exercises the actual activation callback. On PHP 8.3.14 and 8.4.1, fresh activation created one table with no output; repeat activation emitted no output or schema queries and preserved the order-data sentinel. No user database or plugin settings were changed.
+
+The GitHub tag is a source release. Its commit skips the existing automatic deployment workflow; WordPress.org publishing has not been performed.

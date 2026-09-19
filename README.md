@@ -68,6 +68,7 @@ The plugin ships plain PHP, JavaScript, and CSS. There is no frontend compilatio
 npm ci
 npm test
 php tests/email.php
+php tests/activation.php /path/to/wordpress
 ```
 
 The JavaScript suite covers image selection, cart persistence, totals, coupons, pickup, checkout navigation, and gallery dimensions. PHP checks cover email rendering, SMTP configuration, and order confirmation when email fails. These use isolated fixtures, not live payment providers or customer mailboxes. See [TESTING.md](TESTING.md) for the checks performed and remaining integration coverage.

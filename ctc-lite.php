@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: Block-based products, galleries, cart, checkout, and order management for WordPress.
- Version: 2.8.0
+ Version: 2.8.1
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -75,17 +75,21 @@ public function activeDeactivUinstall(){
  * Activate plugin
  */
 public function ctcLiteActivate(){
-global $wpdb;
-$charset_collate = $wpdb->get_charset_collate();
-   $sql[] =  "CREATE TABLE `".$wpdb->prefix."ctclOrders`(
-      `orderId` varchar(155) NOT NULL,
-      `orderDetail` text NOT NULL,
-      `orderStatus` varchar(155)NOT NULL,
-      `vendorNote` text NOT NULL,
-      UNIQUE KEY (`orderId`)) $charset_collate;";
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+    $table_name = $wpdb->prefix . 'ctclOrders';
+    // dbDelta requires a space before '(' and a named key on its own line.
+    // Preserve the existing table, column names and unique index when updating.
+    $sql = "CREATE TABLE {$table_name} (
+        orderId varchar(155) NOT NULL,
+        orderDetail text NOT NULL,
+        orderStatus varchar(155) NOT NULL,
+        vendorNote text NOT NULL,
+        UNIQUE KEY orderId (orderId)
+    ) {$charset_collate};";
 
-require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-dbDelta($sql);
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta($sql);
 }
 /**
  * @since 1.0.0

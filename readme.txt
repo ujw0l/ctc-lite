@@ -3,8 +3,8 @@ Contributors: UjW0L
 Donate link: https://www.paypal.com/donate/?hosted_button_id=JTGN7T2A9X3KW
 Tags: ecommerce, online store, block, shopping cart, sell online
 Requires at least: 5.5.2
-Tested up to: 6.8
-Stable tag: 2.8.0
+Tested up to: 7.1
+Stable tag: 2.8.1
 Requires PHP: 7.4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 
 == Changelog ==
 
+= 2.8.1 =
+* Fixed activation output when the orders table already exists by correcting the dbDelta schema format.
+* Updated Tested up to metadata to WordPress 7.1.
+
 = 2.8.0 =
 * Refreshed responsive styling for product, gallery, cart, and checkout blocks.
 * Added a reactive gallery editor preview and respected configured image dimensions.
@@ -199,6 +203,9 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 = 1.0.0 Alpha =
 
 == Upgrade Notice ==
+
+= 2.8.1 =
+Fixes activation output when an orders table already exists. Update in place to preserve plugin settings.
 
 = 2.8.0 =
 Updated storefront styles, gallery editor, order emails, and SMTP handling. Back up your store, update in place, and review checkout with your theme and add-ons.

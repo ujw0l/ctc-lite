@@ -1,6 +1,6 @@
 {
   "name": "ctc-lite",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "Block-based ecommerce plugin for WordPress",
   "main": "index.js",
   "scripts": {
