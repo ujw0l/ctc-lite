@@ -115,25 +115,28 @@ class ctclMain {
      * On Variation two select
      */
     onVariationTwoSelect(){
+        document.querySelectorAll('.ctcl-Variation-2').forEach(select => {
+            const product = select.closest('.ctcl-product-container');
+            const button = product && product.querySelector('.ctcl-add-cart');
+            if (!button) return;
+            // Keep the saved product image when a variation has no custom image.
+            const productImage = button.getAttribute('data-pic');
+            select.addEventListener('change', e => {
+                const value = e.target.value;
+                const separator = value.indexOf('~');
+                if (separator === -1) return;
+                const variationImage = value.slice(separator + 1).trim();
+                const hasCustomImage = variationImage && !variationImage.includes('ctclite-default.png');
+                const image = hasCustomImage ? variationImage : productImage;
+                if (image) button.setAttribute('data-pic', image);
 
-        if(null != document.querySelector('#ctcl-Variation-2')) { 
-            document.querySelector('#ctcl-Variation-2').addEventListener('change',e=>{
-                let val =  e.target.value ;
-                if(val.includes('~')){
-                    let parentContainer = e.target.parentElement.parentElement;
-                    let vals = val.split('~');
-                    if(null !=  document.querySelector('.ctcl-image-gallery')){
-
-                       if( !vals[1].includes('ctclite-default.png')){
-                        document.querySelector('.ctcl-image-gallery').querySelector('.ctclig-main-image').style.backgroundImage = `url("${vals[1]}")`;
-                       } 
-                       
-                    }
-                    parentContainer.querySelector('.ctcl-add-cart').setAttribute('data-pic',vals[1]);  
+                const display = product.closest('.wp-block-ctc-lite-display-column');
+                const gallery = (display || document).querySelector('.ctclig-main-image');
+                if (gallery && image && !image.includes('ctclite-default.png')) {
+                    gallery.style.backgroundImage = `url(${JSON.stringify(image)})`;
                 }
-            })
-        }
-
+            });
+        });
     }
 
     /**
@@ -330,16 +333,19 @@ class ctclMain {
 
             let itemPrice = document.createElement('span');
             itemPrice.classList.add('ctcl-checkout-item-price');
+            itemPrice.setAttribute('data-label', ctclParams.priceHead);
             itemPrice.appendChild(document.createTextNode(cartItems[i].price));
             itemDisplay.append(itemPrice);
 
             let itemQty = document.createElement('span');
             itemQty.classList.add('ctcl-checkout-item-qty');
+            itemQty.setAttribute('data-label', ctclParams.qtyHead);
             itemQty.appendChild(document.createTextNode(cartItems[i].qty));
             itemDisplay.append(itemQty);
 
             let itemTotalSpan = document.createElement('span');
             itemTotalSpan.classList.add('ctcl-checkout-item-total');
+            itemTotalSpan.setAttribute('data-label', ctclParams.itemTotalHead);
             itemTotalSpan.appendChild(document.createTextNode(itemTotal.toFixed(2)));
             itemDisplay.append(itemTotalSpan);
 

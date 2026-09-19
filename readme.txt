@@ -1,130 +1,142 @@
-# CT Commerce Lite 🛒 | Fast & Flexible WordPress eCommerce Plugin
+=== CT Commerce Lite ===
+Contributors: UjW0L
+Donate link: https://www.paypal.com/donate/?hosted_button_id=JTGN7T2A9X3KW
+Tags: ecommerce, online store, block, shopping cart, sell online
+Requires at least: 5.5.2
+Tested up to: 6.8
+Stable tag: 2.8.0
+Requires PHP: 7.4.9
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-**Contributors:** UjW0L  
-**Donate link:** https://www.paypal.com/donate/?hosted_button_id=JTGN7T2A9X3KW
-**Tags:** ecommerce, online store, block, shopping cart, sell online,  
-**Requires at least:** 5.5.2  
-**Tested up to:** 6.8
-**Stable tag:** 2.7.0 
-**Requires PHP:** 7.4.9  
-**License:** GPLv2 or later
-CT Commerce Lite** is an ultra-lightweight, block-based eCommerce plugin for WordPress
+Create a WordPress store with product, gallery, cart, and checkout blocks. Includes order management, shipping options, coupons, and SMTP email settings.
 
-## Description
+== Description ==
 
-**CT Commerce Lite** is an ultra-lightweight, block-based eCommerce plugin for WordPress, designed to make your online store faster, more flexible, and highly customizable. Perfect for small businesses, handmade goods, and blogs, CT Commerce Lite delivers a feature-rich shopping experience with minimal impact on site speed.
+CT Commerce Lite lets you build product pages and a checkout flow in the WordPress block editor. Configure your products, arrange their galleries, and manage orders from the CTC Lite dashboard.
 
-### 🌟 **Key Features:**
+= Build your store with blocks =
 
-- **🚀 Ultra-Lightweight & Fast:** With a total size of under 200KB and a frontend JavaScript load of just 40KB, CT Commerce Lite ensures rapid page load times, improving user experience and boosting conversion rates. [Learn more about the importance of site speed](https://www.akamai.com/newsroom/press-release/akamai-releases-spring-2017-state-of-online-retail-performance-report).
+* CTC Lite Product: price, product image, quantity, variations, out-of-stock and pre-order settings.
+* CTC Lite Image Gallery: customizable width and height, a live editor preview, thumbnails, and an image viewer.
+* Display in column: a starting layout for a gallery, description, and product controls.
+* CTC Lite Cart: responsive item summaries, coupons, totals, contact fields, and shipping/payment selection.
+* CTC Lite Order Processing: connects checkout to the configured payment and shipping handlers.
 
-- **🔧 Gutenberg Block Integration:** Seamlessly integrates with the WordPress Gutenberg block editor, including a built-in gallery block with advanced Image Gallery and Lightbox features for a stunning product display.
+= Core store features =
 
-- **💸 Flexible Pricing & Variation Images:** Easily configure different prices and images for product variations such as size, color, and style, enhancing the shopping experience with personalized options.
+* Two variation groups, with optional variation-specific prices and images.
+* Currency and tax-rate settings, cash on delivery, vendor delivery, and store pickup.
+* Coupon configuration in the Cart block.
+* Pending and completed order views, customer details, vendor notes, and print controls.
+* SMTP settings and HTML order confirmations with your WordPress Site Title, order details, and delivery notes.
+* Responsive product controls and cart layouts, centered shipping/payment panels, and compact coupon entry.
 
-- **🔗 Modular Design:** Keep your site lean with our modular design. Expand functionality through a variety of add-ons, ensuring that you only include the features you need.
+= Optional integrations =
 
-- **🎨 Comprehensive Product Management:** Manage product pricing, stock status, and pre-orders efficiently. Utilize "out of stock" and "pre-order" labels to optimize inventory management.
+Payments and other features can be extended through separate add-ons. The core plugin does not bundle card payments, PayPal, social sharing, ratings, analytics, or a floating cart.
 
-- **💻 Theme Compatibility:** Works seamlessly with any WordPress theme, requiring minimal CSS adjustments for a consistent look and feel.
+* [Floating Cart](https://wordpress.org/plugins/ctcl-floating-cart/)
+* [Sharing](https://wordpress.org/plugins/ctcl-sharing/)
+* [Stripe](https://wordpress.org/plugins/ctcl-stripe/)
+* [Phone Pay](https://wordpress.org/plugins/ctcl-phone-pay/)
+* [PayPal](https://wordpress.org/plugins/ctcl-paypal/)
+* [Product Display](https://wordpress.org/plugins/ctcl-product-display/)
+* [Analytics](https://wordpress.org/plugins/ctcl-analytics/)
+* [Order Status](https://github.com/ujw0l/ctcl-order-status)
+* [SMS Notifications](https://payhip.com/b/bdiOx)
+* [Custom Shipping](https://payhip.com/b/uZ4KU)
+* [Variation Swatches](https://payhip.com/b/qr8fb)
+* [Rating & Review](https://payhip.com/b/3PKa7)
 
-- **📊 Custom Dashboard:** Access an intuitive dashboard for easy management of settings, orders, and overall store administration.
+Each add-on has its own setup and compatibility requirements. Review your theme and add-ons with a test order before using the store in production.
 
-- **📧 Essential Built-in Features:**
-  - **Gallery Block:** Integrates Image Gallery and Lightbox functionality, along with options for social sharing and product ratings.
-  - **SMTP Settings:** Configure email settings to handle order notifications efficiently.
-  - **Shipping & Billing Settings:** Manage shipping and billing with built-in options, extendable through add-ons.
-  - **Discount & Coupon Codes:** Create discount codes and coupons to attract and retain customers.
+= Support =
 
-### 🌐 **Enhance Your Store with Add-ons:**
+Use the [WordPress.org support forum](https://wordpress.org/support/plugin/ctc-lite/) for setup questions or [GitHub issues](https://github.com/ujw0l/ctc-lite/issues) for reproducible bugs.
 
-CT Commerce Lite supports a range of add-ons to expand your store's capabilities:
+== Installation ==
 
-#### **Free Add-ons (WordPress.org):**
-- **🛒 [CTCL Floating Cart](https://wordpress.org/plugins/ctcl-floating-cart/):** Prevent cart abandonment with a floating cart that remains visible as customers shop.
-- **🔗 [CTCL Sharing](https://wordpress.org/plugins/ctcl-sharing/):** Boost product visibility with integrated social media sharing options.
-- **💳 [CTCL Stripe](https://wordpress.org/plugins/ctcl-stripe/):** Add Stripe payment gateway for seamless credit card transactions.
-- **📱 [CTCL Phone Pay](https://wordpress.org/plugins/ctcl-phone-pay/):** Support phone-based payment methods, ideal for regions with limited online payment options.
-- **💰 [CTCL PayPal Integration](https://wordpress.org/plugins/ctcl-paypal/):** Add PayPal as a payment option for greater flexibility.
-- **📄 [CTCL CTCL Product Display](https://wordpress.org/plugins/ctcl-product-display/):** Allow customers to track their order status directly from the frontend.
-- **📈 [CTCL Analytics](https://wordpress.org/plugins/ctcl-analytics/):** Gain insights into store performance with comprehensive sales reports.
+1. Install CT Commerce Lite from Plugins > Add New Plugin, or upload its ZIP, then activate it.
+2. Open CTC Lite in the admin menu. Configure Billing, Shipping, and Email. Enable a payment method and a shipping method.
+3. Create a product page with Display in column, or add the Product and Image Gallery blocks individually. Open Add Product Detail and enter the product information.
+4. Publish a separate page containing CTC Lite Order Processing and copy its URL.
+5. Add CTC Lite Cart to a checkout page. Open Add Checkout Detail and set the processing-page URL. Configure a coupon if needed.
+6. Publish your pages, add navigation links, and place a controlled test order before accepting customer orders.
 
+== Frequently Asked Questions ==
 
-#### **Free Add-ons (GitHub):**
-- **📦 [ Order Status](https://github.com/ujw0l/ctcl-order-status):** Let user cehck order status on frontend
+= Do I need WooCommerce? =
 
-#### **Premium Add-ons (Payhip):**
-- **📲 [CTCL SMS Notifications](https://payhip.com/b/bdiOx):** Receive instant SMS notifications for every sale.
-- **🚚 [CTCL Custom Shipping Options](https://payhip.com/b/uZ4KU):** Offer customized shipping options and print labels from your dashboard.
-- **🎨 [CTCL Variation Swatches](https://payhip.com/b/qr8fb):** Enhance user experience with clickable swatches for product variations.
-- **👍 [CTCL Rating & Review](https://payhip.com/b/3PKa7):** Enhance user experience by adding Like dislike and product Review form to product page.
+No. CT Commerce Lite provides its own product blocks, cart, order processing, and order-management screens.
 
-### 🎯 **Why Choose CT Commerce Lite?**
+= Where do I configure checkout? =
 
-- **Optimized for Shared Servers:** Designed to perform efficiently in environments with limited resources.
-- **Ideal for Hobbyists & Small Businesses:** Perfect for selling unique items, handmade products, or starting a small online shop.
-- **Scalable & Modular:** Begin with core features and grow with additional add-ons as your business needs evolve.
+In the CTC Lite Cart block, use Add Checkout Detail to set the URL of a published page containing CTC Lite Order Processing. That processing page must remain accessible, even if you leave it out of your navigation.
 
-### 🚀 **Performance Insights**
+= How do I set the product image used in the cart? =
 
-For performance metrics and insights, visit our [Plugin Test Report](https://plugintests.com/plugins/wporg/ctc-lite/latest) to see how CT Commerce Lite performs in terms of speed and server impact.
+Set the main product image through Add Product Detail. Gallery images are configured separately. You can also assign custom variation images. Variations that use the default placeholder keep the main product image. Existing cart items retain their stored image until they are removed and added again.
 
-💻 **Try It Out:** Check out our [Basic Demo](https://ctcl.ujwolb.com.np/8-2/) to experience the speed and functionality of CT Commerce Lite.
+= Can I resize the gallery? =
 
-### **Customization Tips**
+Yes. Select the gallery block and adjust Gallery width and Main image height. The editor previews changes immediately. Thumbnails sit below the main image; narrower screens scale the image proportionally.
 
-For custom CSS changes, use the [Custom CSS & JS](https://wordpress.org/plugins/custom-css-js/) plugin to ensure your modifications persist through updates.
+= How do I configure confirmation emails? =
 
-## Installation
+Enter your provider's SMTP settings under CTC Lite > Email and use the test-email control. The server must be reachable and your sender address must be permitted by the provider. A successful send does not guarantee inbox delivery. If sending fails after an order is placed, checkout shows the order ID and an email warning instead of crashing.
 
-1. Upload the plugin files to the `/wp-content/plugins/ctc-lite` directory, or install directly from the WordPress plugins screen.
-2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Configure the plugin via the Settings → CT Commerce Lite screen.
-4. Access the plugin settings from the top-left dashboard menu.
+= Can I customize the confirmation email? =
 
-## Frequently Asked Questions
+The default email uses your WordPress Site Title and the order data. Developers can use the ctcl_custom_email_body filter to replace it. Direct edits to plugin files are overwritten during updates.
 
-**Q: Where can I find setup instructions?**  
-A: Setup instructions are provided with the plugin and accessible via the first tab inside the plugin settings.
+= What happens if I deactivate the plugin? =
 
-**Q: Can I get help setting up my store?**  
-A: For assistance, contact the creator at bktujwol@gmail.com.
+The legacy deactivation handler removes saved store and SMTP settings. Back up your settings before deactivating. For a routine update, replace the plugin through WordPress's upload/update flow without manually deactivating it.
 
-**Q: How do I configure the checkout page?**  
-A: Use the order processing block to create a processing page, and enter the page link into the URL input of the checkout block settings.
+= Will it work with my theme? =
 
-**Q: What if my variation images aren’t showing?**  
-A: Ensure you add the CTC Lite Image Gallery block to the page for proper display of variation images.
+The blocks include responsive styles, but theme CSS, column widths, and add-ons can affect their appearance. Check product and checkout pages on both desktop and mobile with your chosen theme.
 
-## Screenshots
+== Screenshots ==
 
-1. Product Page
-2. Checkout Page
-3. Billing Tab
-4. Shipping Tab
-5. Email Tab
-6. Pending Orders Tab
-7. Order Detail Modal
-8. Add Product Gutenberg Blocks
-9. Checkout Page Gutenberg Blocks
-10. Processing Page Gutenberg Block
-11. Image Gallery in Overlay
+1. Product page with gallery and purchase controls.
+2. Cart and checkout page.
+3. Billing and currency settings.
+4. Shipping settings.
+5. Email and SMTP settings.
+6. Pending orders.
+7. Order details.
+8. Product block in the editor.
+9. Cart block in the editor.
+10. Order Processing block in the editor.
 
-## Changelog
-### 2.6.1
-- Few bug fixes 
-- Better Overlay
+== Changelog ==
 
-### 2.6.1
-- Few bug fixes
+= 2.8.0 =
+* Refreshed responsive styling for product, gallery, cart, and checkout blocks.
+* Added a reactive gallery editor preview and respected configured image dimensions.
+* Improved narrow-column product layouts, control sizing, and content containment.
+* Centered compact shipping/payment panels and right-aligned coupon entry.
+* Preserved the product image when a variation uses the default placeholder.
+* Fixed premature SMTP connections and authentication toggle handling.
+* Kept successful order confirmation visible when email sending fails.
+* Added an HTML order email with dynamic site branding and a gray header.
+* Added regression checks and updated setup documentation.
 
-### 2.6.0
-- Few bux fixes
+= 2.7.0 =
+* Previous published release.
 
-### 2.5.5
+= 2.6.1 =
+- Bug fixes and improvements to the image overlay.
+
+= 2.6.0 =
+- Bug fixes
+
+= 2.5.5 =
 - Better looking UX for Checkout
 
-### 2.5.0
+= 2.5.0 =
 - Added coupon code functionality
 - Replaced sidebar with modal for order details
 - Display blocks on top of the page
@@ -132,56 +144,61 @@ A: Ensure you add the CTC Lite Image Gallery block to the page for proper displa
 - Added PayPal, SMS, and Custom Shipping Option add-ons
 - Minor bug fixes
 
-### 2.4.2
+= 2.4.2 =
 - Minor fixes
 
-### 2.4.1
+= 2.4.1 =
 - Minor fixes
 
-### 2.4.0
+= 2.4.0 =
 - Various bug fixes
 
-### 2.3.5
+= 2.3.5 =
 - Improved gallery appearance
 
-### 2.3.0
+= 2.3.0 =
 - Added block for displaying products and galleries in inner blocks
 
-### 2.2.0
+= 2.2.0 =
 - Added sub-tabs with filters in the info tab
 
-### 2.1.2
+= 2.1.2 =
 - Fixed data select issues
 
-### 2.1.1
+= 2.1.1 =
 - Minor updates
 
-### 2.1.0
+= 2.1.0 =
 - Added floating cart add-on
 - Added out-of-stock option for product blocks
 - Enabled refund processing from the admin section
 - Minor bug fixes
 
-### 2.0.2
+= 2.0.2 =
 - Minor bug fixes and enhancements
 
-### 2.0.1
+= 2.0.1 =
 - Minor bug fixes
 
-### 2.0.0
+= 2.0.0 =
 - Added different prices and images for variations
 - Integrated CTC Lite Image Gallery block
 - Added CTC Overlay for image viewing
 - Made checkout page multipart
 - Minor bug fixes
 
-### 1.1.2
+= 1.1.2 =
 - Added missing translations
 
-### 1.1.0
+= 1.1.0 =
 - Minor bug fixes
 
-### 1.0.0 Beta
+= 1.0.0 Beta =
 - Minor bug fixes and tweaks
 
-### 1.0.0 Alpha
+= 1.0.0 Alpha =
+
+== Upgrade Notice ==
+
+= 2.8.0 =
+Updated storefront styles, gallery editor, order emails, and SMTP handling. Back up your store, update in place, and review checkout with your theme and add-ons.

@@ -91,7 +91,8 @@ registerBlockType('ctc-lite/ctc-lite-product-block', {
                 }
 
             }  }) ,
-            el('div', { className: 'ctcl-quantity' },el('span',{},__('Qty: ','ctc-lite')), el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
+            el('label', { className: 'ctcl-product-qty', htmlFor: `ctcl-editor-qty-${clientId}` }, __('Qty', 'ctc-lite')),
+            el('div', { className: 'ctcl-quantity' }, el('span', { onClick: () => setAttributes({ dummyQty: 2 <= parseInt(attributes.dummyQty) ? (parseInt(attributes.dummyQty) - 1) : 1 }), className: 'ctcl-minus-qty' }, '-'), el('input', { id: `ctcl-editor-qty-${clientId}`, onChange: e => setAttributes({ dummyQty: e.target.value }), className: 'ctcl-qty', type: 'number', min: '1', value: attributes.dummyQty }), el('span', { onClick: () => setAttributes({ dummyQty: (parseInt(attributes.dummyQty) + 1) }), className: 'ctcl-plus-qty' }, '+')),
             el(Button, { style: { backgroundColor: attributes.buttonColor },  disabled:attributes.disableAddToCartBtn, className: ' dashicons-before dashicons-cart ctcl-add-cart', 'data-price': attributes.productPrice, 'data-name': attributes.productName, 'data-pic': attributes.profilePic, }, attributes.addToCartMsg),
             el(Button,{style:{marginLeft:'auto',marginRight:'auto',display:'block',marginTop:'10px'},variant:'secondary', onClick:()=>setModalOpen(true)},__('Add Product Detail','ctc-lite')),
             modalIsOpen && el(Modal,{title:__('Add/Edit Product Detail','ctc-lite'),size:'large', onRequestClose:()=> setModalOpen(false), },  
@@ -594,35 +595,56 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
 
 
 
-        setAttributes({ clntId: clientId });
+        const [previewImage, setPreviewImage] = useState('');
+        const galleryWidth = Math.max(148, Number(attributes.mainImgWd) || 340);
+        const galleryHeight = Math.max(148, Number(attributes.mainImgHt) || 385);
+        const selectedImage = attributes.galItems.find(image => image.url === previewImage)
+            || attributes.galItems[0];
+
         useEffect(() => {
-           
-            if(attributes.galItems.length > 1){
+            if (attributes.clntId !== clientId) {
+                setAttributes({ clntId: clientId });
+            }
+        }, [clientId, attributes.clntId]);
 
-                let imgList = document.querySelector('.ctclig-image-list');
-                if(null != imgList){
-                    imgList.remove();   
-                } 
-              
-            new ctclImgGal('.ctcl-image-gallery',{
-                
-                    mainImgHt:attributes.mainImgHt, 
-                    mainImgWd:attributes.mainImgWd,
-                    imageEvent:'mouseover' ,
-                    callBack:(el)=>{
-                        console.log(el)
-                    
-                    }
-            });
-        }
-
-        }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
-
-
+        // React owns the editor preview so sliders resize it in the editor canvas
+        // immediately, including iframe editors, without rebuilding the gallery.
         return el('div', { className: 'ctcl-image-gallery-block' },
-
-            el('div',{className:'ctcl-image-gallery'},
-            attributes.galItems.map((x, i) =>el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, key: i, title: x.caption, src: x.url })),
+            el('div', {
+                className: 'ctcl-image-gallery ctcl-editor-gallery',
+                style: {
+                    width: `${galleryWidth}px`,
+                    '--ctcl-gallery-ratio': `${galleryWidth - 22} / ${galleryHeight}`,
+                },
+            },
+                el('div', { className: 'ctclig-image-list' },
+                    el('div', {
+                        className: 'ctclig-main-image',
+                        role: selectedImage ? 'img' : undefined,
+                        'aria-label': selectedImage ? (selectedImage.alt || __('Gallery image preview', 'ctc-lite')) : undefined,
+                        style: {
+                            backgroundImage: selectedImage ? `url(${JSON.stringify(selectedImage.url)})` : 'none',
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                        },
+                    }, !selectedImage && el('span', { className: 'ctcl-gallery-placeholder' },
+                        __('Select images to preview your gallery.', 'ctc-lite'))),
+                    attributes.galItems.length > 0 && el('div', { className: 'ctclig-image-cont' },
+                        el('div', null, attributes.galItems.map((image, index) =>
+                            el('button', {
+                                key: image.id || image.url || index,
+                                type: 'button',
+                                className: 'ctcl-gallery-preview-thumbnail',
+                                'aria-label': `${__('Preview image', 'ctc-lite')} ${index + 1}`,
+                                'aria-pressed': selectedImage.url === image.url,
+                                onClick: () => setPreviewImage(image.url),
+                                onMouseEnter: () => setPreviewImage(image.url),
+                                onFocus: () => setPreviewImage(image.url),
+                            }, el('img', { src: image.url, alt: '' }))
+                        ))
+                    )
+                )
             ),
             el('div', { style: { border: '1px solid rgb(61, 148, 218)', backgroundColor: 'rgba(255,255,255,1)', } },
 
@@ -633,7 +655,7 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
                     gallery: true,
                     onSelect: gal => {
                         setAttributes({ galItems: gal });
-                        setAttributes({ mainImage: gal[0].url });
+                        setAttributes({ mainImage: gal.length ? gal[0].url : '' });
                     },
                     render: ({ open }) => el('div', { style: { width: '100%', backgroundColor: 'rgba(255,255,,255,1)', color: 'rgb(61, 148, 218)', padding: '10px' } },
                        
@@ -644,19 +666,21 @@ registerBlockType('ctc-lite/ctcl-image-gallery', {
                 el(InspectorControls, null,
                     el(PanelBody, null,
                         el(RangeControl, {
-                            label: __('Image width in pixel (px)', 'ctc-gal'),
+                            label: __('Gallery width (px)', 'ctc-gal'),
+                            help: __('Maximum gallery width. Scales down to fit smaller screens.', 'ctc-gal'),
                             min: 148,
-                            max: window.innerWidth,
-                            onChange: val => setAttributes({ mainImgWd: val }),
-                            value: attributes.mainImageWd,
+                            max: Math.max(2000, galleryWidth),
+                            onChange: val => setAttributes({ mainImgWd: Math.max(148, Number(val) || 340) }),
+                            value: attributes.mainImgWd,
                         }),
 
                         el(RangeControl, {
-                            label: __('Image height in pixel(px)', 'ctc-gal'),
+                            label: __('Main image height (px)', 'ctc-gal'),
+                            help: __('Image height at the configured width. Thumbnails appear below.', 'ctc-gal'),
                             min: 148,
-                            max: window.innerHeight,
-                            onChange: val => setAttributes({ mainImgHt: val }),
-                            value: attributes.mainImageHt,
+                            max: Math.max(2000, galleryHeight),
+                            onChange: val => setAttributes({ mainImgHt: Math.max(148, Number(val) || 385) }),
+                            value: attributes.mainImgHt,
                         })
 
                     ))

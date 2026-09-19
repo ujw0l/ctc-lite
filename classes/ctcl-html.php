@@ -462,50 +462,9 @@ return $html;
      */
     public function  createEmailBody($data){
 
-        $body = '<div style="margin-left:auto;margin-right:auto;display:block;padding:20px;">';
-        $body .= '<p>'.__('Hello','ctc-lite').', '.$data['ctcl-co-first-name'].'</p>';
-        $body .= '<p>'.__('Thank you for your purchase, your purchase details are as follows :','ctc-lite').'</p>';
-        $body .= '<p>'.__('Order id ').' :'.$data['order_id'].'</p>';
-        $body .= '<p>'.__('Your order details :','ctc-lite').'</p>';
-        $body .= '<div style="width:600px;">';
-        $body .= '<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body .= '<span style="display:table-cell;height:30px;width:200px;" >'.__('Products','ctc-lite').'</span>';
-        $body .= '<span style="display:table-cell;height:30px;width:300px;" >'.__('Variation','ctc-lite').'</span>';
-        $body .='<span style="display:table-cell;height:30px;width:50px;" >'.__('Qty').'</span>';
-        $body .='<span style="display:table-cell;height:30px;width:100px;" >'.__('Item Total').'</span></div>';
-    
-        foreach($data['products'] as $key=>$value):
-            $product = json_decode(stripslashes($value),TRUE);
-            $body .= "<div style='border-bottom:1px solid rgba(255,255,255,1);display:table;height:30px;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;padding-top:10px;'>";
-            $body .="<span  style='display:table-cell;width:200px'>{$product['itemName']}</span>";
-            $body .="<span  style='display:table-cell;width:300px'>{$product['vari']}</span>";
-            $body.="<span style='display:table-cell;width:50px;'>{$product['quantity']}</span>";
-            $body .="<span style='display:table-cell;width:100px;' >{$product['itemTotal']}</span></div>";
-        endforeach;
-        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body .='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Tax Rate ','ctc-lite').' : </span>';
-        $body.='<span style="display:table-cell;">'.get_option('ctcl_tax_rate').' % </span></div>';
-        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body .='<span style="display:table-cell;width:500px;text-align:right;">'.__('Shipping Cost ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
-        $body .= '<span style="display:table-cell;" >'.$data['shipping-total'].'</span></div>';
-       
-
-       if(isset( $data['total-discount'])) :
-        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Discount Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
-        $body.='<span style="display:table-cell;" >'.$data['total-discount'].'</span></div>';
-        $body .='</div>';
-       endif;
-       
-        $body .='<div style="padding-top:10px;border-bottom:1px solid rgba(255,255,255,1);height:30px;display:table;background-color:rgba(0,0,0,0.1);width:600px;text-align:center;">';
-        $body.='<span style="display:table-cell;width:500px;text-align:right;" >'.__('Total ','ctc-lite').' ('.get_option('ctcl_currency').') : </span>';
-        $body.='<span style="display:table-cell;" >'.$data['sub-total'].'</span></div>';
-        $body .='</div>';
-        if(isset($data['shipping_note'])):
-        $body .= "<div style='font-size:15px;margin-top:15px;'><p>".__('Shipping Note :','ctc-lite')."</p>{$data['shipping_note']}</div>";
-        endif;
-        $body .='</div>';
-        return $body;
+        ob_start();
+        include dirname(__DIR__) . '/templates/order-confirmation.php';
+        return ob_get_clean();
     }
 
     /**

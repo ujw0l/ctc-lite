@@ -1,135 +1,87 @@
-<h1 align="center">Welcome to ctc-lite 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-2.5.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/ujw0l/ctc-lite#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="https://github.com/ujw0l/ctc-lite/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/ujw0l/ctc-lite/blob/master/LICENSE" target="_blank">
-    <img alt="License: GPL--2.0" src="https://img.shields.io/github/license/ujw0l/ctc-lite" />
-  </a>
-</p>
+# CT Commerce Lite
 
-> ecommerce plugin for wordpress
+Build a small WordPress store with blocks for products, image galleries, a shopping cart, and checkout. Arrange product pages in the block editor and manage orders from the **CTC Lite** dashboard.
 
-### 🏠 [Homepage](https://wordpress.org/plugins/ctc-lite/)
+[WordPress.org](https://wordpress.org/plugins/ctc-lite/) · [Support](https://wordpress.org/support/plugin/ctc-lite/) · [Report an issue](https://github.com/ujw0l/ctc-lite/issues)
 
+## What is included
 
+- **Product block:** product image, pricing, quantity, two variation groups, optional variation prices and images, out-of-stock and pre-order settings.
+- **Image Gallery block:** configurable width and main-image height, a live editor preview, responsive thumbnails, and a frontend image viewer.
+- **Display in column:** a starting layout for a gallery, description, and product controls.
+- **Cart block:** responsive order rows, coupon entry, totals, contact details, and shipping/payment selection. Shipping and payment panels are centered; coupon entry is compact and right-aligned.
+- **Order Processing block:** processes the submitted checkout through the configured payment and shipping handlers.
+- **Store settings:** currency, tax rate, cash on delivery, vendor delivery, and store pickup.
+- **Order management:** pending and completed orders, customer details, vendor notes, and print controls.
+- **Order emails:** SMTP settings and an HTML confirmation with item details, totals, and delivery notes. Branding uses the WordPress Site Title.
 
-## Author
+Card payments, PayPal, floating carts, sharing, ratings, analytics, and other integrations are separate add-ons. They are not bundled with the core plugin.
 
+## Set up a store
 
-<div class="ctcl-info-tab-main">
-<h3 class=" dashicons-before dashicons-editor-help ctcl-basic-info-header">How to Set up store</h3>
-<div class="ctcl-info-tab" style="height: 1491.5px; opacity: 1;">
+1. Install and activate **CT Commerce Lite** through **Plugins → Add New Plugin**, or upload the plugin ZIP.
+2. Open **CTC Lite** in the WordPress admin menu. Configure **Billing**, **Shipping**, and **Email**. Enable at least one payment method and one shipping method.
+3. Create a product page. Add **Display in column**, or place **CTC Lite Image Gallery** and **CTC Lite Product** separately. Use **Add Product Detail** to set the product name, image, price, and variations.
+4. Create a separate page containing **CTC Lite Order Processing**. Publish it and copy its URL. Keep it accessible, even if it is not in your navigation.
+5. Create a checkout page containing **CTC Lite Cart**. Use **Add Checkout Detail** to enter the processing-page URL and configure the optional coupon.
+6. Publish the product and checkout pages and add them to your navigation.
+7. Place a controlled test order and confirm totals, shipping, payment behavior, and email delivery before opening the store to customers.
 
+### Product images and gallery sizing
 
+The product's main image and its gallery are configured separately. Set the product image in **Add Product Detail**; upload gallery images through **Select Gallery Images**. Set custom images for color/style variations if needed. A variation using the placeholder now keeps the product's main image.
 
-<fieldset class="ctcl-misc-setting" style="width: 450px; position: absolute; left: 24.5px; top: 380px;">
-<legend class="dashicons-before dashicons-admin-generic ctcl-misc-setting-legend"> 1) Important settings</legend>
-    <ol>
-    <li>Go to Billings tab and setup payment information</li>
-    <li>Go to Shipping tab and setup shipping Setting</li>
-    <li>Go to Email tab and setup email Setting to send order confirmation email.</li>
-    <br>
-    </ol>
-</fieldset>
+Gallery settings control the outer width and the main-image height at that width. Thumbnails appear below. The image scales proportionally in a narrower column or screen, and the editor preview updates as you adjust the settings.
 
+### Email setup
 
-<fieldset class="ctcl-setup-product" style="width: 450px; position: absolute; left: 24.5px; top: 580.5px;">
-    <legend class="dashicons-before dashicons-products ctcl-setup-product-legend"> 2) Set up product page</legend>
-    <ol>
-        <li>Create a page</li>
-        <li>Add CTC Lite Product block to the Page.</li>
-        <li>Click Add Product Detail Button </li>
-        <li>Fill up the required fields like name , price etc.</li>
-        <li>Save and Publish the page and you are done with creating product.</li>
-    </ol>
-</fieldset>
+Enter your provider's SMTP host, authentication setting, port, credentials, encryption value, and permitted From address in **CTC Lite → Email**. Use the provider's documented settings; PHPMailer accepts `tls` for STARTTLS and `ssl` for implicit TLS. Use the built-in test-email control to check delivery.
 
-<fieldset class="ctcl-setup-processing-page" style="width: 450px; position: absolute; left: 24.5px; top: 787px;">
-<legend class="dashicons-before dashicons-cart ctcl-setup-processing-page-legend"> 3) Set up order processing page (Important)</legend>
-    <ol>
-        <li>Create a page</li>
-        <li>Add CTC Lite Order Processing block to page.</li>
-        <li>Publish the page and you are done creating processing page.</li>
-        <li>This page do not need to be on menu, you can keep it hidden but accessible.</li>
-        <br>
-    </ol>
-</fieldset>
+A failed confirmation email does not turn a successful order into a failed checkout. The confirmation page shows the order ID and a message if sending fails. Check Pending Orders before retrying an order.
 
+The email renderer is `ctclHtml::createEmailBody()` in `classes/ctcl-html.php`. Its default design is `templates/order-confirmation.php`. Use the `ctcl_custom_email_body` filter for a custom template; direct plugin edits are overwritten during updates.
 
-<fieldset class="ctcl-setup-check-out-page" style="width: 450px; position: absolute; left: 24.5px; top: 1011.5px;">
-<legend class=" dashicons-before dashicons-money ctcl-setup-check-out-page-legend"> 4) Set up checkout page</legend>
-    <ol>
-        <li>Create a page</li>
-        <li>Add CTC Lite Cart block to page.</li>
-        <li>Click Add Checkout Detail button</li>
-        <li>Get the Url of order processing page from step 3) and paste it to url field (Important).</li>
-        <li>Save and Publish the page and you are done creating checkout page.</li>
-    </ol>
-</fieldset>
+## Optional add-ons
 
+Install only the integrations your store needs. Each add-on has its own setup and compatibility requirements.
 
+| Add-on | Link |
+| --- | --- |
+| Floating Cart | [WordPress.org](https://wordpress.org/plugins/ctcl-floating-cart/) |
+| Sharing | [WordPress.org](https://wordpress.org/plugins/ctcl-sharing/) |
+| Stripe | [WordPress.org](https://wordpress.org/plugins/ctcl-stripe/) |
+| Phone Pay | [WordPress.org](https://wordpress.org/plugins/ctcl-phone-pay/) |
+| PayPal | [WordPress.org](https://wordpress.org/plugins/ctcl-paypal/) |
+| Product Display | [WordPress.org](https://wordpress.org/plugins/ctcl-product-display/) |
+| Analytics | [WordPress.org](https://wordpress.org/plugins/ctcl-analytics/) |
+| Order Status | [GitHub](https://github.com/ujw0l/ctcl-order-status) |
+| SMS Notifications | [Developer store](https://payhip.com/b/bdiOx) |
+| Custom Shipping | [Developer store](https://payhip.com/b/uZ4KU) |
+| Variation Swatches | [Developer store](https://payhip.com/b/qr8fb) |
+| Rating & Review | [Developer store](https://payhip.com/b/3PKa7) |
 
-<fieldset class="ctcl-pending-order-info" style="width: 450px; position: absolute; left: 24.5px; top: 1236px;">
-<legend class="dashicons-before dashicons-clipboard ctcl-pending-order-info-legend"> 5) Pending order tab</legend>
-    <ol>
-    <li>Go to Pending order tab</li>
-    <li>Click detail link</li>
-    <li>View Order detail, print order list or customer info.</li>
-    <li>Or add vendor note to the order</li>
-    <li>Complete or Cancel order</li>
-    </ol>
-</fieldset>
+## Development and validation
 
-<fieldset class="ctcl-complete-order-info" style="width: 450px; position: absolute; left: 24.5px; top: 1442.5px;">
-<legend class="dashicons-before dashicons-archive ctcl-complete-order-info-legend"> 6) Complete order tab</legend>
-    <ol>
-    <li>Go to Complete order tab</li>
-    <li>Click detail link</li>
-    <li>View Order detail, print order list or customer info.</li>
-    <li>Or edit or view vendor note of the order</li>
-    </ol>
-</fieldset>
+The plugin ships plain PHP, JavaScript, and CSS. There is no frontend compilation step. Node.js is needed only for development checks; exclude `node_modules`, tests, and development files from the installable ZIP.
 
+```sh
+npm ci
+npm test
+php tests/email.php
+```
 
+The JavaScript suite covers image selection, cart persistence, totals, coupons, pickup, checkout navigation, and gallery dimensions. PHP checks cover email rendering, SMTP configuration, and order confirmation when email fails. These use isolated fixtures, not live payment providers or customer mailboxes. See [TESTING.md](TESTING.md) for the checks performed and remaining integration coverage.
 
-</div>
-</div>
+## Updating
 
+Back up your database and plugin files, then replace the plugin through WordPress's ZIP upload/update flow. Keep the plugin active during a file-only update: the legacy deactivation handler deletes the plugin's saved settings. Review settings if you deactivate/reactivate it. Existing cart entries retain their stored product data; re-add an item to pick up a corrected image.
 
+Theme styles and add-ons can affect the layout. Check your product page, cart, and checkout on desktop and mobile after an update.
 
-👤 **UjW0L**
+Updating this repository does not update the WordPress.org listing. That requires a separate WordPress.org release. The existing deployment workflow is triggered by version tags; do not create a release tag until the intended release has been reviewed.
 
-* Website: http://ujw0l.github.io
-* Github: [@ujw0l](https://github.com/ujw0l)
-* LinkedIn: [@ujwol-bastakoti-559219236](https://linkedin.com/in/ujwol-bastakoti-559219236)
+## Support and license
 
-## 🤝 Contributing
+For help, use the [support forum](https://wordpress.org/support/plugin/ctc-lite/). For reproducible bugs, open a [GitHub issue](https://github.com/ujw0l/ctc-lite/issues) with WordPress/PHP versions, active theme and relevant add-ons, steps to reproduce, and screenshots. Do not include passwords or private customer details.
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/ujw0l/ctc-lite/issues). You can also take a look at the [contributing guide](https://github.com/ujw0l/ctc-lite/blob/master/CONTRIBUTING.md).
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-<ul>
-<li>
-<a href="https://www.patreon.com/ujw0l">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-</li>
-<li>
-<a href="https://www.buymeacoffee.com/ujw0l" title=" Buy me Beer"> 🍺 </a>
-</li>
-</ul>
-
-## 📝 License
-
-Copyright © 2023 [UjW0L](https://github.com/ujw0l).<br />
-This project is [GPL--2.0](https://github.com/ujw0l/ctc-lite/blob/master/LICENSE) licensed.
-
-***
+Created by [Ujwol Bastakoti](https://github.com/ujw0l). Licensed under [GPLv2 or later](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).

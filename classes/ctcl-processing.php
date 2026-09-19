@@ -24,16 +24,11 @@ class ctclProcessing{
 
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
-    	$mail->smtpConnect([
-    			'ssl' => [
-    					'verify_peer' => false,
-    					'verify_peer_name' => false,
-    					'allow_self_signed' => true
-    			]
-    	]);
-    	
+        // Configure only: wp_mail() connects during send(), inside its exception handler.
+        // Keep PHPMailer certificate verification enabled.
+
     	$mail->Host       =  get_option('ctcl_smtp_host') ;
-    	$mail->SMTPAuth   =  get_option('ctcl_smtp_authentication') ;
+        $mail->SMTPAuth   =  filter_var(get_option('ctcl_smtp_authentication'), FILTER_VALIDATE_BOOLEAN) ;
     	$mail->Port       =  get_option('ctcl_smtp_port') ;
     	$mail->Username   = get_option('ctcl_smtp_username') ;
     	$mail->Password   = get_option('ctcl_smtp_password') ;
@@ -79,8 +74,12 @@ public function orderProcessingShortCode(){
         else:
             $emailBody = $custEmailBody;
         endif;
-       $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody);
-       return "<div style='margin-left:auto;margin-right:auto;display:block;'; id='ctcl-order-sucesfully-placed'>".__('Order successfully placed. You will get email with details . <br/>Your order id is')." : {$postArr['order_id']} </div>";
+       $emailSent = $this->sendConfirmationEmail($dataAfterPayment['checkout-email-address'],get_option('ctcl_email_subject'),$emailBody, true);
+       $message = $emailSent
+           ? __('Order successfully placed. Your confirmation email has been sent.', 'ctc-lite')
+           : __('Order successfully placed, but the confirmation email could not be sent. Please contact the store with your order ID. Do not submit the order again.', 'ctc-lite');
+       return "<div id='ctcl-order-sucesfully-placed'>" . esc_html($message) . '<br/>'
+           . esc_html__('Your order ID is', 'ctc-lite') . ' : ' . esc_html($postArr['order_id']) . '</div>';
       else:
         return "<p>{$processPayment['failure_message']}</p>";
       endif;
@@ -92,10 +91,16 @@ public function orderProcessingShortCode(){
      *
      * Send confirmation email
      */
-    public function sendConfirmationEmail($emailAddress,$subject,$emailBody){
-        global $phpmailer;
-        $headers[] = 'Bcc:'. get_option('ctcl_smtp_bcc_email');
+    public function sendConfirmationEmail($emailAddress,$subject,$emailBody,$returnStatus = false){
+        $headers = array();
+        $bcc = get_option('ctcl_smtp_bcc_email');
+        if (!empty($bcc)) {
+            $headers[] = 'Bcc:' . $bcc;
+        }
         $emailSent = wp_mail($emailAddress, $subject , $emailBody,$headers);
+        if ($returnStatus) {
+            return $emailSent;
+        }
 		if($emailSent):
             return __('Email sent sucessfully','ctc-lite');
         else:

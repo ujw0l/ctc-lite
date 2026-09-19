@@ -4,50 +4,57 @@
  * javascript library create gallery with main image
  * https://ujw0l.github.io/
  * MIT license
- *  
+ *
  */
 'use strict'
 class ctclImgGal{
 
     /**
-     * Construtor 
-     * 
+     * Construtor
+     *
      * @param {*} elems elements to apply gallery
      * @param {*} opt gallery option
      */
         constructor(elems,opt){
-    
+
             Array.from(document.querySelectorAll(elems)).map(x=>{
                 this.createGal(x,opt)});
-    
+
         }
-    
+
     /**
-     * 
+     *
      * Create Gallery
-     * 
+     *
      * @param {*} el gallery element
      * @param {*} opt gallery options
      */
         createGal(el,opt){
-    
+
             let imgChngEvnt = undefined != opt && undefined != opt.imageEvent ? opt.imageEvent : 'click';
-            let galWd = undefined != opt && undefined != opt.mainImgWd ? opt.mainImgWd : el.offsetWidth;
-            let galHt = undefined != opt && undefined != opt.mainImgHt ? opt.mainImgHt : el.offsetHeight;
-    
-    
+            // Read saved settings before CSS constrains the rendered size.
+            let galWd = parseFloat(opt && opt.mainImgWd) || parseFloat(el.style.width) || el.offsetWidth || 340;
+            let galHt = parseFloat(opt && opt.mainImgHt) || parseFloat(el.style.height) || 385;
+            el.style.width = `${galWd}px`;
+            const galleryStyle = getComputedStyle(el);
+            const horizontalInset = ['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth']
+                .reduce((total, property) => total + (parseFloat(galleryStyle[property]) || 0), 0);
+            // The setting controls main-image height; thumbnails occupy their own space.
+            el.style.setProperty('--ctcl-gallery-ratio', `${Math.max(1, galWd - horizontalInset)} / ${galHt}`);
+
+
             let evryTngCont = document.createElement('div');
             evryTngCont.classList.add('ctclig-image-list');
             el.appendChild(evryTngCont);
-    
+
             let mainImgDiv =  document.createElement('div');
             mainImgDiv.classList.add('ctclig-main-image');
             mainImgDiv.style = `width:${galWd}px; height :${galHt}px ;background: url("") center center / contain no-repeat rgb(255, 255, 255,0.5); margin-left:auto;margin-right:auto;display: block;`;
-           mainImgDiv.innerHTML = `<span style='font-size:${galWd/30}px;position:relative; top: ${(galHt/2)-5}px; left: ${(galWd/2)-5}px ;' >Loading ...</span>`; 
+           mainImgDiv.innerHTML = `<span style='font-size:${galWd/30}px;position:relative; top: ${(galHt/2)-5}px; left: ${(galWd/2)-5}px ;' >Loading ...</span>`;
             evryTngCont.appendChild(mainImgDiv);
-    
-          
-    
+
+
+
             let carouselDivCont = document.createElement('div')
             carouselDivCont.style.width = `${galWd}px`,
             carouselDivCont.classList.add('ctclig-image-cont');
@@ -56,42 +63,42 @@ class ctclImgGal{
             carouselDivCont.style.marginLeft = 'auto';
             carouselDivCont.style.marginRight = 'auto';
             carouselDivCont.style.display = 'block';
-    
+
             let carouselDiv =  document.createElement('div');
             carouselDiv.style.width = `0px`;
             carouselDiv.style.marginLeft = 'auto';
             carouselDiv.style.marginRight = 'auto';
             carouselDiv.style.display = 'block';
-        
+
             carouselDivCont.appendChild(carouselDiv);
-    
+
             evryTngCont.appendChild(carouselDivCont);
-    
-            
+
+
                 Array.from(el.querySelectorAll('img')).map((y,i) => {
-    
-    
+
+
                   y.style.display = 'none';
-    
+
                   let img = new Image();
-                
+
                   img.src = y.src
-                
+
                   img.addEventListener('load',e =>{
-    
-                    
-              
+
+
+
                         if('' != mainImgDiv.innerHTML){
                             mainImgDiv.innerHTML = '';
                             mainImgDiv.setAttribute('data-num',i);
                             mainImgDiv.style.backgroundImage = `url("${e.target.src}")`;
                         }
-    
-                      
+
+
                         let imgHtWdRatio = e.target.width/e.target.height;
                         let imgResizeWd = imgHtWdRatio * 70;
-                        carouselDiv.style.width = `${parseFloat(carouselDiv.style.width)+imgResizeWd+4}px` 
-    
+                        carouselDiv.style.width = `${parseFloat(carouselDiv.style.width)+imgResizeWd+4}px`
+
                        e.target.style.width = `${imgResizeWd}px`;
                        e.target.setAttribute('data-img-num',i);
                        e.target.style.height = '70px';
@@ -102,15 +109,14 @@ class ctclImgGal{
                             mainImgDiv.style.backgroundImage = `url("${e.target.src}")`;
                             e.target.scrollIntoView({ behavior: "smooth", block:'nearest', inline: "center" });
                         });
-    
+
                         carouselDiv.appendChild(e.target)
                     });
                 });
-    
-           
+
+
                 el.style.height = `${galHt +  100 }px`;
                 undefined != opt && undefined != opt.callBack && opt.callBack(el);
         }
-    
+
     }
-    
