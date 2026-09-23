@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=JTGN7T2A9X3KW
 Tags: ecommerce, online store, block, shopping cart, sell online
 Requires at least: 5.5.2
 Tested up to: 7.1
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 Requires PHP: 7.4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 
 == Changelog ==
 
+= 2.8.2 =
+* Fix order JSON decoding in pending and completed order screens, preserving escaped product data and quoted text.
+* Show a clear message for unreadable orders without changing stored records.
+
 = 2.8.1 =
 * Fixed activation output when the orders table already exists by correcting the dbDelta schema format.
 * Updated Tested up to metadata to WordPress 7.1.
@@ -203,6 +207,9 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 = 1.0.0 Alpha =
 
 == Upgrade Notice ==
+
+= 2.8.2 =
+Fixes PHP warnings in order management. Replace the installed plugin files to update.
 
 = 2.8.1 =
 Fixes activation output when an orders table already exists. Update in place to preserve plugin settings.

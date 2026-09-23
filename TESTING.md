@@ -1,4 +1,4 @@
-# Validation report — 2.8.1
+# Validation report — 2.8.2
 
 Validated on 19 September 2026 against the working changes based on commit `b6668c6`.
 
@@ -40,3 +40,7 @@ The local WordPress log reported an existing orders table being created again du
 `php tests/activation.php /path/to/wordpress` loads the installed WordPress `dbDelta()` function without bootstrapping the site. A database double exercises the actual activation callback. On PHP 8.3.14 and 8.4.1, fresh activation created one table with no output; repeat activation emitted no output or schema queries and preserved the order-data sentinel. No user database or plugin settings were changed.
 
 The GitHub tag is a source release. Its commit skips the existing automatic deployment workflow; WordPress.org publishing has not been performed.
+
+## Order screen regression — 2.8.2
+
+`tests/orders.php` passes on PHP 7.4 and 8.4 with warnings treated as exceptions. Covers raw nested JSON, legacy slashed JSON, null/malformed data, missing fields, both order tables, unreadable detail actions, and nested product rendering. Tests use WordPress/database stubs; production records were not accessed or modified.

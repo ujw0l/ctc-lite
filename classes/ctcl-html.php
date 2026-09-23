@@ -1,6 +1,50 @@
 <?php
 class ctclHtml{
 
+/** Decode stored JSON before attempting compatibility with legacy slashed values. */
+private function decodeOrderJson($raw){
+    if (!is_string($raw) || trim($raw) === '') {
+        return null;
+    }
+    $decoded = json_decode($raw, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $decoded = json_decode(stripslashes($raw), true);
+    }
+    return is_array($decoded) && !empty($decoded) ? $decoded : null;
+}
+
+/** Supply safe display values without changing the stored order. */
+private function orderDisplayData($raw, $orderId = ''){
+    $detail = $this->decodeOrderJson($raw);
+    if ($detail === null) {
+        return null;
+    }
+    $fields = array('order_id', 'payment_type', 'shipping_type',
+        'checkout-special-instruction', 'items-total', 'tax-total',
+        'shipping-total', 'sub-total', 'ctcl-co-first-name', 'ctcl-co-last-name',
+        'checkout-street-address-1', 'checkout-street-address-2', 'checkout-city',
+        'checkout-state', 'checkout-zip-code', 'checkout-country');
+    foreach ($fields as $field) {
+        $detail[$field] = isset($detail[$field]) && is_scalar($detail[$field])
+            ? (string) $detail[$field] : '';
+    }
+    if ($detail['order_id'] === '') {
+        $detail['order_id'] = (string) $orderId;
+    }
+    $detail['products'] = isset($detail['products']) && is_array($detail['products'])
+        ? $detail['products'] : array();
+    if (isset($detail['total-discount']) && !is_numeric($detail['total-discount'])) {
+        unset($detail['total-discount']);
+    }
+    return $detail;
+}
+
+private function unavailableOrderMessage(){
+    return __('Order details are unavailable because the saved data could not be read.', 'ctc-lite');
+}
+
+
+
 
 /**
  * @since 1.0.0
@@ -270,26 +314,32 @@ private function pendingOrderTab(){
 <?php
 
 foreach ($items as $key => $value):
-    $item = json_decode(stripslashes($value['orderDetail']),TRUE);
+    $item = $this->orderDisplayData($value['orderDetail'] ?? null, $value['orderId'] ?? '');
+    if ($item === null):
+        ?>
+        <tr><td><?=esc_html($value['orderId'] ?? '')?></td><td colspan="7"><?=esc_html($this->unavailableOrderMessage())?></td></tr>
+        <?php
+        continue;
+    endif;
 ?>
-    <tr id="ctcl-pending-order-<?=$item['order_id']?>" >
+    <tr id="ctcl-pending-order-<?=esc_attr($item['order_id'])?>" >
             <td>
-                <?=$item['order_id']?>
+                <?=esc_attr($item['order_id'])?>
             </td>
             <td>
-                <?=date('m/d/Y',$item['order_id'])?>
+                <?=ctype_digit($item['order_id']) ? esc_html(date('m/d/Y', (int) $item['order_id'])) : '—'?>
             </td>
             <td>
-            <?=$item['payment_type']?>
+            <?=esc_html($item['payment_type'])?>
             </td>
             <td>
-              <?=$item['shipping_type']?>
+              <?=esc_html($item['shipping_type'])?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
+                <p class="ctcl-pending-special-instruct"> <?=esc_html($item['checkout-special-instruction'])?></p>
             </td>
             <td>
-                <a href="Javascript:void(0)" class="ctcl-get-pending-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
+                <a href="Javascript:void(0)" class="ctcl-get-pending-order-data" data-order-id="<?=esc_attr($item['order_id'])?>"><?=__('Click Here','ctc-lite')?></a>
             </td>
     </tr>
 <?php
@@ -354,26 +404,32 @@ private function completeOrderTab(){
 
 foreach ($items as $key => $value):
 
-    $item = json_decode(stripslashes($value['orderDetail']),TRUE);
+    $item = $this->orderDisplayData($value['orderDetail'] ?? null, $value['orderId'] ?? '');
+    if ($item === null):
+        ?>
+        <tr><td><?=esc_html($value['orderId'] ?? '')?></td><td colspan="7"><?=esc_html($this->unavailableOrderMessage())?></td></tr>
+        <?php
+        continue;
+    endif;
 ?>
-    <tr id="ctcl-complete-order-<?=$item['order_id']?>" >
+    <tr id="ctcl-complete-order-<?=esc_attr($item['order_id'])?>" >
             <td>
-                <?=$item['order_id']?>
+                <?=esc_attr($item['order_id'])?>
             </td>
             <td>
-                <?=date('m/d/Y',$item['order_id'])?>
+                <?=ctype_digit($item['order_id']) ? esc_html(date('m/d/Y', (int) $item['order_id'])) : '—'?>
             </td>
             <td>
-            <?=$item['payment_type']?>
+            <?=esc_html($item['payment_type'])?>
             </td>
             <td>
-              <?=$item['shipping_type']?>
+              <?=esc_html($item['shipping_type'])?>
             </td>
             <td colspan="3">
-                <p class="ctcl-pending-special-instruct"> <?=str_replace('u2019',"'",$item['checkout-special-instruction'])?></p>
+                <p class="ctcl-pending-special-instruct"> <?=esc_html($item['checkout-special-instruction'])?></p>
             </td>
             <td>
-                <a href="Javascript:void(0)" class="ctcl-get-complete-order-data" data-order-id="<?=$item['order_id']?>"><?=__('Click Here','ctc-lite')?></a>
+                <a href="Javascript:void(0)" class="ctcl-get-complete-order-data" data-order-id="<?=esc_attr($item['order_id'])?>"><?=__('Click Here','ctc-lite')?></a>
             </td>
     </tr>
 <?php
@@ -478,7 +534,12 @@ return $html;
 
         $ctclProcessing =  new ctclProcessing();
         $orderId = sanitize_text_field( $_POST['orderId']);
-        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId)),TRUE);
+        $detail = $this->orderDisplayData($ctclProcessing->getOrderDetail($orderId), $orderId);
+        if ($detail === null) {
+            echo '<p class="notice notice-error">' . esc_html($this->unavailableOrderMessage()) . '</p>';
+            wp_die();
+            return;
+        }
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for ")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
@@ -514,7 +575,12 @@ return $html;
 
         $orderId = sanitize_text_field( $_POST['orderId']);
 
-        $detail =  json_decode(stripslashes($ctclProcessing->getOrderDetail($orderId )),TRUE);
+        $detail = $this->orderDisplayData($ctclProcessing->getOrderDetail($orderId), $orderId);
+        if ($detail === null) {
+            echo '<p class="notice notice-error">' . esc_html($this->unavailableOrderMessage()) . '</p>';
+            wp_die();
+            return;
+        }
         echo '<fieldset class="ctcl-order-detail-main-cont">';
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-order-detail-main-cont-legend'> ".__("Order Detail for")." {$orderId}</legend>";
         echo '<div class="ctc-order-detail-cont">';
@@ -552,7 +618,15 @@ return $html;
         echo "<span class='ctcl-order-list-header-total'>".__('Item Total','ctc-lite')."</span></div>";
         
         foreach($detail['products']as $key=>$order):
-        $item = json_decode($order,TRUE);
+        $item = $this->decodeOrderJson($order);
+        if ($item === null) {
+            echo '<p>' . esc_html(__('Product details are unavailable.', 'ctc-lite')) . '</p>';
+            continue;
+        }
+        foreach (array('itemName', 'vari', 'quantity', 'itemTotal') as $field) {
+            $item[$field] = isset($item[$field]) && is_scalar($item[$field])
+                ? esc_html((string) $item[$field]) : '—';
+        }
         echo "<div class='ctcl-ordered-item'>";
         echo "<span class='ctcl-ordered-item-name'>{$item['itemName']}</span>";
         echo "<span class='ctcl-ordered-item-var' >{$item['vari']}</span>";
