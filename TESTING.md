@@ -1,4 +1,4 @@
-# Validation report — 2.8.2
+# Validation report — 2.8.3
 
 Validated on 19 September 2026 against the working changes based on commit `b6668c6`.
 
@@ -44,3 +44,11 @@ The GitHub tag is a source release. Its commit skips the existing automatic depl
 ## Order screen regression — 2.8.2
 
 `tests/orders.php` passes on PHP 7.4 and 8.4 with warnings treated as exceptions. Covers raw nested JSON, legacy slashed JSON, null/malformed data, missing fields, both order tables, unreadable detail actions, and nested product rendering. Tests use WordPress/database stubs; production records were not accessed or modified.
+
+## Security regression — 2.8.3
+
+The standalone PHP security suite tests denied low-privilege and nonce-less requests for all seven admin AJAX handlers, numeric order ID validation, prepared SQL arguments, ignored visitor payment results, unavailable payment methods, successful COD processing, canonical product/variation pricing, shipping, coupons, and escaped historical order data. Authorized mutations still call the database adapter. Uses WordPress and database stubs; no live payment, SMTP, customer records, or third-party add-ons were exercised.
+
+Run `php tests/security.php`, `php tests/orders.php`, `php tests/email.php`, and `npm test`. PHP checks run with warnings treated as exceptions. The previously added admin CSS is included in this release.
+
+Checkout keeps the existing post-ID/product-name cart format and validates it against published product blocks, including nested blocks and synced patterns. Unknown or ambiguous products, outdated prices, unpublished products, and invalid coupons fail closed with a refresh message. Custom integrations must register their enabled payment option and processor; server-side pricing extensions and third-party payment/shipping add-ons require integration testing before production deployment.

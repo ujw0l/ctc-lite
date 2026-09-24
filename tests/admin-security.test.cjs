@@ -1,0 +1,21 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {JSDOM}=require('jsdom');
+test('admin note request carries the nonce and preserves special characters',()=>{
+ const dom=new JSDOM('<button class="ctcl-vendor-note-submit">Save</button><textarea id="ctcl-order-status-note"></textarea><input id="ctcl-order-id" value="1790121600">',{runScripts:'outside-only'});
+ const w=dom.window;
+ let request;
+ w.ctclAdminObject={nonce:'session-nonce',ajaxUrl:'/wp-admin/admin-ajax.php'};
+ w.XMLHttpRequest=class {open(){}setRequestHeader(){}addEventListener(){}send(body){request=new URLSearchParams(body);}};
+ w.eval(fs.readFileSync('js/ctcl-admin.js','utf8').replace(/window\.addEventListener\('DOMContentLoaded',[\s\S]*$/,'window.Admin=ctclAdminJs;'));
+ Object.create(w.Admin.prototype).vendorNoteSubmit();
+ const note='Packed & ready + fragile = yes\nDo not bend';
+ w.document.querySelector('textarea').value=note;
+ w.document.querySelector('button').click();
+ assert.equal(request.get('nonce'),'session-nonce');
+ assert.equal(request.get('action'),'updateVendorNote');
+ assert.equal(request.get('orderId'),'1790121600');
+ assert.equal(request.get('vendorNote'),note);
+ dom.window.close();
+});

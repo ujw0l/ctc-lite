@@ -221,6 +221,16 @@ class ctclMain {
      */
 
    loadCartItems(storePickUp) {
+            const checkoutForm = document.querySelector('#ctcl-checkout-from');
+            for (const [name, value] of [['ctcl_checkout_page', ctclParams.checkoutPage || ''], ['ctcl_coupon_code', '']]) {
+                if (checkoutForm.querySelector(`input[name="${name}"]`)) continue;
+                const contextInput = document.createElement('input');
+                contextInput.type = 'hidden';
+                contextInput.name = name;
+                contextInput.value = value;
+                checkoutForm.appendChild(contextInput);
+            }
+
     let prodListCont = document.querySelector('#ctcl-checkout-product-list');
     let loadingP = document.querySelector('.ctcl-product-loading');
     let discountTotal =  document.querySelector('input[name="total-discount"]');
@@ -624,6 +634,7 @@ applyCoupon(){
     let couponCode =  document.querySelector('#ctcl-coupon-code').value;
 
    if(couponCode === couponInfo.code ){
+    document.querySelector('input[name="ctcl_coupon_code"]').value = couponCode;
     
     let discountContainer = document.querySelector('#ctcl-discount-cont');
     if(null != discountContainer){

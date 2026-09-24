@@ -13,6 +13,8 @@ function add_query_arg($key, $value) { return ''; }
 function sanitize_text_field($value) { return $value; }
 function wp_die() {}
 class ctclProcessing {
+    public static function authorizeAdminRequest() {}
+    public static function requestOrderId() { return $_POST['orderId']; }
     public static $rows = array();
     public static $raw;
     public function getTotalPendingOrders() { return count(self::$rows); }
@@ -34,7 +36,7 @@ function check($condition, $message) {
 }
 $product = json_encode(array('itemName' => 'Shoe "Classic"', 'vari' => 'Blue', 'quantity' => 2, 'itemTotal' => 80));
 $order = array('order_id' => '1790121600', 'products' => array($product),
-    'payment_type' => 'Cash', 'shipping_type' => 'Pickup',
+    'payment_type' => '<img src=x onerror=alert(1)>Cash', 'shipping_type' => 'Pickup',
     'checkout-special-instruction' => 'Don’t remove "quotes" or C:\\orders');
 $raw = json_encode($order);
 check(invokeOrderMethod('decodeOrderJson', array($raw)) === $order, 'Valid nested JSON must retain escapes');
@@ -51,6 +53,7 @@ ctclProcessing::$rows = array(
 foreach (array('pendingOrderTab', 'completeOrderTab') as $tab) {
     ob_start(); invokeOrderMethod($tab); $output = ob_get_clean();
     check(strpos($output, 'Cash') !== false, 'Valid order must render');
+    check(strpos($output, '<img') === false && strpos($output, '&lt;img') !== false, 'Stored scripts must be escaped in both order tables');
     check(strpos($output, 'Don’t remove &quot;quotes&quot; or C:\\orders') !== false, 'Instructions must preserve content');
     check(strpos($output, '1790121602') !== false && strpos($output, 'saved data could not be read') !== false, 'Unreadable row must remain visible');
     check(strpos($output, '1790121603') !== false, 'Missing JSON order ID must use database ID');

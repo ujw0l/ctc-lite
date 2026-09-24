@@ -4,6 +4,18 @@ Build a small WordPress store with blocks for products, image galleries, a shopp
 
 [WordPress.org](https://wordpress.org/plugins/ctc-lite/) · [Support](https://wordpress.org/support/plugin/ctc-lite/) · [Report an issue](https://github.com/ujw0l/ctc-lite/issues)
 
+## Release 2.8.3
+
+This release hardens checkout and order administration, and refreshes the admin interface with consistent headings, responsive forms, and cards.
+
+- Escape stored order fields and vendor notes when displaying them.
+- Require the `manage_options` capability and a session nonce for admin order actions and SMTP test emails.
+- Use prepared queries for order and vendor-note lookups.
+- Accept payment success only from an enabled, registered payment processor.
+- Validate products, variations, prices, shipping, tax, and coupons against published block settings before processing payment.
+
+Update the existing plugin in place, then clear cached plugin scripts and refresh admin and checkout pages. Existing orders remain stored. Carts with outdated prices or ambiguous product names must be refreshed. Test your payment and shipping add-ons before deploying to a live store; the automated checks cover core workflows, not external payment services.
+
 ## What is included
 
 - **Product block:** product image, pricing, quantity, two variation groups, optional variation prices and images, out-of-stock and pre-order settings.
@@ -86,3 +98,9 @@ Updating this repository does not update the WordPress.org listing. That require
 For help, use the [support forum](https://wordpress.org/support/plugin/ctc-lite/). For reproducible bugs, open a [GitHub issue](https://github.com/ujw0l/ctc-lite/issues) with WordPress/PHP versions, active theme and relevant add-ons, steps to reproduce, and screenshots. Do not include passwords or private customer details.
 
 Created by [Ujwol Bastakoti](https://github.com/ujw0l). Licensed under [GPLv2 or later](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+
+## Publishing to WordPress.org SVN
+
+The distribution ZIP contains a `ctc-lite/` folder. Copy its **contents** into SVN `trunk/`, and copy the same release files to `tags/2.8.3/`. Do not nest the `ctc-lite/` folder inside `trunk/` or the version tag. The WordPress readme uses `Stable tag: 2.8.3`; the GitHub tag is `v2.8.3`.
+
+Keep the repository's `.svn` metadata and top-level `assets/` directory intact. Review the SVN diff before committing. The ZIP excludes GitHub workflows, development dependencies, package manifests, and tests.

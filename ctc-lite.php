@@ -3,7 +3,7 @@
  Plugin Name:CT Commerce Lite
  Plugin URI:https://github.com/ujw0l/ctc-lite
  Description: Block-based products, galleries, cart, checkout, and order management for WordPress.
- Version: 2.8.2
+ Version: 2.8.3
  Author: Ujwol Bastakoti
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctc-lite
@@ -174,6 +174,7 @@ public function ctcLiteActivate(){
       wp_enqueue_script('ctcImgGallery', CTCL_DIR_PATH.'js/ctcl-image-gallery.js', array(), filemtime(__DIR__ . '/js/ctcl-image-gallery.js'));
     wp_enqueue_script('ctclFrontendJs', CTCL_DIR_PATH.'js/ctcl-frontend.js',array('ctcOvrlayJs','ctcImgGallery'), filemtime(__DIR__ . '/js/ctcl-frontend.js'));
     wp_localize_script('ctclFrontendJs','ctclParams',array(
+       'checkoutPage'=>get_queried_object_id(),
        'taxRate'=>get_option('ctcl_tax_rate'),
        'currency'=>get_option('ctcl_currency'),
        'totalShipping'=> __('Total Shipping Cost', 'ctc-lite'),
@@ -215,9 +216,10 @@ public function ctcLiteActivate(){
    wp_enqueue_script('ctclJsMasonry', CTCL_DIR_PATH.'js/js-masonry.js',array());
    wp_enqueue_script('ctclJsOverlay', CTCL_DIR_PATH.'js/js-overlay.js',array());
    wp_enqueue_script('ctcImgGallery', CTCL_DIR_PATH.'js/ctcl-image-gallery.js', array(), filemtime(__DIR__ . '/js/ctcl-image-gallery.js'));
-    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay','ctcImgGallery'));
+    wp_enqueue_script('ctclAdminJs', CTCL_DIR_PATH.'js/ctcl-admin.js',array('ctclJsMasonry','ctclJsOverlay','ctcImgGallery'), filemtime(__DIR__ . '/js/ctcl-admin.js'));
     wp_localize_script('ctclAdminJs','ctclAdminObject',array(
                                                                'ajaxUrl'=>admin_url( 'admin-ajax.php'),
+                                                               'nonce'=>wp_create_nonce('ctcl_admin'),
                                                                'emptyTestEmail'=>__('Please provide email for testing.','ctc-lite'),
                                                                'confirmCancelOrder'=>__("This will remove order. Are you sure?",'ctc-lite'),
                                                                'confirmRefund'=>__("This will refund order. Are you sure?",'ctc-lite'),
@@ -231,7 +233,7 @@ public function ctcLiteActivate(){
    */
 
   public function enequeAdminCss(){
-    wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin-panel.css'); 
+    wp_enqueue_style( 'ctclAdminCss', CTCL_DIR_PATH.'css/ctcl-admin-panel.css', array(), filemtime(__DIR__ . '/css/ctcl-admin-panel.css'));
 }
 /**
  * @since 1.0.0
@@ -269,7 +271,7 @@ public function requiredAjax(){
   public function adminMenu(){
     if ( is_admin()):
       $pendingOrder = "<span '".__('Pending Orders','ctc-lite')."' class='update-plugins'><span class='plugin-count'> {$this->ctclProcessing->getTotalPendingOrders()} </span><span>";
-        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CT  Commerce ', 'ctc-lite').$pendingOrder,'administrator','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
+        add_menu_page( __('CTC Lite', 'ctc-lite' ),__('CT  Commerce ', 'ctc-lite').$pendingOrder,'manage_options','ctclAdminPanel',array($this->ctclHtml, 'adminPanelHtml'),'dashicons-store','2');
     endif;
 }
 

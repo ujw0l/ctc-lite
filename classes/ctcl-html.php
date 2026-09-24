@@ -531,9 +531,10 @@ return $html;
      * 
      */
     public function getPendingOrderDetail(){
+        ctclProcessing::authorizeAdminRequest();
 
         $ctclProcessing =  new ctclProcessing();
-        $orderId = sanitize_text_field( $_POST['orderId']);
+        $orderId = ctclProcessing::requestOrderId();
         $detail = $this->orderDisplayData($ctclProcessing->getOrderDetail($orderId), $orderId);
         if ($detail === null) {
             echo '<p class="notice notice-error">' . esc_html($this->unavailableOrderMessage()) . '</p>';
@@ -550,7 +551,7 @@ return $html;
         echo '</div>';
       
        echo "<div class='ctcl-pending-order-detail'>";
-       echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
+       echo "<input id='ctcl-order-id' type='hidden' value='".esc_attr($detail['order_id'])."'/>";
        $this ->createOrderListSection($detail);
        $this->createCustomerInfoSection($detail);
        $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
@@ -570,10 +571,11 @@ return $html;
      * 
      */
     public function completeOrderDetail(){
+        ctclProcessing::authorizeAdminRequest();
 
         $ctclProcessing =  new ctclProcessing();
 
-        $orderId = sanitize_text_field( $_POST['orderId']);
+        $orderId = ctclProcessing::requestOrderId();
 
         $detail = $this->orderDisplayData($ctclProcessing->getOrderDetail($orderId), $orderId);
         if ($detail === null) {
@@ -590,7 +592,7 @@ return $html;
         echo '</div>';
 
        echo "<div class='ctcl-complete-order-detail'>";
-       echo "<input id='ctcl-order-id' type='hidden' value='".$detail['order_id']."'/>";
+       echo "<input id='ctcl-order-id' type='hidden' value='".esc_attr($detail['order_id'])."'/>";
        $this ->createOrderListSection($detail);
        $this->createCustomerInfoSection($detail);
        $this->createVendorNoteSection($ctclProcessing,$detail['order_id']);
@@ -636,13 +638,13 @@ return $html;
        endforeach;
        echo '<hr>';
 
-       echo "<div class='ctcl-order-detail-total'><span>".__("Sub Total", "ctc-lite" )." : </span><span>{$detail['items-total']}</span></div>";
-       echo "<div class='ctcl-order-detail-tax'><span>".__("Sales Tax", "ctc-lite" )." : </span><span>{$detail['tax-total']}</span></div>";
-       echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>{$detail['shipping-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-total'><span>".__("Sub Total", "ctc-lite" )." : </span><span>" . esc_html($detail['items-total']) . "</span></div>";
+       echo "<div class='ctcl-order-detail-tax'><span>".__("Sales Tax", "ctc-lite" )." : </span><span>" . esc_html($detail['tax-total']) . "</span></div>";
+       echo "<div class='ctcl-order-detail-shipping'><span>".__("Shipping Total", "ctc-lite" )." : </span><span>" . esc_html($detail['shipping-total']) . "</span></div>";
        if(isset($detail['total-discount'])):
         echo "<div class='ctcl-order-detail-discount'><span>".__("Discount", "ctc-lite" )." : </span><span>".number_format($detail['total-discount'],2)."</span></div>";
        endif;
-       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>{$detail['sub-total']}</span></div>";
+       echo "<div class='ctcl-order-detail-sub-total'><span>".__("Sub Total","ctc-lite" )." :</span><span>" . esc_html($detail['sub-total']) . "</span></div>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print list","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-order-list'></a></div>";
        echo "</fieldset>";
@@ -660,16 +662,16 @@ return $html;
        echo "<legend class='dashicons-before dashicons-admin-users ctcl-cust-info-legend'>".__("Customer Info","ctc-lite")."</legend>";
        echo '<div id="ctc-pending-customer-info">';
        echo "<address>";
-       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Customer Name",'ctc-lite')." : </label><span>{$detail['ctcl-co-first-name']} {$detail['ctcl-co-last-name']}</span></div>";
-       echo "<div class='ctcl-pending-cust-info-street-add1' ><label>".__("Street Address 1",'ctc-lite')." : </label><span>{$detail['checkout-street-address-1']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-street-add2' ><label>".__("Street Address 2",'ctc-lite')." : </label><span>{$detail['checkout-street-address-2']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-city' ><label>".__("City","ctc-lite")." : </label><span>{$detail['checkout-city']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-state' ><label>".__("State","ctc-lite")." : </label><span>{$detail['checkout-state']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-zip-code' ><label>".__("Zip Code","ctc-lite")." : </label><span>{$detail['checkout-zip-code']}</span><div>";
-       echo "<div class='ctcl-pending-cust-info-country' ><label>".__("Country","ctc-lite")." : </label><span>{$detail['checkout-country']}</span><div>";
+       echo "<div class='ctcl-pending-cust-info-name' ><label>".__("Customer Name",'ctc-lite')." : </label><span>" . esc_html($detail['ctcl-co-first-name']) . " " . esc_html($detail['ctcl-co-last-name']) . "</span></div>";
+       echo "<div class='ctcl-pending-cust-info-street-add1' ><label>".__("Street Address 1",'ctc-lite')." : </label><span>" . esc_html($detail['checkout-street-address-1']) . "</span><div>";
+       echo "<div class='ctcl-pending-cust-info-street-add2' ><label>".__("Street Address 2",'ctc-lite')." : </label><span>" . esc_html($detail['checkout-street-address-2']) . "</span><div>";
+       echo "<div class='ctcl-pending-cust-info-city' ><label>".__("City","ctc-lite")." : </label><span>" . esc_html($detail['checkout-city']) . "</span><div>";
+       echo "<div class='ctcl-pending-cust-info-state' ><label>".__("State","ctc-lite")." : </label><span>" . esc_html($detail['checkout-state']) . "</span><div>";
+       echo "<div class='ctcl-pending-cust-info-zip-code' ><label>".__("Zip Code","ctc-lite")." : </label><span>" . esc_html($detail['checkout-zip-code']) . "</span><div>";
+       echo "<div class='ctcl-pending-cust-info-country' ><label>".__("Country","ctc-lite")." : </label><span>" . esc_html($detail['checkout-country']) . "</span><div>";
        echo "</address>";
-       echo "<div class='ctcl-pending-cust-info-shhiping-type'><label>".__("Shipping Type",'ctc-lite')." : </label><span class='ctcl-pending-cust-info-shhiping-type-text' >{$detail['shipping_type']}</span></div>";
-       echo "<div class='ctcl-pending-cust-info-special-instruct'><label>".__("Special Instruction",'ctc-lite')." : </label><span class='ctcl-cust-info-instruction-text' >{$detail['checkout-special-instruction']}</span></div>";
+       echo "<div class='ctcl-pending-cust-info-shhiping-type'><label>".__("Shipping Type",'ctc-lite')." : </label><span class='ctcl-pending-cust-info-shhiping-type-text' >" . esc_html($detail['shipping_type']) . "</span></div>";
+       echo "<div class='ctcl-pending-cust-info-special-instruct'><label>".__("Special Instruction",'ctc-lite')." : </label><span class='ctcl-cust-info-instruction-text' >" . esc_html($detail['checkout-special-instruction']) . "</span></div>";
        echo "</div>";
        echo "<div><a href='Javascript:void(0);' title='".__("Print Customer Info","ctc-lite")."' class='dashicons-before dashicons-printer' id='ctcl-print-cust-info'></a></div>";
        echo "</fieldset>";
@@ -688,7 +690,7 @@ return $html;
         $note = $ctclProcessing->getVendorNote($orderId);
         echo "<fieldset class='ctcl-vendor-note'>";
         echo "<legend class='dashicons-before dashicons-clipboard ctcl-vendor-note-legend'>".__("Order Status  Note" ,"ctc-lite")." : </legend>";    
-        echo "<textarea id='ctcl-order-status-note' rows='5' cols='60' name='ctcl-order-status-note' value=''>{$note}";
+        echo "<textarea id='ctcl-order-status-note' rows='5' cols='60' name='ctcl-order-status-note' value=''>" . esc_textarea($note ?? '') . "";
         echo"</textarea>";
         echo submit_button( __( 'Save', 'ctc-lite' ), 'primary ctcl-vendor-note-submit','submit',false );
         echo "</fieldset>";

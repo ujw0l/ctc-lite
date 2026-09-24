@@ -70,7 +70,7 @@ class ctclAdminJs {
                             console.log(event.target.statusText);
                         }
                     })
-                    xhttp.send(`action=sendTestEmail&email=${testEmail}`);
+                    xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=sendTestEmail&email=${encodeURIComponent(testEmail)}`);
 
                 }
             });
@@ -113,7 +113,7 @@ class ctclAdminJs {
                         console.log(event.target.statusText);
                     }
                 });
-                xhttp.send(`action=pendingOrderDetail&orderId=${orderId}`);
+                xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=pendingOrderDetail&orderId=${encodeURIComponent(orderId)}`);
 
             }));
         }
@@ -195,7 +195,7 @@ class ctclAdminJs {
                     console.log(event.target.statusText);
                 }
             })
-            xhttp.send(`action=updateVendorNote&orderId=${orderId}&vendorNote=${vendorNote}`);
+            xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=updateVendorNote&orderId=${encodeURIComponent(orderId)}&vendorNote=${encodeURIComponent(vendorNote)}`);
 
         });
 
@@ -228,7 +228,7 @@ class ctclAdminJs {
                     console.log(event.target.statusText);
                 }
             })
-            xhttp.send(`action=orderMarkComplete&orderId=${orderId}`);
+            xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=orderMarkComplete&orderId=${encodeURIComponent(orderId)}`);
 
         });
 
@@ -259,7 +259,7 @@ class ctclAdminJs {
                         console.log(event.target.statusText);
                     }
                 })
-                xhttp.send(`action=cancelOrder&orderId=${orderId}`);
+                xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=cancelOrder&orderId=${encodeURIComponent(orderId)}`);
             }
         });
     }
@@ -299,7 +299,7 @@ class ctclAdminJs {
                         console.log(event.target.statusText);
                     }
                 });
-                xhttp.send(`action=completeOrderDetail&orderId=${orderId}`);
+                xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=completeOrderDetail&orderId=${encodeURIComponent(orderId)}`);
 
             }));
         }
@@ -331,7 +331,7 @@ class ctclAdminJs {
                         console.log(event.target.statusText);
                     }
                 });
-                xhttp.send(`action=refundOrder&orderId=${orderId}`);
+                xhttp.send(`nonce=${encodeURIComponent(ctclAdminObject.nonce)}&action=refundOrder&orderId=${encodeURIComponent(orderId)}`);
             }
 
 

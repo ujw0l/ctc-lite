@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=JTGN7T2A9X3KW
 Tags: ecommerce, online store, block, shopping cart, sell online
 Requires at least: 5.5.2
 Tested up to: 7.1
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 Requires PHP: 7.4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -113,6 +113,13 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 
 == Changelog ==
 
+= 2.8.3 =
+* Security: escape stored order fields and vendor notes in administration screens.
+* Security: require administrator capability and a nonce for order-management and test-email AJAX requests.
+* Security: prepare order and vendor-note database lookups.
+* Security: reject client-supplied payment success and unavailable payment/shipping methods; validate checkout products and totals against published block settings.
+* Refresh admin section headings, cards, forms, and responsive layouts.
+
 = 2.8.2 =
 * Fix order JSON decoding in pending and completed order screens, preserving escaped product data and quoted text.
 * Show a clear message for unreadable orders without changing stored records.
@@ -207,6 +214,9 @@ The blocks include responsive styles, but theme CSS, column widths, and add-ons 
 = 1.0.0 Alpha =
 
 == Upgrade Notice ==
+
+= 2.8.3 =
+Security update for order management and checkout. Clear cached plugin scripts and refresh checkout/admin pages after installing.
 
 = 2.8.2 =
 Fixes PHP warnings in order management. Replace the installed plugin files to update.
